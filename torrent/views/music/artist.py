@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
+from django.db import models
 
 from root import messages
 from torrent.models.music import MusicArtist
@@ -55,6 +56,23 @@ def edit(request, pk):
 		form = MusicArtistFormEdit(instance=artist)
 	
 	return render(request, 'torrent/music/artist/edit.html', { 'form': form, 'artist': artist })
+
+
+def delete(request, pk):
+	artist = get_object_or_404(MusicArtist, pk=pk)
+	
+	if 'confirmation' in request.GET:
+		if request.GET['confirmation'] == 'yes':
+			try:
+				artist.delete()
+				messages.deletion(request, 'Deleted artist.')
+				return redirect('torrent:music_latest')
+			except models.ProtectedError:
+				messages.failure(request, 'An artist that contains release groups cannot be deleted.')
+		
+		return redirect('torrent:music_artist_view', pk=artist.pk)
+	
+	return render(request, 'torrent/music/artist/delete.html', { 'artist': artist })
 
 
 def view_json(request, pk):

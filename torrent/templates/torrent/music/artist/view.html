@@ -38,6 +38,7 @@
 				<tbody>
 					<tr><td>Subscribe to Artist</td></tr>
 					<tr><td><a href="{% url 'torrent:music_artist_edit' artist.pk %}">Edit Artist</a></td></tr>
+					<tr><td><a href="{% url 'torrent:music_artist_delete' artist.pk %}">Delete Artist</a></td></tr>
 					<tr><td><a href="{% url 'torrent:music_release_group_add' %}?artist={{ artist.pk }}">Add Release Group</a></td></tr>
 					<tr><td><a href="{% url 'torrent:music_upload' %}?artist={{ artist.pk }}">Upload Release Group</a></td></tr>
 				</tbody>

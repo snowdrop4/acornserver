@@ -10,6 +10,7 @@ urlpatterns = [
 	path('music/artist/add',                artist.add,       name='music_artist_add'),
 	path('music/artist/view/<int:pk>',      artist.view,      name='music_artist_view'),
 	path('music/artist/edit/<int:pk>',      artist.edit,      name='music_artist_edit'),
+	path('music/artist/delete/<int:pk>',    artist.delete,    name='music_artist_delete'),
 	path('music/artist/view/json/<int:pk>', artist.view_json, name='music_artist_view_json'),
 	path('music/artist/view/contributions/json/<int:pk>', artist.view_contributions_json, name='music_artist_view_contributions_json'),
 	
