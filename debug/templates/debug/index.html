@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Debug menu
+{% endblock %}
+
+{% block content %}
+	<h2>Database</h2>
+	<ul>
+		<li><a href="{% url 'debug:populate_music_database' %}">Populate Music Database</a></li>
+		<li><a href="{% url 'debug:populate_forum_database' %}">Populate Forum Database</a></li>
+		<li><a href="{% url 'debug:populate_news_database' %}">Populate News Database</a></li>
+	</ul>
+	
+	<h2>Other</h2>
+	<ul>
+		<li><a href="{% url 'debug:test_messages' %}">Test messages</a></li>
+	</ul>
+{% endblock %}

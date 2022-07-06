@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Latest Uploads
+{% endblock %}
+
+{% block content %}
+	<h2>Latest Uploads</h2>
+	
+	{% if grouped_torrents %}
+		{% include 'torrent/music/grouped_torrent_list.html' %}
+	{% else %}
+		<p>No uploads.</p>
+	{% endif %}
+{% endblock %}

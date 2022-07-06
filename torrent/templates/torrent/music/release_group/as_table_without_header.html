@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="table-container">
+	<table>
+		<thead>
+			<tr>{% include 'torrent/music/torrent/as_table_header.html' %}</tr>
+		</thead>
+		
+		<tbody>
+			{% for release in release_group.get_releases_by_newest_prefetch_related %}
+				<tr>{% include 'torrent/music/release/as_table_row.html' %}</tr>
+				
+				{% for torrent in release.torrents.all %}
+					<tr>{% include 'torrent/music/torrent/as_table_data.html' %}</tr>
+				{% endfor %}
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

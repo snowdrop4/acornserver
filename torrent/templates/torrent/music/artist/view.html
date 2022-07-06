@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+	Artist '{{ artist.name }}'
+{% endblock %}
+
+{% block content %}
+	<h2>Artist '{{ artist.name }}'</h2>
+	
+	<div class="vertical-split">
+		<div class="table-container" style="width: 100%;">
+			<table style="width: 100%">
+				<thead>
+					<tr><th colspan="2">Info</th></tr>
+				</thead>
+				
+				<tbody>
+					<tr><td>Type:</td>      <td class="tr width-100">{{ artist.get_artist_type_display }}</td></tr>
+					<tr><td>Country:</td>   <td class="tr width-100">{{ artist.country.name }} <div class="{{ artist.country.flag_css }}"></div></td></tr>
+					<tr><td>Founded:</td>   <td class="tr width-100">{{ artist.formed }}</td></tr>
+					<tr><td>Disbanded:</td> <td class="tr width-100">{{ artist.disbanded }}</td></tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="vertical-separator hide-horizontal">
+			<div class="line"></div>
+		</div>
+		
+		<div class="table-container" style="width: 100%;">
+			<table style="width: 100%">
+				<thead>
+					<tr><th>Operations</th></tr>
+				</thead>
+				
+				<tbody>
+					<tr><td>Subscribe to Artist</td></tr>
+					<tr><td><a href="{% url 'torrent:music_artist_edit' artist.pk %}">Edit Artist</a></td></tr>
+					<tr><td><a href="{% url 'torrent:music_release_group_add' %}?artist={{ artist.pk }}">Add Release Group</a></td></tr>
+					<tr><td><a href="{% url 'torrent:music_upload' %}?artist={{ artist.pk }}">Upload Release Group</a></td></tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="vertical-separator hide-horizontal">
+			<div class="line"></div>
+		</div>
+		
+		<div class="table-container" style="overflow: initial">
+			<table style="width: 100%;">
+				<thead>
+					<tr><th>Portrait</th></tr>
+				</thead>
+				
+				<tbody>
+					<tr><td><img src="{% static 'img/blank-artist-portrait.svg' %}" style="width: 10rem"></td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	{% for role_name, release_groups in releases_by_release_groups_by_roles.items %}
+		<h3>{{ role_name }}</h3>
+		
+		{% for release_group, releases in release_groups.items %}
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>{% include 'torrent/music/release_group/as_table_header.html' %}</tr>
+						
+						<tr>{% include 'torrent/music/torrent/as_table_header.html' %}</tr>
+					</thead>
+					
+					<tbody>
+						{% for release in releases %}
+							<tr>{% include 'torrent/music/release/as_table_row.html' %}</tr>
+							
+							{% for torrent in release.torrents.all %}
+								<tr>{% include 'torrent/music/torrent/as_table_data.html' %}</tr>
+							{% endfor %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endfor %}
+	{% endfor %}
+{% endblock %}

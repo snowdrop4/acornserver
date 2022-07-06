@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Edit Release for '{{ release.release_group.name }}'
+{% endblock %}
+
+{% block content %}
+	<h2>Edit Release for '{{ release.release_group.name }}'</h2>
+	
+	{% if form.errors %}
+		<p class="error">Error processing the release. The invalid fields are marked below.</p>
+	{% endif %}
+	
+	<form method="post">
+		{% csrf_token %}
+		
+		{% include 'form-as-table.html' %}
+		
+		<div class="button-container">
+			<button type="submit">Save Changes</button>
+		</div>
+	</form>
+{% endblock %}

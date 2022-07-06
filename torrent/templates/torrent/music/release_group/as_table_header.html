@@ -1,0 +1,10 @@
+{% load static %}
+
+<th colspan="6">
+	<div style="display: flex; align-items: center;">
+		<img src="{% static 'img/blank-album-cover.svg' %}" width="100px" height="100px">
+		<div style="font-size: 1.25rem; margin-left: 0.5rem;">
+			{% include 'torrent/music/release_group/as_link.html' %} / {{ release_group.get_group_type_display }}
+		</div>
+	</div>
+</th>

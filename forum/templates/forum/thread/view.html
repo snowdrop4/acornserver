@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Thread '{{ thread.title }}'
+{% endblock %}
+
+{% block content %}
+	{% include 'forum/breadcrumb.html' %}
+	
+	<h2>Thread '{{ thread.title }}'</h2>
+	
+	{% include 'forum/post/as_table.html' with post=thread %}
+	
+	{% for post in thread.replies.all %}
+		{% include 'forum/post/as_table.html' %}
+	{% endfor %}
+	
+	<form method="post">
+		{% csrf_token %}
+		
+		<div class="table-container">
+			<table class="form" style="width: 100%;">
+				<tbody>
+					{% include 'form-as-table-raw.html' %}
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="button-container">
+			<button type="submit">Reply</button>
+		</div>
+	</form>
+{% endblock %}

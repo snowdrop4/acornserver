@@ -1,0 +1,10 @@
+{% load humanize %}
+
+<td><a href="{% url 'forum:thread_view' pk=thread.pk %}">{{ thread.title }}</a></td>
+<td>
+	<a href="{% url 'forum:thread_view' pk=thread.pk %}#{{ thread.post_count }}">#{{ thread.post_count }}</a>
+	by <a href="{% url 'account:profile_view' pk=thread.latest_post_author.pk %}">{{ thread.latest_post_author }}</a>
+	{{ thread.latest_post_datetime|naturaltime }}
+</td>
+<td>{{ thread.reply_count }}</td>
+<td><a href="{% url 'account:profile_view' pk=thread.author.pk %}">{{ thread.author }}</a></td>

@@ -1,0 +1,1 @@
+<a href="{% url 'torrent:music_release_view' pk=release.pk %}{% if artist %}?artist={{ artist.pk }}{% endif %}">{{ release.date }} / {{ release.label }} / {{ release.catalog_number }} / {{ release.get_release_format_display }}</a>

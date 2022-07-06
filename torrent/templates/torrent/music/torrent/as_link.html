@@ -1,0 +1,1 @@
+<a href="{% url 'torrent:music_torrent_view' pk=torrent.pk %}{% if artist %}?artist={{ artist.pk }}{% endif %}">{{ torrent.get_encode_format_display }}</a>

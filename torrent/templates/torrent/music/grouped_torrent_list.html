@@ -1,0 +1,40 @@
+<div class="table-container">
+	<table>
+		{% for release_group, releases in grouped_torrents.items %}
+			<thead>
+				<tr>
+					<th colspan="4">{% include 'torrent/music/release_group/as_link.html' %} / {{ release_group.get_group_type_display }}</a></th>
+					<th colspan="6">Torrent</th>
+				</tr>
+				
+				<tr>
+					<th>Date</th>
+					<th>Label</th>
+					<th>Catalog#</th>
+					<th>Medium</th>
+					
+					{% include 'torrent/music/torrent/as_table_header.html' %}
+				</tr>
+			</thead>
+			
+			<tbody>
+				{% for release, torrents in releases.items %}
+					{% for torrent in torrents %}
+						<tr>
+							<td>{{ release.date }}</td>
+							<td>{{ release.label }}</td>
+							<td>{{ release.catalog_number }}</td>
+							<td>{{ release.release_format }}</td>
+							
+							{% include 'torrent/music/torrent/as_table_data.html' %}
+						</tr>
+					{% endfor %}
+				{% endfor %}
+			</tbody>
+			
+			{% if forloop.last is False %}
+				<tr class="conjoined-table-spacer"><th colspan="10" ></th></tr>
+			{% endif %}
+		{% endfor %}
+	</table>
+</div>

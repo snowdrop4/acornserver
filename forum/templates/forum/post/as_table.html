@@ -1,0 +1,16 @@
+<div class="table-container" id="post{{ post.post_number }}">
+	<table style="width: 100%">
+		<thead>
+			<tr>
+				<th class="tl" style="border-right: 0rem"><a href="#post{{ post.post_number }}">#{{ post.post_number }}</a></th>
+				<th class="tr" style="border-left:  0rem"><a href="">{{ post.author }}</a> wrote on {{ post.datetime }}:</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+				<td class="markdown" style="padding-top: 0rem; padding-bottom: 0rem" colspan="2">{{ post.body }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

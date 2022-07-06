@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Delete contribution '{{ contribution }}'
+{% endblock %}
+
+{% block content %}
+	<h2>Delete contribution '{{ contribution }}'</h2>
+	
+	<p>Are you sure you want to delete this contribution?</p>
+	
+	<form method="get">
+		<div class="button-container">
+			<button type="submit" name="confirmation" value="yes" class="danger">Delete</button>
+			<button type="submit" name="confirmation" value="no">Cancel</button>
+		</div>
+	</form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'blank.html' %}
+
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'css/signup_signin.css' %}">
+{% endblock %}
+
+{% block blank-content %}
+	<div class="center-max-width">
+		<div>
+			<h1>Acorn Torrent</h1>
+			
+			<div style="text-align: center;">
+				{% url 'account:signin' as signin_url %}
+				{% url 'account:signup' as signup_url %}
+				
+				{% if request.path != signin_url %}
+					<a href="{% url 'account:signin' %}">Sign In</a>
+				{% else %}
+					Sign In
+				{% endif %}
+				
+				|
+				
+				{% if request.path != signup_url %}
+					<a href="{% url 'account:signup' %}">Sign Up</a>
+				{% else %}
+					Sign Up
+				{% endif %}
+			</div>
+		</div>
+		
+		<div>{% block content %}{% endblock %}</div>
+	</div>
+{% endblock %}

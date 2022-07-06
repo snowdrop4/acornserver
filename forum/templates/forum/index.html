@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Forum
+{% endblock %}
+
+{% block content %}
+	<h2>Forum</h2>
+	
+	{% for category in root.children.all %}
+		{% include 'forum/category/as_table.html' %}
+	{% endfor %}
+{% endblock %}

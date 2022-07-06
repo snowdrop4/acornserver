@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Add Torrent
+{% endblock %}
+
+{% block content %}
+	<h2>Add Torrent</h2>
+	
+	{% if form.errors %}
+		<p class="error">Error processing the torrent. The invalid fields are marked below.</p>
+	{% endif %}
+	
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		
+		{% include 'form-as-table.html' %}
+		
+		<div class="button-container">
+			<button type="submit">Add Torrent</button>
+		</div>
+	</form>
+{% endblock %}

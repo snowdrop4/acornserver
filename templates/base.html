@@ -1,0 +1,60 @@
+{% extends 'blank.html' %}
+
+{% load static %}
+
+{% block blank-content %}
+	<div class="header-container">
+		<header class="center-max-width">
+			<h1>
+				<a href="{% url 'root:homepage' %}" style="display: flex; align-items: center; column-gap: 0.5rem">
+					<img style="height: 5rem" src="{% static 'img/acorn-logo.svg' %}">
+					Acorn Torrent
+				</a>
+			</h1>
+			
+			<nav>
+				<a href="{% url 'root:homepage' %}">Home</a>
+				<a href="{% url 'torrent:music_latest' %}">Torrents</a>
+				<a href="{% url 'torrent:music_upload' %}">Upload</a>
+				<a>Requests</a>
+				<a href="{% url 'forum:index_view' %}">Forum</a>
+				
+				<a href="{% url 'account:profile_view' pk=user.pk %}">Profile</a>
+				<a href="{% url 'account:signout' %}">Sign Out</a>
+			</nav>
+		</header>
+	</div>
+	
+	<div class="search-container">
+		<div class="search center-max-width">
+			<form action="{% url 'search:music_search' %}" method="get">
+				<input id="search-artist" type="search" placeholder="Artist" name="artist_name">
+			</form>
+			
+			<form action="{% url 'search:music_search' %}" method="get">
+				<input id="search-release_group" type="search" placeholder="Release Group" name="release_group_name">
+			</form>
+			
+			<form action="{% url 'search:music_search' %}" method="get">
+				<input type="search" placeholder="Request" name="q">
+			</form>
+			
+			<form action="{% url 'search:music_search' %}" method="get">
+				<input type="search" placeholder="Forum" name="q">
+			</form>
+			
+			<form action="{% url 'search:music_search' %}" method="get">
+				<input type="search" placeholder="User" name="q">
+			</form>
+		</div>
+	</div>
+	
+	<main class="center-max-width">
+		{% include 'messages.html' %}
+		{% block content %}{% endblock %}
+	</main>
+	
+	<footer class="center-max-width">
+		Page generated on {% now "DATETIME_FORMAT" %}.
+	</footer>
+{% endblock %}

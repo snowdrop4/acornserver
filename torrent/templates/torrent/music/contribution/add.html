@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Add Contribution to '{{ release_group.name }}'
+{% endblock %}
+
+{% block content %}
+	<h2>Add Contribution to '{{ release_group.name }}'</h2>
+	
+	<h3>Search for Artist</h3>
+	
+	<form method="get">
+		{% include 'form-as-table.html' with form=search_form %}
+		
+		<div class="button-container">
+			<button type="submit" name="release_group" value="{{ release_group.pk }}">Search</button>
+		</div>
+	</form>
+	
+	{% if page.object_list %}
+		<h3>Select Artist</h3>
+		
+		{% if contribution_form.errors %}
+			<p class="error">Error processing the contribution. The invalid fields are marked below.</p>
+		{% endif %}
+		
+		<form method="post">
+			{% csrf_token %}
+			
+			{% include 'form-as-table.html' with form=contribution_form %}
+			
+			<div class="button-container">
+				<button type="submit">Add contribution</button>
+			</div>
+		</form>
+	{% endif %}
+	
+	{% include 'pagination.html' %}
+{% endblock %}

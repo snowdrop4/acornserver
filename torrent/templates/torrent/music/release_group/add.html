@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Add Release Group
+{% endblock %}
+
+{% block content %}
+	<h2>Add Release Group</h2>
+	
+	{% if form.errors %}
+		<p class="error">Error processing the release group. The invalid fields are marked below.</p>
+	{% endif %}
+	
+	<form method="post">
+		{% csrf_token %}
+		
+		<div class="vertical-split">
+			<div class="table-container">
+				<table class="form">
+					<tbody>
+						{% include 'form-as-table-raw.html' with form=release_group_form %}
+						{% include 'form-as-table-raw.html' with form=contribution_form %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="button-container">
+			<button type="submit">Add Release Group</button>
+		</div>
+	</form>
+{% endblock %}
