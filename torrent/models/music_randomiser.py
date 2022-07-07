@@ -3,6 +3,8 @@
 
 import random
 
+from django_countries import countries
+
 from root.utils.random import random_str, random_date
 from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution, MusicRelease
 
@@ -10,7 +12,8 @@ from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContributi
 def create_random_artist():
 	data = {
 		'artist-name': random_str(),
-		'artist-artist_type': random.choice(MusicArtist.ArtistType.values)
+		'artist-artist_type': random.choice(MusicArtist.ArtistType.values),
+		'artist-country': random.choice(countries)
 	}
 	
 	args = { a.removeprefix('artist-'): b for (a, b) in data.items() }
