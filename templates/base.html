@@ -6,7 +6,7 @@
 	<div class="header-container">
 		<header class="center-max-width">
 			<h1>
-				<a href="{% url 'root:homepage' %}" style="display: flex; align-items: center; column-gap: 0.5rem">
+				<a href="{% url 'root:homepage' %}">
 					<img style="height: 5rem" src="{% static 'img/acorn-logo.svg' %}">
 					Acorn Torrent
 				</a>
@@ -55,6 +55,6 @@
 	</main>
 	
 	<footer class="center-max-width">
-		Page generated on {% now "DATETIME_FORMAT" %}.
+		Page generated on {% now "DATETIME_FORMAT" %}. <a href="{% url 'root:about' %}">About</a>.
 	</footer>
 {% endblock %}

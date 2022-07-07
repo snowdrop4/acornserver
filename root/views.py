@@ -9,3 +9,7 @@ def homepage(request):
 	print(f"pub={articles[0].pub_date}, mod={articles[0].mod_date}")
 	
 	return render(request, 'root/homepage.html', { 'articles': articles })
+
+
+def about(request):
+	return render(request, 'root/about.html', { })
