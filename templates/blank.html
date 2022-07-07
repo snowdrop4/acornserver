@@ -7,9 +7,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
 	<title>{% block title %}{% endblock %} | Acorn</title>
+	
 	<link rel="stylesheet" href="{% static 'css/acorn.css' %}">
 	<link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
+	<link rel="icon" href="{% static 'img/favicon.svg' %}">
+	
+	<!-- Any page-specific CSS -->
 	{% block css %}{% endblock %}
 </head>
 
