@@ -295,33 +295,25 @@ footer {
 /* Tables */
 /*----------------------------------------------------------------------------*/
 
+/* ~~~~~~~~~~ Standard tables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 table {
 	border-collapse: collapse;
-	white-space: nowrap;
-}
-
-/* Give tables that we use for displaying forms a minimum width */
-table.form {
-	width: 32rem;
-}
-
-@media (max-width: 66rem) {
-	table.form {
-		width: 100%;
-	}
 }
 
 /*
- * Give standard rows a background colour. Ignore the spacer rows so that
- * they still have an unset (transparent) background colour.
+ * Give standard rows a background colour.
+ * 
+ * Ignore spacer rows so that they still have an unset
+ * (transparent) background colour.
  */
-tr:not(.conjoined-table-spacer) {
+ tr:not(.conjoined-table-spacer) {
 	background-color: var(--element-background);
 }
 
 /* 
  * Give the the first row in the header section
- * of each table a darker background to stand out
+ * of each table a darker background to stand out.
  */
 thead > tr:first-of-type {
 	background-color: var(--medium-background);
@@ -342,9 +334,8 @@ tr.conjoined-table-spacer > th {
 	padding: 0.5rem;
 }
 
-/* 
- * A few classes to highlight specific rows of data for user attention
-*/
+/* ~~~~~~~~~~ Special classes to highlight specific rows ~~~~~~~~~~~~~~~~~~~~ */
+
 tr.highlight {
 	background-color: var(--highlight);
 }
@@ -354,13 +345,42 @@ tr.error {
 	color: var(--font-color-inverted);
 }
 
-/* Some handy mix-ins */
+/* ~~~~~~~~~~ Handy mix-ins ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 th.tl, td.tl { text-align:   left; }
 th.tc, td.tc { text-align: center; }
 th.tr, td.tr { text-align:  right; }
 
 th.width-100, td.width-100 {
 	width: 100vw;
+}
+
+/* ~~~~~~~~~~ Tables for forms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* Give them a minimum width on large screens. */
+table.form {
+	width: 32rem;
+}
+
+/* Make them take up the full width on small screens. */
+@media (max-width: 66rem) {
+	table.form {
+		width: 100%;
+	}
+}
+
+/* ~~~~~~~~~~ Tables for torrents ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* Fix whitespace issues when certain columns are set to 100vw. */
+table.torrent-listings {
+	white-space: nowrap;
+}
+
+/* ~~~~~~~~~~ Tables for forum categories ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* Fix whitespace issues when certain columns are set to 100vw. */
+table.forum-listings {
+	white-space: nowrap;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -771,7 +791,7 @@ main.center-max-width {
 	line-height: 3rem;
 }
 
-/* Vertical separator overrides for specific child classes/elements */
+/* Vertical separator overrides for specific child classes/elements: */
 
 .vertical-split .table-container {
 	margin: 0rem;
@@ -789,7 +809,7 @@ main.center-max-width {
 	margin-bottom: 0.25rem;
 }
 
-/* Turn the vertical separator into a horizontal separator on small screens */
+/* Turn the vertical separator into a horizontal separator on small screens: */
 
 @media (max-width: 66rem) {
 	.vertical-split {
@@ -838,7 +858,7 @@ ul.file-list {
 	padding-left: 0rem;
 }
 
-/* Start adding left-padding only when we're recursing */
+/* Start adding left-padding only when we're recursing. */
 ul.file-list > ul.file-list {
 	padding-left: 2rem;
 }
