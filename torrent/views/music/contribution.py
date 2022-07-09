@@ -1,8 +1,9 @@
-from django.db import models, IntegrityError
-from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.core.paginator import Paginator
+from django.db import models, IntegrityError
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
 from root.utils.get_parameters import fill_typed_get_parameters
@@ -15,9 +16,10 @@ from torrent.forms.music.contribution import (
 
 def add(request):
 	try:
-		get_params = fill_typed_get_parameters(request,
-			{ 'release_group': (True, int, "must be an integer")
-			, 'page': (False, int, "must be an integer") }
+		get_params = fill_typed_get_parameters(request, {
+				'release_group': (True,  int, 'must be an integer'),
+				'page':          (False, int, 'must be an integer')
+			}
 		)
 	except ValueError as e:
 		return renderers.render_http_bad_request(request, e)
@@ -48,11 +50,10 @@ def add(request):
 				try:
 					contribution.save()
 				except IntegrityError:
-					messages.failure(request, 'Release groups cannot have \
-						multiple contributions from the same artist.')
+					messages.failure(request, ('Release groups cannot have multiple '
+						'contributions from the same artist.'))
 				else:
 					messages.creation(request, 'Created contribution.')
-				
 				
 				return redirect('torrent:music_release_group_view', pk=release_group.pk)
 		else:
@@ -83,27 +84,30 @@ def edit(request, pk):
 	)
 
 
-def delete(request, pk):
-	contribution = get_object_or_404(MusicContribution, pk=pk)
+class Delete(DeleteView):
+	model = MusicContribution
+	template_name = 'torrent/music/contribution/delete.html'  # template to use
+	context_object_name = 'contribution'  # name of object in template
 	
-	if 'confirmation' in request.GET:
-		release_group = contribution.release_group
+	def post(self, *args, **kwargs):
+		user = self.request.user
+		contribution = self.get_object()
 		
-		if request.GET['confirmation'] == 'yes':
-			try:
-				contribution.delete()
-				messages.deletion(request, 'Deleted contribution.')
-				return redirect('torrent:music_release_group_view', pk=release_group.pk)
-			except models.ProtectedError:
-				messages.failure(request, 'A contribution cannot be deleted\
-					if it is the only contribution to a release group.')
+		if self.request.POST.get('confirm', 'no') == 'yes':
+			# Only delete the contribution if the current user has the permission to delete contributions,
+			#  or if it was the current user created this contribution.
+			if user.has_perm('torrent.delete_musiccontribution') or user == contribution.creator:
+				try:
+					contribution.delete()
+					messages.deletion(self.request, 'Deleted contribution.')
+					return redirect('torrent:music_release_group_view', pk=contribution.release_group.pk)
+				except models.ProtectedError:
+					messages.failure(self.request, ('A contribution cannot be deleted '
+					'if it is the only contribution to a release group.'))
+			else:
+				messages.error(self.request, 'Insufficient permissions to delete contribution.')
 		
-		return redirect('torrent:music_release_group_view', pk=release_group.pk)
-	
-	return render(
-		request, 'torrent/music/contribution/delete.html',
-		{ 'contribution': contribution }
-	)
+		return redirect('torrent:music_release_group_view', pk=contribution.release_group.pk)
 
 
 def view_json(request, pk):

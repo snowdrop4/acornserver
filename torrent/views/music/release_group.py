@@ -1,7 +1,8 @@
-from django.db import models
-from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpResponse
 from django.core import serializers
+from django.db import models
+from django.http import HttpResponse
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
 from root.utils.get_parameters import fill_typed_get_parameters
@@ -13,7 +14,8 @@ from torrent.forms.music.contribution import MusicContributionFormWithArtistFK
 def add(request):
 	try:
 		get_params = fill_typed_get_parameters(request,
-			{ 'artist': (True, int, "must be an integer") })
+			{ 'artist': (True, int, "must be an integer") }
+		)
 	except ValueError as e:
 		return renderers.render_http_bad_request(request, e)
 	
@@ -37,9 +39,10 @@ def add(request):
 		release_group_form = MusicReleaseGroupForm()
 		contribution_form = MusicContributionFormWithArtistFK(artist)
 	
-	template_args = \
-		{ 'release_group_form': release_group_form 
-		, 'contribution_form':  contribution_form }
+	template_args = {
+		'release_group_form': release_group_form,
+		'contribution_form':  contribution_form,
+	}
 	
 	return render(request, 'torrent/music/release_group/add.html', template_args)
 
@@ -74,24 +77,36 @@ def edit(request, pk):
 	else:
 		form = MusicReleaseGroupForm(instance=release_group)
 	
-	return render(request, 'torrent/music/release_group/edit.html', { 'form': form, 'release_group': release_group })
+	return render(request, 'torrent/music/release_group/edit.html',
+		{ 'form': form, 'release_group': release_group }
+	)
 
 
-def delete(request, pk):
-	release_group = get_object_or_404(MusicReleaseGroup, pk=pk)
+class Delete(DeleteView):
+	model = MusicReleaseGroup
+	template_name = 'torrent/music/release_group/delete.html'  # template to use
+	context_object_name = 'release_group'  # name of object in template
 	
-	if 'confirmation' in request.GET:
-		if request.GET['confirmation'] == 'yes':
-			try:
-				release_group.delete()
-				messages.deletion(request, 'Deleted release group.')
-				return redirect('torrent:music_latest')
-			except models.ProtectedError:
-				messages.failure(request, 'A release group that contains releases cannot be deleted.')
+	def post(self, *args, **kwargs):
+		user = self.request.user
+		release_group = self.get_object()
+		
+		if self.request.POST.get('confirm', 'no') == 'yes':
+			# Only delete the release group if the current user has the permission to delete releases groups,
+			#  or if it was the current user created this release group.
+			if user.has_perm('torrent.delete_musicreleasegroup') or user == release_group.creator:
+				try:
+					release_group.delete()
+					messages.deletion(self.request, 'Deleted release group.')
+					return redirect('torrent:music_latest')
+				except models.ProtectedError:
+					messages.failure(self.request,
+						'A release group that contains releases cannot be deleted.'
+					)
+			else:
+				messages.error(self.request, 'Insufficient permissions to delete release group.')
 		
 		return redirect('torrent:music_release_group_view', pk=release_group.pk)
-	
-	return render(request, 'torrent/music/release_group/delete.html', { 'release_group': release_group })
 
 
 def view_json(request, pk):

@@ -9,10 +9,5 @@
 	
 	<p>Are you sure you want to delete this torrent?</p>
 	
-	<form method="get">
-		<div class="button-container">
-			<button type="submit" name="confirmation" value="yes" class="danger">Delete</button>
-			<button type="submit" name="confirmation" value="no">Cancel</button>
-		</div>
-	</form>
+	{% include "delete-confirmation-form.html" %}
 {% endblock %}

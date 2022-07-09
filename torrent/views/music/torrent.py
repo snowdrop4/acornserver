@@ -1,5 +1,6 @@
 from bcoding import bdecode
 
+from django.views.generic.edit import DeleteView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import FileResponse
 from django.utils import timezone
@@ -14,7 +15,8 @@ from torrent.forms.music.torrent import MusicTorrentFormAdd, MusicTorrentFormEdi
 def add(request):
 	try:
 		get_params = fill_typed_get_parameters(request,
-			{ 'release': (True, int, "must be an integer") })
+			{ 'release': (True, int, 'must be an integer') }
+		)
 	except ValueError as e:
 		return renderers.render_http_bad_request(request, e)
 	
@@ -50,7 +52,8 @@ def add(request):
 def view(request, pk):
 	try:
 		get_params = fill_typed_get_parameters(request,
-			{ 'artist': (False, int, "must be an integer") })
+			{ 'artist': (False, int, 'must be an integer') }
+		)
 	except ValueError as e:
 		return renderers.render_http_bad_request(request, e)
 	
@@ -61,10 +64,11 @@ def view(request, pk):
 	except MusicTorrent.DoesNotExist:
 		return renderers.render_http_not_found(request, 'Torrent not found.')
 	
-	template_args = \
-		{ 'torrent': torrent
-		, 'release': torrent.release
-		, 'release_group': torrent.release.release_group }
+	template_args = {
+		'torrent': torrent,
+		'release': torrent.release,
+		'release_group': torrent.release.release_group,
+	}
 	
 	if 'artist' in get_params:
 		template_args['artist'] = get_object_or_404(MusicArtist, pk=get_params['artist'])
@@ -88,18 +92,26 @@ def edit(request, pk):
 	return render(request, 'torrent/music/torrent/edit.html', { 'form': form, 'torrent': torrent })
 
 
-def delete(request, pk):
-	torrent = get_object_or_404(MusicTorrent, pk=pk)
+class Delete(DeleteView):
+	model = MusicTorrent
+	template_name = 'torrent/music/torrent/delete.html'  # template to use
+	context_object_name = 'torrent'  # name of object in template
 	
-	if 'confirmation' in request.GET:
-		if request.GET['confirmation'] == 'yes':
-			torrent.delete()
-			messages.deletion(request, 'Deleted torrent.')
-			return redirect('torrent:music_release_view', pk=torrent.release.pk)
+	def post(self, *args, **kwargs):
+		user = self.request.user
+		torrent = self.get_object()
+		
+		if self.request.POST.get('confirm', 'no') == 'yes':
+			# Only delete the torrent if the current user has the permission to delete torrents,
+			#  or if it was the current user uploaded this torrent.
+			if user.has_perm('torrent.delete_musictorrent') or user == torrent.uploader:
+				torrent.delete()
+				messages.deletion(self.request, 'Deleted torrent.')
+				return redirect('torrent:music_release_view', pk=torrent.release.pk)
+			else:
+				messages.error(self.request, 'Insufficient permissions to delete torrent.')
 		
 		return redirect('torrent:music_torrent_view', pk=torrent.pk)
-	
-	return render(request, 'torrent/music/torrent/delete.html', { 'torrent': torrent })
 
 
 # Register the torrent in the user's downloads if the user has not downloaded the torrent before.

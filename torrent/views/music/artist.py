@@ -1,7 +1,8 @@
-from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.db import models
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic.edit import DeleteView
 
 from root import messages
 from torrent.models.music import MusicArtist
@@ -58,21 +59,31 @@ def edit(request, pk):
 	return render(request, 'torrent/music/artist/edit.html', { 'form': form, 'artist': artist })
 
 
-def delete(request, pk):
-	artist = get_object_or_404(MusicArtist, pk=pk)
+class Delete(DeleteView):
+	model = MusicArtist
+	template_name = 'torrent/music/artist/delete.html'  # template to use
+	context_object_name = 'artist'  # name of object in template
 	
-	if 'confirmation' in request.GET:
-		if request.GET['confirmation'] == 'yes':
-			try:
-				artist.delete()
-				messages.deletion(request, 'Deleted artist.')
-				return redirect('torrent:music_latest')
-			except models.ProtectedError:
-				messages.failure(request, 'An artist that contains release groups cannot be deleted.')
+	def post(self, *args, **kwargs):
+		user = self.request.user
+		artist = self.get_object()
+		
+		if self.request.POST.get('confirm', 'no') == 'yes':
+			# Only delete the artist if the current user has the permission to delete artists,
+			#  or if it was the current user created this artist.
+			if user.has_perm('torrent.delete_musicartist') or user == artist.creator:
+				try:
+					artist.delete()
+					messages.deletion(self.request, 'Deleted artist.')
+					return redirect('torrent:music_latest')
+				except models.ProtectedError:
+					messages.failure(self.request,
+						'An artist that contains release groups cannot be deleted.'
+					)
+			else:
+				messages.error(self.request, 'Insufficient permissions to delete artist.')
 		
 		return redirect('torrent:music_artist_view', pk=artist.pk)
-	
-	return render(request, 'torrent/music/artist/delete.html', { 'artist': artist })
 
 
 def view_json(request, pk):
@@ -89,7 +100,7 @@ def view_contributions_json(request, pk):
 	for count, val in enumerate(artist.contributions.all()):
 		data[count] = {
 			'pk':  val.pk,
-			'str': val.get_contribution_type_display() + " - " + str(val.release_group)
+			'str': f'{val.get_contribution_type_display()} - {str(val.release_group)}'
 		}
 	
 	return JsonResponse(data)

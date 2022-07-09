@@ -25,6 +25,11 @@ class MusicArtist(models.Model):
 	country = CountryField(null=True, blank=True)
 	artist_type = models.CharField(max_length=3, choices=ArtistType.choices, default=ArtistType.ARTIST)
 	
+	# User who added the artist to the database
+	creator = models.ForeignKey(auth.get_user_model(),
+		on_delete=models.SET_NULL, null=True, related_name='created_musicartists'
+	)
+	
 	def get_absolute_url(self):
 		return reverse('torrent:music_artist_view', kwargs={ 'pk': self.pk })
 	
@@ -49,6 +54,11 @@ class MusicReleaseGroup(models.Model):
 	name = models.CharField(max_length=256)
 	group_type = models.CharField(max_length=2, choices=GroupType.choices)
 	contributors = models.ManyToManyField(MusicArtist, through='MusicContribution', related_name='release_groups')
+	
+	# User who added the artist to the database
+	creator = models.ForeignKey(auth.get_user_model(),
+		on_delete=models.SET_NULL, null=True, related_name='created_musicreleasegroups'
+	)
 	
 	def get_earliest_release_date(self):
 		return min(self.releases.values_list('date', flat=True), default=datetime.date(1, 1, 1))
@@ -88,6 +98,11 @@ class MusicContribution(models.Model):
 	release_group = models.ForeignKey(MusicReleaseGroup, on_delete=models.CASCADE, related_name='contributions')
 	contribution_type = models.CharField(max_length=2, choices=ContributionType.choices)
 	
+	# User who added the artist to the database
+	creator = models.ForeignKey(auth.get_user_model(),
+		on_delete=models.SET_NULL, null=True, related_name='created_musiccontribution'
+	)
+	
 	def __str__(self):
 		return f"'{self.artist.name}' as {self.contribution_type} in '{self.release_group.name}'"
 	
@@ -109,8 +124,7 @@ class MusicContribution(models.Model):
 def contribution_pre_delete_signal_handler(sender, instance, **kwargs):
 	if instance.release_group.contributions.count() == 1:
 		raise models.ProtectedError(
-			'A contribution cannot be deleted if it is the \
-				only contribution to a release group.',
+			'A contribution cannot be deleted if it is the only contribution to a release group.',
 			[instance]
 		)
 
@@ -132,6 +146,11 @@ class MusicRelease(models.Model):
 	label = models.CharField(max_length=256)
 	catalog_number = models.CharField(max_length=64)
 	release_format = models.CharField(max_length=2, choices=ReleaseFormat.choices)
+	
+	# User who added the artist to the database
+	creator = models.ForeignKey(auth.get_user_model(),
+		on_delete=models.SET_NULL, null=True, related_name='created_musicreleases'
+	)
 	
 	def get_absolute_url(self):
 		return reverse('torrent:music_release_view', kwargs={ 'pk': self.pk })
@@ -168,9 +187,9 @@ class MusicTorrent(torrent.Torrent):
 	release = models.ForeignKey(MusicRelease, on_delete=models.PROTECT, related_name='torrents')
 	
 	uploader = models.ForeignKey(auth.get_user_model(), on_delete=models.SET_NULL, null=True, related_name='music_uploads')
+	downloaders = models.ManyToManyField(auth.get_user_model(), through='MusicTorrentDownload', related_name='downloaded_music_torrents')
 	
 	encode_format = models.CharField(max_length=6, choices=EncodeFormat.choices)
-	downloaders = models.ManyToManyField(auth.get_user_model(), through='MusicTorrentDownload', related_name='downloaded_music_torrents')
 	
 	def get_absolute_url(self):
 		return reverse('torrent:music_torrent_view', kwargs={ 'pk': self.pk })
