@@ -1,0 +1,133 @@
+/******************************************************************************/
+/* Main site body centering/container class ***********************************/
+/******************************************************************************/
+
+.center-max-width {
+	max-width: var(--site-width);
+	
+	margin-left:  auto;
+	margin-right: auto;
+	
+	padding: 1rem;
+	box-sizing: border-box;
+}
+
+main.center-max-width {
+	padding-top:    0rem;
+	padding-bottom: 0rem;
+}
+
+/******************************************************************************/
+/* Vertical split container that reflows to horizontal on small screens *******/
+/******************************************************************************/
+
+/* Usage: must specify `.split .two-col` or `.split .three-col` */
+
+.split {
+	display: grid;
+	width: 100%;
+}
+
+.split > .item1 { grid-area: item1; }
+.split > .item2 { grid-area: item2; }
+.split > .item3 { grid-area: item3; }
+.split > .line1 { grid-area: line1; }
+.split > .line2 { grid-area: line2; }
+
+.split.two-col {
+	grid-template-rows: max-content;
+	grid-template-columns: 1fr 2.5rem 1fr;
+	grid-template-areas: "item1 line1 item2";
+}
+
+.split.three-col {
+	grid-template-rows: max-content;
+	grid-template-columns: 1fr 2.5rem 1fr 2.5rem 1fr;
+	grid-template-areas: "item1 line1 item2 line2 item3";
+}
+
+/*----------------------------------------------------------------------------*/
+/* Separator lines */
+/*----------------------------------------------------------------------------*/
+
+.split > .line1,
+.split > .line2 {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	
+	opacity: 0.5;
+}
+
+.line1 > .line,
+.line2 > .line {
+	background-color: var(--dark-background);
+	width: 1px;
+	height: 100%;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Text in the separator lines */
+/*----------------------------------------------------------------------------*/
+
+.line1 > .text,
+.line2 > .text {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+	
+	color: var(--dark-background);
+	
+	line-height: 3rem;
+}
+
+@media (max-width: 66rem) {
+	.line1 > .text,
+	.line2 > .text {
+		width: 8rem;
+		text-align: center;
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/* Reflowing on small screens */
+/*----------------------------------------------------------------------------*/
+
+@media (max-width: 66rem) {
+	.split.two-col {
+		grid-template-rows: min-content 2.5rem min-content ;
+		grid-template-columns: 1fr;
+		grid-template-areas: "item1" "line1" "item2";
+	}
+	
+	.split.three-col {
+		grid-template-rows: min-content 2.5rem min-content 2.5rem min-content;
+		grid-template-columns: 1fr;
+		grid-template-areas: "item1" "line1" "item2" "line2" "item3";
+	}
+	
+	.split > .line1,
+	.split > .line2 {
+		flex-direction: row;
+	}
+	
+	.split > .line1 > .line,
+	.split > .line2 > .line {
+		height: 1px;
+		width: 100%;
+	}
+	
+	/* Mix-in to disable the display of lines when in horizontal flow mode for small screens */
+	.split.two-col.no-horizontal-lines {
+		grid-template-rows: min-content 1.5rem min-content;
+		grid-template-columns: 1fr;
+		grid-template-areas: "item1" "." "item2" ".";
+	}
+	.split.three-col.no-horizontal-lines {
+		grid-template-rows: min-content 1.5rem min-content 1.5rem min-content;
+		grid-template-columns: 1fr;
+		grid-template-areas: "item1" "." "item2" "." "item3";
+	}
+}

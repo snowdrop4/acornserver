@@ -25,8 +25,8 @@ Upload Torrent
 		{% if release_group_form %}
 			<h3>Release Group</h3>
 			
-			<div class="vertical-split">
-				<div class="table-container">
+			<div class="split two-col torrent-upload-form">
+				<div class="item1">
 					<table class="form">
 						<tbody>
 							{% include 'form-as-table-raw.html' with form=release_group_form %}
@@ -38,14 +38,16 @@ Upload Torrent
 				</div>
 				
 				{% if contribution_select_form %}
-					<div class="vertical-separator">
+					<div class="line1">
 						<div class="line"></div>
 						<div class="text">or</div>
 						<div class="line"></div>
 					</div>
 					
-					<div class="selector">
-						{{ contribution_select_form }}
+					<div class="item2">
+						<div class="selector">
+							{{ contribution_select_form }}
+						</div>
 					</div>
 				{% endif %}
 			</div>
@@ -54,18 +56,26 @@ Upload Torrent
 		{% if release_form %}
 			<h3>Release</h3>
 			
-			<div class="vertical-split">
-				{% include 'form-as-table.html' with form=release_form %}
+			<div class="split two-col torrent-upload-form">
+				<div class="item1">
+					<table class="form">
+						<tbody>
+							{% include 'form-as-table-raw.html' with form=release_form %}
+						</tbody>
+					</table>
+				</div>
 				
 				{% if release_select_form %}
-					<div class="vertical-separator">
+					<div class="line1">
 						<div class="line"></div>
 						<div class="text">or</div>
 						<div class="line"></div>
 					</div>
 					
-					<div class="selector">
-						{{ release_select_form }}
+					<div class="item2">
+						<div class="selector">
+							{{ release_select_form }}
+						</div>
 					</div>
 				{% endif %}
 			</div>

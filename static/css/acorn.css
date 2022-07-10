@@ -49,16 +49,6 @@
 /* Fonts */
 /*----------------------------------------------------------------------------*/
 
-@font-face {
-	font-family: "NotoSerif-Regular";
-	src: url("../fnt/Noto_Serif/NotoSerif-Regular.ttf");
-}
-
-@font-face {
-	font-family: "NotoSerifJP-Regular";
-	src: url("../fnt/Noto_Serif_JP/NotoSerifJP-Light.otf");
-}
-
 /*----------------------------------------------------------------------------*/
 /* Headers */
 /*----------------------------------------------------------------------------*/
@@ -66,7 +56,6 @@
 h1, h2, h3, h4, h5, header a, footer a {
 	color: var(--font-color-inverted);
 	background-color: var(--font-color-inverted-background);
-	font-family: "NotoSerif-Regular", "NotoSerifJP-Regular", Serif;
 	font-weight: bold;
 }
 
@@ -77,10 +66,11 @@ h4 { font-size: 1.25rem; margin: 1.50rem 0rem; }
 h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
 
 /* 
- * Intended to display commonly reoccurring links to actions specific to the page being displayed
- * such as a "Edit profile" link when displaying a user profile.
+ * Intended to display commonly reoccurring links to actions specific to the page
+ * being displayed, such as a "Edit profile" link when displaying a user profile.
  */
 h2.with-nav, h3.with-nav { margin-bottom: 0rem }
+
 nav.subheader-nav { 
 	margin-top: 0rem;
 	margin-bottom: 1.75rem;
@@ -123,75 +113,6 @@ ul {
 	list-style: square;
 }
 
-/*----------------------------------------------------------------------------*/
-/* Error/help messages for forms and their fields */
-/*----------------------------------------------------------------------------*/
-
-tr.error > .form-data-cell > .error-text.inline,
-tr.error > .form-data-cell >  .help-text.inline {
-	font-size: 80%;
-	margin: 0.5rem 0rem 0rem 0rem;
-}
-
-tr.error > .form-data-cell > .error-text.inline::before {
-	content: "🛑 ";
-}
-
-tr.error > .form-data-cell > .help-text.inline::before {
-	content: "ℹ️ ";
-}
-
-/*----------------------------------------------------------------------------*/
-/* Markdown-specific overrides */
-/*----------------------------------------------------------------------------*/
-
-.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 { 
-	font-size: 1rem;
-	font-weight: normal;
-	margin: 1rem 0rem;
-	
-	/*
-	 * Make it so that the width of the element is only as big as the text
-	 * contained within. We could use `display: inline-block` instead,
-	 * but that breaks margin collapsing.
-	 * 
-	 * We don't want the user-generated markdown headers to have a
-	 * big horizontal bar like our (real) site headers.
-	 */
-	display: table;
-}
-
-.markdown h1::before { content: '# '; }
-.markdown h2::before { content: '## '; }
-.markdown h3::before { content: '### '; }
-.markdown h4::before { content: '#### '; }
-.markdown h5::before { content: '##### '; }
-
-.markdown li {
-	list-style: none;
-	margin-bottom: 0.25rem;
-}
-
-.markdown li::before {
-	margin-right: 0.50rem;
-	color: var(--font-color-inverted);
-	background-color: var(--font-color-inverted-background);
-}
-
-.markdown li:first-child {
-	counter-reset: index;
-}
-
-.markdown ul > li::before {
-	content: '*';
-	counter-increment: index;
-}
-
-.markdown ol > li::before {
-	content: counter(index, decimal) '.';
-	counter-increment: index;
-}
-
 /******************************************************************************/
 /* Semantic containers ********************************************************/
 /******************************************************************************/
@@ -201,7 +122,7 @@ tr.error > .form-data-cell > .help-text.inline::before {
 /*----------------------------------------------------------------------------*/
 
 body {
-	font-family: Sans-serif;
+	font-family: sans-serif;
 	color: var(--font-color);
 	
 	margin: 0rem;
@@ -209,13 +130,20 @@ body {
 	background-color: #f1f2f6;
 	background-image: url("../img/backgrounds/heropatterns/topography.svg");
 	
-	/* Safari-specific override to stop the text size changing when orientation is changed */
+	/* 
+	 * Safari-specific override to stop the text size changing
+	 * when the device orientation is changed (!!!).
+	 */
 	-webkit-text-size-adjust: 100%;
 }
 
 /*----------------------------------------------------------------------------*/
 /* Header */
 /*----------------------------------------------------------------------------*/
+
+.header-container {
+	background-color: var(--dark-background);
+}
 
 header {
 	display: flex;
@@ -268,7 +196,7 @@ main {
 }
 
 /*----------------------------------------------------------------------------*/
-/* Main */
+/* Breadcrumb navigation */
 /*----------------------------------------------------------------------------*/
 
 nav.breadcrumb {
@@ -279,6 +207,7 @@ nav.breadcrumb {
 /* Article */
 /*----------------------------------------------------------------------------*/
 
+/* Used to contain user biographies and site news. */
 article {
 	border: 1px solid var(--dark-background);
 	background-color: var(--element-background);
@@ -296,14 +225,13 @@ footer {
 }
 
 /******************************************************************************/
-/* Semantic elements **********************************************************/
+/* Tables *********************************************************************/
 /******************************************************************************/
 
-/*----------------------------------------------------------------------------*/
-/* Tables */
-/*----------------------------------------------------------------------------*/
-
-/* ~~~~~~~~~~ Standard tables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+.table-container {
+	overflow: auto; /* Make a scrollbar appear on small screens */
+	margin: 1rem 0rem;
+}
 
 table {
 	border-collapse: collapse;
@@ -342,7 +270,9 @@ tr.conjoined-table-spacer > th {
 	padding: 0.5rem;
 }
 
-/* ~~~~~~~~~~ Special classes to highlight specific rows ~~~~~~~~~~~~~~~~~~~~ */
+/*----------------------------------------------------------------------------*/
+/* Handy mix-ins */
+/*----------------------------------------------------------------------------*/
 
 tr.highlight {
 	background-color: var(--highlight);
@@ -353,558 +283,10 @@ tr.error {
 	color: var(--font-color-inverted);
 }
 
-/* ~~~~~~~~~~ Handy mix-ins ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
 th.tl, td.tl { text-align:   left; }
 th.tc, td.tc { text-align: center; }
 th.tr, td.tr { text-align:  right; }
 
 th.width-100, td.width-100 {
 	width: 100vw;
-}
-
-/* ~~~~~~~~~~ Tables for forms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-/* Give them a minimum width on large screens. */
-table.form {
-	width: 32rem;
-}
-
-/* Make them take up the full width on small screens. */
-@media (max-width: 66rem) {
-	table.form {
-		width: 100%;
-	}
-}
-
-/* ~~~~~~~~~~ Tables for torrents ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-/* Fix whitespace issues when certain columns are set to 100vw. */
-table.torrent-listings {
-	white-space: nowrap;
-}
-
-/* ~~~~~~~~~~ Tables for forum categories ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-/* Fix whitespace issues when certain columns are set to 100vw. */
-table.forum-listings {
-	white-space: nowrap;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Buttons */
-/*----------------------------------------------------------------------------*/
-
-button {
-	margin: 0rem;
-	padding: 0.5rem;
-	line-height: 0.5rem;
-	font-size: 1rem;
-	
-	color: var(--font-color);
-	border: 1px solid var(--dark-background);
-	background-color: var(--element-background);
-	
-	-webkit-appearance: none;
-	   -moz-appearance: none;
-	    -ms-appearance: none;
-	        appearance: none;
-}
-
-button.danger {
-	color: var(--font-color-inverted);
-	background-color: var(--red);
-}
-
-button:hover {
-	color: var(--font-color-inverted);
-	background-color: var(--dark-background);
-}
-
-button:focus, button:active {
-	background-color: var(--active);
-	color: var(--font-color);
-}
-
-button:active {
-	transform: translateY(1px);
-}
-
-/*----------------------------------------------------------------------------*/
-/* Common rules for textarea, input, and select */
-/*----------------------------------------------------------------------------*/
-
-textarea,
-input:not([type="checkbox"]):not([type="radio"]),
-.select > select,
-.select > div {
-	background-color: var(--form-element-background);
-	border: 1px solid var(--form-element-border);
-	box-shadow: inset 1px 1px 3px var(--form-element-box-shadow);
-	
-	border-radius: 0px;
-	
-	-webkit-appearance: none;
-	   -moz-appearance: none;
-	    -ms-appearance: none;
-	        appearance: none;
-}
-
-textarea:focus,
-input:not([type="checkbox"]):not([type="radio"]):focus,
-.select:focus-within > select,
-.select:focus-within > div {
-	border-color: var(--active);
-	outline: none;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Textareas */
-/*----------------------------------------------------------------------------*/
-
-textarea {
-	width: 100%;
-	height: 10rem;
-	
-	padding: 0.5rem;
-	
-	box-sizing: border-box;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Input fields */
-/*----------------------------------------------------------------------------*/
-
-input {
-	width: 100%;
-	min-width: 15rem;
-	height: 2rem;
-	
-	padding: 0.5rem;
-	
-	box-sizing: border-box;
-}
-
-input:not([type="checkbox"]):not([type="radio"]):disabled {
-	background-color: var(--form-element-background-disabled);
-	color: var(--font-color-disabled);
-	cursor: not-allowed;
-}
-
-/*----------------------------------------------------------------------------*/
-/* File selector input fields */
-/*----------------------------------------------------------------------------*/
-
-/* 
- * The styling is the same as a normal input field,
- * except we just remove the 2rem height as it needs to be taller.
- */
-input[type="file"] {
-	height: auto;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Checkbox/radio input fields */
-/*----------------------------------------------------------------------------*/
-
-/* 
- * The styling is the same as a normal input field,
- * except we just remove the dimension overrides as it needs to be smaller.
- */
-input[type="checkbox"], input[type="radio"] {
-	width: auto;
-	min-width: auto;
-	height: auto;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Select fields */
-/*----------------------------------------------------------------------------*/
-
-.select {
-	position: relative;
-	width: 100%;
-	height: 2rem;
-}
-
-.select > select {
-	width: 100%;
-	height: 100%;
-	
-	margin: 0rem;
-	padding: 0 0 0 0.5rem;
-	
-	border-right: 0rem;
-}
-
-.select > select:disabled,
-.select > select:disabled + div {
-	background-color: var(--form-element-background-disabled);
-	color: var(--font-color-disabled);
-	cursor: not-allowed;
-}
-
-.select > select:enabled:hover + div {
-	color: var(--active);
-}
-
-.select > div {
-	position: absolute;
-	right: 0;
-	top: 0;
-	
-	line-height: calc(2rem - 2px);
-	font-size: 0.8rem;
-	padding: 0rem 0.8rem;
-	
-	pointer-events: none;
-	
-	border-left: 0rem;
-	
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	    -ms-user-select: none;
-	        user-select: none;
-}
-
-/******************************************************************************/
-/* Custom containers **********************************************************/
-/******************************************************************************/
-
-/*----------------------------------------------------------------------------*/
-/* Main site body centering/container class */
-/*----------------------------------------------------------------------------*/
-
-.center-max-width {
-	max-width: var(--site-width);
-	
-	margin-left:  auto;
-	margin-right: auto;
-	
-	padding: 1rem;
-	box-sizing: border-box;
-}
-
-main.center-max-width {
-	padding-top:    0rem;
-	padding-bottom: 0rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header bar */
-/*----------------------------------------------------------------------------*/
-
-.header-container {
-	background-color: var(--dark-background);
-}
-
-/*----------------------------------------------------------------------------*/
-/* Search bar */
-/*----------------------------------------------------------------------------*/
-
-.search-container {
-	background-color: var(--medium-background);
-	/* 
-	 * Allow scrolling when the screen is too small.
-	 * Letting the search boxes wrap around to multiple lines would look ugly.
-	 */
-	overflow: auto;
-}
-
-.search {
-	display: flex;
-	justify-content: space-between;
-	column-gap: 0.50rem;
-}
-
-/* Let the flex items grow in size when there's free space. */
-.search > form {
-	flex: 1 0;
-}
-
-/* 
- * Overide the minimum width for input boxes that we defined elsewhere,
- * so that they can shrink to be as small as we need them to be in the
- * confined space of the search bar.
- */
-.search > form > input {
-	min-width: 5rem;
-}
-
-/* Make them grow when focused, so that the user has enough space to work with. */
-.search > form > input:focus {
-	min-width: 18rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Content vertical split container */
-/*----------------------------------------------------------------------------*/
-
-.split-content-container {
-	display: flex;
-	column-gap: 1rem;
-}
-
-.split-content-container > .left {
-	width: 100%;
-}
-
-.split-content-container > .right {
-	min-width: 15rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Tables */
-/*----------------------------------------------------------------------------*/
-
-.table-container {
-	overflow: auto; /* Make a scrollbar appear on small screens */
-	margin: 1rem 0rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Buttons */
-/*----------------------------------------------------------------------------*/
-
-/* Used to hold multiple buttons together next to each other. */
-.button-container {
-	display: flex;
-	flex-wrap: wrap;
-	row-gap: 0.5rem;
-	column-gap: 0.5rem;
-	
-	margin: 1rem 0rem;
-}
-
-/******************************************************************************/
-/* Custom elements ************************************************************/
-/******************************************************************************/
-
-/*----------------------------------------------------------------------------*/
-/* Message box */
-/*----------------------------------------------------------------------------*/
-
-.message {
-	margin: 1rem 0rem;
-	padding: 0rem 1rem;
-	
-	border: 2px dashed var(--dark-background);
-	font-weight: bold;
-}
-
-.message > p {
-	color: var(--font-color);
-	margin: 0.5rem 0rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Specific message boxes */
-/*----------------------------------------------------------------------------*/
-
-.message.success      { background-color: var(--green);  }
-.message.failure      { background-color: var(--red);    }
-.message.creation     { background-color: var(--green);  }
-.message.deletion     { background-color: var(--red);    }
-.message.error        { background-color: var(--red);    }
-.message.warning      { background-color: var(--orange); }
-.message.modification { background-color: var(--yellow); }
-.message.information  { background-color: var(--blue);   }
-
-.message.success      > p::before { content: '✔️ '; }
-.message.failure      > p::before { content: '❌ '; }
-.message.creation     > p::before { content: '📄 '; }
-.message.deletion     > p::before { content: '🗑️ '; }
-.message.error        > p::before { content: '🛑 '; }
-.message.warning      > p::before { content: '⚠️ '; }
-.message.modification > p::before { content: '✏️ '; }
-.message.information  > p::before { content: 'ℹ️ '; }
-
-/*----------------------------------------------------------------------------*/
-/* Autocomplete */
-/*----------------------------------------------------------------------------*/
-
-.autocomplete {
-	cursor: pointer;
-	
-	border: 1px solid var(--active);
-	border-top: 0px;
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-	
-	background: #FFF;
-
-	position: absolute;
-	display: none;
-	z-index: 9999;
-}
-
-.autocomplete > .item {
-	padding: 0.5em;
-	line-height: 0.5rem;
-	font-size: 1rem;
-	
-	position: relative;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.autocomplete > .item b {
-	font-weight: normal;
-	color: #1F8DD6;
-}
-
-.autocomplete > .item:hover {
-	background-color: #DDD;
-}
-
-.autocomplete > .item.highlighted {
-	background-color: var(--light-background);
-}
-
-/*----------------------------------------------------------------------------*/
-/* Vertical split with separator */
-/* (used in the upload page and on pages for torrent models) */
-/*----------------------------------------------------------------------------*/
-
-.vertical-split {
-	display: flex;
-	justify-content: space-between;
-}
-
-.vertical-separator {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-direction: column;
-	
-	opacity: 0.5;
-	
-	width: 5rem;
-}
-
-.vertical-separator > .line {
-	background-color: var(--dark-background);
-	width: 1px;
-	height: 100%;
-}
-
-.vertical-separator > .text {
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	    -ms-user-select: none;
-	        user-select: none;
-	
-	color: var(--dark-background);
-	
-	line-height: 3rem;
-}
-
-/* Vertical separator overrides for specific child classes/elements: */
-
-.vertical-split .table-container {
-	margin: 0rem;
-}
-
-.vertical-split > .selector {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	width: 20rem;
-}
-
-.vertical-split > .selector > label {
-	margin-bottom: 0.25rem;
-}
-
-/* Turn the vertical separator into a horizontal separator on small screens: */
-
-@media (max-width: 66rem) {
-	.vertical-split {
-		flex-direction: column;
-	}
-	
-	.vertical-separator {
-		flex-direction: row;
-		width: 100%;
-		height: 3rem;
-	}
-	
-	.vertical-separator > .line {
-		height: 1px;
-		width: 100%;
-	}
-	
-	.vertical-separator > .text {
-		width: 8rem;
-		text-align: center;
-	}
-	
-	.vertical-split > .selector {
-		width: 100%;
-	}
-	
-	.vertical-split > .selector > label {
-		margin: 1rem;
-	}
-	
-	.vertical-separator.hide-horizontal {
-		height: 1rem;
-	}
-	
-	.vertical-separator.hide-horizontal > .line {
-		background-color: unset;
-	}
-}
-
-/*----------------------------------------------------------------------------*/
-/* File listing (used to display the files contained in a torrent) */
-/*----------------------------------------------------------------------------*/
-
-ul.file-list {
-	list-style: none;
-	padding-left: 0rem;
-}
-
-/* Start adding left-padding only when we're recursing. */
-ul.file-list > ul.file-list {
-	padding-left: 2rem;
-}
-
-ul.file-list .name {
-	background-color: var(--element-background);
-	display: inline;
-}
-
-ul.file-list .size {
-	display: inline;
-	font-size: 0.8rem;
-	opacity: 75%;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Pagination */
-/*----------------------------------------------------------------------------*/
-
-.pagination {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
-	width: 100%;
-	column-gap: 0.75rem;
-	
-	margin-bottom: 1rem;
-}
-
-.pagination > .line {
-	background-color: var(--dark-background);
-	width: 1px;
-	height: 1.5rem;
-	opacity: 0.5;
-}
-
-.pagination a.arrow {
-	font-size: 1.5rem;
-	line-height: 1.5rem;
 }

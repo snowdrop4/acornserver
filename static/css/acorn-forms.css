@@ -1,0 +1,223 @@
+/******************************************************************************/
+/* Form buttons ***************************************************************/
+/******************************************************************************/
+
+/* Used to hold multiple buttons together next to each other. */
+.button-container {
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 0.5rem;
+	column-gap: 0.5rem;
+	
+	margin: 1rem 0rem;
+}
+
+button {
+	margin: 0rem;
+	padding: 0.5rem;
+	line-height: 0.5rem;
+	font-size: 1rem;
+	
+	color: var(--font-color);
+	border: 1px solid var(--dark-background);
+	background-color: var(--element-background);
+	
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	    -ms-appearance: none;
+	        appearance: none;
+}
+
+button.danger {
+	color: var(--font-color-inverted);
+	background-color: var(--red);
+}
+
+button:hover {
+	color: var(--font-color-inverted);
+	background-color: var(--dark-background);
+}
+
+button:focus, button:active {
+	background-color: var(--active);
+	color: var(--font-color);
+}
+
+button:active {
+	transform: translateY(1px);
+}
+
+/******************************************************************************/
+/* Form input elements ********************************************************/
+/******************************************************************************/
+
+/*----------------------------------------------------------------------------*/
+/* Common rules for textarea, input, and select */
+/*----------------------------------------------------------------------------*/
+
+textarea,
+input:not([type="checkbox"]):not([type="radio"]),
+.select > select,
+.select > div {
+	background-color: var(--form-element-background);
+	border: 1px solid var(--form-element-border);
+	box-shadow: inset 1px 1px 3px var(--form-element-box-shadow);
+	
+	border-radius: 0px;
+	
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	    -ms-appearance: none;
+	        appearance: none;
+}
+
+textarea:focus,
+input:not([type="checkbox"]):not([type="radio"]):focus,
+.select:focus-within > select,
+.select:focus-within > div {
+	border-color: var(--active);
+	outline: none;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Textareas */
+/*----------------------------------------------------------------------------*/
+
+textarea {
+	width: 100%;
+	height: 10rem;
+	
+	padding: 0.5rem;
+	
+	box-sizing: border-box;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Input fields */
+/*----------------------------------------------------------------------------*/
+
+input {
+	width: 100%;
+	min-width: 15rem;
+	height: 2rem;
+	
+	padding: 0.5rem;
+	
+	box-sizing: border-box;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):disabled {
+	background-color: var(--form-element-background-disabled);
+	color: var(--font-color-disabled);
+	cursor: not-allowed;
+}
+
+/*----------------------------------------------------------------------------*/
+/* File selector input fields */
+/*----------------------------------------------------------------------------*/
+
+/* 
+ * The styling is the same as a normal input field,
+ * except we just remove the 2rem height as it needs to be taller.
+ */
+input[type="file"] {
+	height: auto;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Checkbox/radio input fields */
+/*----------------------------------------------------------------------------*/
+
+/* 
+ * The styling is the same as a normal input field,
+ * except we just remove the dimension overrides as it needs to be smaller.
+ */
+input[type="checkbox"], input[type="radio"] {
+	width: auto;
+	min-width: auto;
+	height: auto;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Select fields */
+/*----------------------------------------------------------------------------*/
+
+.select {
+	position: relative;
+	width: 100%;
+	height: 2rem;
+}
+
+.select > select {
+	width: 100%;
+	height: 100%;
+	
+	margin: 0rem;
+	padding: 0 0 0 0.5rem;
+	
+	border-right: 0rem;
+}
+
+.select > select:disabled,
+.select > select:disabled + div {
+	background-color: var(--form-element-background-disabled);
+	color: var(--font-color-disabled);
+	cursor: not-allowed;
+}
+
+.select > select:enabled:hover + div {
+	color: var(--active);
+}
+
+.select > div {
+	position: absolute;
+	right: 0;
+	top: 0;
+	
+	line-height: calc(2rem - 2px);
+	font-size: 0.8rem;
+	padding: 0rem 0.8rem;
+	
+	pointer-events: none;
+	
+	border-left: 0rem;
+	
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+}
+
+/******************************************************************************/
+/* Form tables ****************************************************************/
+/******************************************************************************/
+
+/* Give them a minimum width on large screens. */
+table.form {
+	width: 32rem;
+}
+
+/* Make them take up the full width on small screens. */
+@media (max-width: 66rem) {
+	table.form {
+		width: 100%;
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/* Error/help messages for form fields */
+/*----------------------------------------------------------------------------*/
+
+tr.error > .form-data-cell > .error-text.inline,
+tr.error > .form-data-cell >  .help-text.inline {
+	font-size: 80%;
+	margin: 0.5rem 0rem 0rem 0rem;
+}
+
+tr.error > .form-data-cell > .error-text.inline::before {
+	content: "🛑 ";
+}
+
+tr.error > .form-data-cell > .help-text.inline::before {
+	content: "ℹ️ ";
+}

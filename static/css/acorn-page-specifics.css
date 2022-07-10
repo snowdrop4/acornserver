@@ -1,0 +1,76 @@
+/******************************************************************************/
+/* Torrent tables *************************************************************/
+/******************************************************************************/
+/* Used on: */
+/* `torrent/music/artist/view` */
+/* `torrent/music/release_group/view` */
+/* `torrent/music/release/view` */
+/* `torrent/music/torrent/view` */
+
+table.torrent-listings {
+	white-space: nowrap;
+}
+
+/* 
+ * Make the tables grow as much as they can, inside separator3.
+ */
+table#torrent-info-table, table#torrent-operations-table,
+table#torrent-stats-table, table#torrent-album-art-table,
+table#torrent-artist-portrait-table {
+	width: 100%;
+}
+
+/* 
+ * Disable text wrapping on the label column, and make the data column
+ * expand as much as it can.
+ */
+table#torrent-info-table > tbody > tr > td:nth-of-type(1) {
+	white-space: nowrap;
+}
+
+table#torrent-info-table > tbody > tr > td:nth-of-type(2) {
+	width: 100vw;
+}
+
+/* 
+ * Make images as big as they can be on big screens, but constrain their size
+ * on small screens.
+ */
+table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
+	width: 100%;
+}
+
+@media (max-width: 66rem) {
+	table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
+		width: 15rem;
+	}
+}
+
+/******************************************************************************/
+/* Forum tables ***************************************************************/
+/******************************************************************************/
+/* Used on: `forum/category/view` */
+
+table.forum-listings {
+	white-space: nowrap;
+}
+
+/******************************************************************************/
+/* Torrent upload page ********************************************************/
+/******************************************************************************/
+/* Used on: `torrent/music/upload` */
+
+.split.torrent-upload-form > .item2 > .selector > label {
+	margin-bottom: 0.5rem;
+	display: inline-block;
+}
+
+.split.torrent-upload-form {
+	grid-template-columns: 1fr 0.5fr 1fr;
+}
+
+@media (max-width: 66rem) {
+	.split.torrent-upload-form {
+		grid-template-columns: 1fr;
+	}
+}

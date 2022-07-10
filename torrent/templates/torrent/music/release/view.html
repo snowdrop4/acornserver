@@ -11,9 +11,9 @@
 	
 	<h2>Release for release group '{{ release.release_group.name }}'</h2>
 	
-	<div class="vertical-split">
-		<div class="table-container" style="width: 100%;">
-			<table style="width: 100%">
+	<div class="split three-col no-horizontal-lines">
+		<div class="item1">
+			<table id="torrent-info-table">
 				<thead>
 					<tr><th colspan="2">Info</th></tr>
 				</thead>
@@ -27,12 +27,12 @@
 			</table>
 		</div>
 		
-		<div class="vertical-separator hide-horizontal">
+		<div class="line1">
 			<div class="line"></div>
 		</div>
 		
-		<div class="table-container" style="width: 100%;">
-			<table style="width: 100%">
+		<div class="item2">
+			<table id="torrent-operations-table">
 				<thead>
 					<tr><th>Operations</th></tr>
 				</thead>
@@ -47,18 +47,18 @@
 			</table>
 		</div>
 		
-		<div class="vertical-separator hide-horizontal">
+		<div class="line2">
 			<div class="line"></div>
 		</div>
 		
-		<div class="table-container" style="overflow: initial">
-			<table style="width: 100%;">
+		<div class="item3">
+			<table id="torrent-album-art-table">
 				<thead>
 					<tr><th>Album Art</th></tr>
 				</thead>
 				
 				<tbody>
-					<tr><td><img src="{% static 'img/blank-album-cover.svg' %}" style="width: 10rem"></td></tr>
+					<tr><td><img src="{% static 'img/blank-album-cover.svg' %}"></td></tr>
 				</tbody>
 			</table>
 		</div>
