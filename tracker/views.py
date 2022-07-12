@@ -161,13 +161,15 @@ def bittorrent_announce(request, passkey, torrent_type):
 			peer = MusicTorrentPeer.objects.get(peer_id=get_params['peer_id'])
 			peer.peer_ip = get_params['ip']
 			peer.peer_port = get_params['port']
+			peer.peer_bytes_left = get_params['left']
 			peer.last_seen = current_time
 			peer.save()
 		except MusicTorrentPeer.DoesNotExist:
 			peer = MusicTorrentPeer(torrent=torrent,
 				peer_id=get_params['peer_id'],
 				peer_ip=get_params['ip'],
-				peer_port=get_params['port']
+				peer_port=get_params['port'],
+				peer_bytes_left=get_params['left']
 			)
 			peer.save()
 	else:

@@ -66,10 +66,14 @@ class MusicReleaseGroup(models.Model):
 	# Used in the templates `as_table.html` and `as_table_no_header.html`
 	#   inside `torrent/templates/torrent/music/release_group/`.
 	def get_releases_by_newest_prefetch_related(self):
-		return self.releases.order_by('-date').prefetch_related('torrents__downloads')
+		return self.releases.order_by('-date')\
+			.prefetch_related('torrents__downloads')\
+			.prefetch_related('torrents__peers')
 	
 	def get_releases_by_oldest_prefetch_related(self):
-		return self.releases.order_by('date').prefetch_related('torrents__downloads')
+		return self.releases.order_by('date')\
+			.prefetch_related('torrents__downloads')\
+			.prefetch_related('torrents__peers')
 	
 	def get_absolute_url(self):
 		return reverse('torrent:music_release_group_view', kwargs={ 'pk': self.pk })
@@ -193,6 +197,12 @@ class MusicTorrent(torrent.Torrent):
 	
 	def get_absolute_url(self):
 		return reverse('torrent:music_torrent_view', kwargs={ 'pk': self.pk })
+	
+	def get_num_seeders(self) -> int:
+		return self.peers.filter(peer_bytes_left__exact=0).count()
+	
+	def get_num_leechers(self) -> int:
+		return self.peers.filter(peer_bytes_left__gt=0).count()
 	
 	def __str__(self):
 		return f"'{self.encode_format}' encode of release: {self.release}"

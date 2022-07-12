@@ -58,8 +58,8 @@
 				</thead>
 				
 				<tbody>
-					<tr><td>Seeders:</td>   <td class="tr width-100">-</td></tr>
-					<tr><td>Leechers:</td>  <td class="tr width-100">-</td></tr>
+					<tr><td>Seeders:</td>   <td class="tr width-100">{{ torrent.get_num_seeders }}</td></tr>
+					<tr><td>Leechers:</td>  <td class="tr width-100">{{ torrent.get_num_leechers }}</td></tr>
 					<tr><td>Downloads:</td> <td class="tr width-100">{{ torrent.downloads.count }}</td></tr>
 				</tbody>
 			</table>

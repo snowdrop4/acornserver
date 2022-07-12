@@ -2,8 +2,7 @@
 
 <td class="tl width-100">&nbsp;↳ {% include 'torrent/music/torrent/as_link.html' %}</td>
 <td class="tr">{{ torrent.torrent_size|IEC_80000_13 }}</td>
-<td class="tc">-</td>
-<td class="tc">-</td>
+<td class="tc">{{ torrent.peers.count }}</td>
 <td class="tc">{{ torrent.downloads.count }}</td>
 <td class="tr">
 	<a href="{% url 'torrent:music_torrent_download' pk=torrent.pk %}">DL</a> / FL / <a href="{% url 'torrent:music_torrent_edit' pk=torrent.pk %}">ED</a> / <a href="{% url 'torrent:music_torrent_delete' pk=torrent.pk %}">RM</a> / RP

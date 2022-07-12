@@ -54,7 +54,11 @@ def view(request, pk):
 	except ValueError as e:
 		return renderers.render_http_bad_request(request, e)
 	
-	release_group = get_object_or_404(MusicReleaseGroup, pk=pk)
+	release_group = get_object_or_404(
+		MusicReleaseGroup.objects\
+		.prefetch_related('contributions__artist'),
+		pk=pk
+	)
 	
 	template_args = { 'release_group': release_group }
 	

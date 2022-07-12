@@ -26,14 +26,24 @@ def add(request):
 def view(request, pk):
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
-	contributions = artist.contributions.prefetch_related('release_group__releases__torrents__downloads').all()
+	# `torrents` and `peers` both used in template, so prefetch them now to save database time
+	contributions = artist.contributions\
+		.prefetch_related('release_group__releases__torrents__downloads')\
+		.prefetch_related('release_group__releases__torrents__peers')\
+		.all()
 	
-	# { role: { release_group: [releases] } }
+	# Construct a dictionary like: { role: { release_group: [releases] } }
+	#   so that the template can simply iterate over to display
+	#   each release for every release group, grouped by contribution type. 
 	releases_by_release_groups_by_roles = { }
 	
 	for i in contributions:
-		releases_by_release_groups_by_roles.setdefault(i.get_contribution_type_display(), { })
-		releases_by_release_groups_by_roles[i.get_contribution_type_display()][i.release_group] = i.release_group.releases.all()
+		contribution_type = i.get_contribution_type_display()
+		release_group     = i.release_group
+		releases          = i.release_group.releases.all()
+		
+		releases_by_release_groups_by_roles.setdefault(contribution_type, { })
+		releases_by_release_groups_by_roles[contribution_type][release_group] = releases
 	
 	template_args = {
 		'releases_by_release_groups_by_roles': releases_by_release_groups_by_roles,

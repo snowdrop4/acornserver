@@ -26,8 +26,9 @@ def add(request):
 		form = MusicTorrentFormAdd(fk, request.POST, request.FILES)
 		
 		if form.is_valid():
-			# A torrent object requires more fields than the torrent form provides, so use `commit=False`
-			# and then manually add these fields, before finally saving the torrent object.
+			# A torrent object requires more fields than the torrent form provides,
+			#   so use `commit=False`, and then manually add these fields,
+			#   before finally saving the torrent object.
 			torrent = form.save(commit=False)
 			
 			metainfo = request.FILES['torrent-metainfo_file']
