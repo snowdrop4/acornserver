@@ -4,6 +4,7 @@ media/
 # Editor stuff
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
 .idea/
 
 # MacOS pollution
