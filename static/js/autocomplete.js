@@ -1,3 +1,5 @@
+'use strict';
+
 // searchBox        = query selector string
 // urlBuilder       = function that returns the url the request should be sent to
 // selectCallback   = function to be called when a candidate is selected   (optional, can be null)
@@ -18,7 +20,6 @@ class Autocomplete {
 			
 			this.urlBuilder = urlBuilder;
 			
-			// Javascript is an abomination.
 			this.searchBox.oninput   = () => this.oninput();
 			this.searchBox.onblur    =  e => this.onblur(e);
 			this.searchBox.onfocus   = () => this.onfocus();
@@ -27,7 +28,7 @@ class Autocomplete {
 	}
 	
 	selectCandidate(candidate) {
-		// Call the callback
+		// Call the callback.
 		if (this.selectCallback !== null) {
 			this.selectCallback(candidate.getAttribute("pk"), candidate.getAttribute("url"));
 		}
@@ -48,7 +49,7 @@ class Autocomplete {
 	deselectCandidate() {
 		this.searchBox.setAttribute("class", "");
 		
-		// Call the callback
+		// Call the callback.
 		if (this.deselectCallback !== null) {
 			this.deselectCallback();
 		}

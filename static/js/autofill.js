@@ -1,3 +1,5 @@
+'use strict';
+
 class Autofill {
 	constructor(selectBox, urlBuilder, selectCallback, deselectCallback) {
 		this.selectBox = selectBox;
