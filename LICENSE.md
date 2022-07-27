@@ -1,13 +1,19 @@
-# Acorn Torrent
+MIT License
 
-Acorn Server is published at https://github.com/snowdrop4/acornserver, licensed under https://spdx.org/licenses/MIT.html (MIT License).
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-# Images
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Backgrounds under `/static/img/backgrounds/heropatterns/` courtesy of Steve Schoger @ https://heropatterns.com/, licensed under https://creativecommons.org/licenses/by/4.0/ (CC BY 4.0).
-
-Acorn logo (`static/img/acorn-logo-original.svg`) courtesy of johnny_automatic @ https://openclipart.org/detail/20784/-by--20784, licenced under https://creativecommons.org/publicdomain/zero/1.0/ (CC0 1.0).
-
-Blank album cover (`static/img/blank-album-cover.svg`) courtesy of Keistutis @ https://openclipart.org/detail/184759/compact-disc-cd-kompaktas-by-keistutis-184759, licensed under https://creativecommons.org/licenses/publicdomain/ (U.S. Public Domain).
-
-Acorn favicon (`static/img/favicon.svg`) courtesy of Matt Brooks @ https://thenounproject.com/icon/acorn-80434/, licensed under https://creativecommons.org/publicdomain/zero/1.0/ (CC0 1.0).
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
