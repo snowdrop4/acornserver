@@ -6,6 +6,7 @@ from torrent.models.music import (
 	MusicArtist, MusicReleaseGroup, MusicContribution, MusicRelease, MusicTorrent
 )
 
+
 groups = {
 	'Admin': {
 		MusicArtist:       ['add', 'change', 'delete', 'view'],
@@ -24,7 +25,7 @@ groups = {
 }
 
 
-# To run: `python manage.py create_groups`
+# To run: `python manage.py create_user_groups`
 class Command(BaseCommand):
 	help = 'Create default user groups'
 	

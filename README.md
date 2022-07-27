@@ -45,8 +45,8 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 	- 🟩 album art image
 * 🟩 Torrent pages
 * 🟨 Web torrent support
-	- ability to stream an album
-	- ability to stream album art
+	- 🟨 ability to stream an album
+	- 🟨 ability to stream album art
 * 🟩 Forum
 	- 🟩 Threads
 	- 🟩 Categories
@@ -66,7 +66,7 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 
 * Python >=3.10
 
-# Dependancies
+# Dependencies
 
 * django
 * django-glrm
@@ -82,14 +82,18 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 
 ## Installing
 
-1. Install [pyenv](https://github.com/pyenv/pyenv) (intructions in the `README.md`)
+1. Install [pyenv](https://github.com/pyenv/pyenv)
 2. Install [pipenv](https://github.com/pypa/pipenv) with `pip3 install pipenv`
 3. Run `pipenv install` from the repository directory to set up a virtual environment with the necessary python version and packages
 
 ## Running
 
-Create the default user groups: `pipenv run python3 manage.py create_groups`
-Create a super user account: `pipenv run python3 manage.py createsuperuser`
+Populate the database:
+
+* Create the default user groups: `pipenv run python3 manage.py create_user_groups`
+* Create the default forum categories: `pipenv run python3 manage.py create_forum_groups`
+* Create a super user account: `pipenv run python3 manage.py createsuperuser`
+
 Run the server: `pipenv run python3 manage.py runserver`
 
 ## Testing
