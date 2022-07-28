@@ -23,34 +23,38 @@ class UserManager(BaseUserManager):
 		return user
 
 
-# Any value not given a default value, and not marked as nullable, will need to filled in somehow.
-#
-# If creating a user through a web form, the form must include these non-nullable values.
-#
-# If creating a user manually in some function somewhere, the values in the user object
-# must be set before it is saved to the database.
 class User(AbstractBaseUser, PermissionsMixin):
-	username = models.CharField(max_length=20, unique=True)
-	email = models.EmailField(max_length=256, unique=True)
+	# Custom Fields
+	# ‾‾‾‾‾‾‾‾‾‾‾‾‾
+	
+	username = models.CharField( max_length=20,  unique=True)
+	email    = models.EmailField(max_length=256, unique=True)
 	
 	is_superuser = models.BooleanField(default=False)
-	is_staff = models.BooleanField(default=False)
+	is_staff     = models.BooleanField(default=False)
 	
-	# Pass the timezone.now function as the default value. `timezone.now()` will be called upon creation of a user,
-	# and the result of this will be used as the default value.
 	join_datetime = models.DateTimeField(default=timezone.now)
 	
 	user_bio = MarkupField(markup_type='markdown', escape_html=True, default='')
+	
+	# Number of bytes uploaded/downloaded
+	uploaded   = models.PositiveBigIntegerField(default=0)
+	downloaded = models.PositiveBigIntegerField(default=0)
+	
+	# Django nonsense
+	# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 	
 	# Register a custom manager as managing this model.
 	objects = UserManager()
 	
 	# Set the 'username' field as the unique identifier for a User object.
 	# 
-	# USERNAME_FIELD could be set to 'email' or anything else. I don't know why it is called 'USERNAME_FIELD'.
+	# USERNAME_FIELD could be set to `email` or anything else.
+	# I don't know why it is called 'USERNAME_FIELD'.
 	USERNAME_FIELD = "username"
 	
-	# Make the django 'python3 manage.py createsuperuser' command work by telling it that it needs to also ask for email.
+	# Make the django 'python3 manage.py createsuperuser' command work
+	# by telling it that it needs to also ask for email.
 	REQUIRED_FIELDS = ["email"]
 	
 	def __str__(self):

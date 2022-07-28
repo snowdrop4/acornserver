@@ -1,27 +1,37 @@
 {% extends 'blank.html' %}
 
+{% load units %}
+{% load maths %}
 {% load static %}
 
 {% block blank-content %}
-	<div class="header-container">
+	<div id="header-container">
 		<header class="center-max-width">
-			<h1>
+			<h1 id="header-logo">
 				<a href="{% url 'root:homepage' %}">
-					<img style="height: 5rem" src="{% static 'img/acorn-logo.svg' %}">
-					Acorn Torrent
+					<img id="header-logo-image" src="{% static 'img/acorn-logo.svg' %}">
+					<div id="header-logo-text">Acorn Torrent</div>
 				</a>
 			</h1>
 			
-			<nav>
-				<a href="{% url 'root:homepage' %}">Home</a>
-				<a href="{% url 'torrent:music_latest' %}">Torrents</a>
-				<a href="{% url 'torrent:music_upload' %}">Upload</a>
-				<a>Requests</a>
-				<a href="{% url 'forum:index_view' %}">Forum</a>
+			<div id="header-links">
+				<nav id="header-site-nav">
+					<a href="{% url 'torrent:music_latest' %}">Torrents</a>
+					<a href="{% url 'torrent:music_upload' %}">Upload</a>
+					<a>Requests</a>
+					<a href="{% url 'forum:index_view' %}">Forum</a>
+					
+					<a href="{% url 'account:profile_view' pk=user.pk %}">Profile</a>
+					<a href="{% url 'account:signout' %}">Sign Out</a>
+				</nav>
 				
-				<a href="{% url 'account:profile_view' pk=user.pk %}">Profile</a>
-				<a href="{% url 'account:signout' %}">Sign Out</a>
-			</nav>
+				<div id="header-user-bar">
+					<div>Inbox (0)</div>
+					<div>Up: {{ user.uploaded|IEC_80000_13 }}</div>
+					<div>Down: {{ user.downloaded|IEC_80000_13 }}</div>
+					<div>Ratio: {% divide user.uploaded user.downloaded %}</div>
+				</div>
+			</div>
 		</header>
 	</div>
 	

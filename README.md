@@ -32,6 +32,7 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 * 🟩 metainfo uploading
 * 🟩 metainfo downloading
 * 🟩 bittorrent announce
+	- 🟨 authentication with passkey
 * 🟩 Progressive upload page
 	- 🟩 fields can be autocompleted by searching for an artist or album
 	- 🟩 fields can be autocompleted by clicking "upload here" on an artist/release group/release page
@@ -57,6 +58,7 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 	- 🟩 Latest downloads/uploads
 	- 🟨 Download/uploads list
 	- 🟨 Download/upload totals and ratio
+	- 🟨 Currently seeding list
 	- 🟩 Permissions system
 	- 🟨 User classes
 * 🟨 Requests

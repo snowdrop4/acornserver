@@ -52,14 +52,10 @@
 }
 
 /*----------------------------------------------------------------------------*/
-/* Fonts */
+/* h1/h2/h3/h4/h5 */
 /*----------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------------*/
-/* Headers */
-/*----------------------------------------------------------------------------*/
-
-h1, h2, h3, h4, h5, header a, footer a {
+h1, h2, h3, h4, h5 {
 	color: var(--font-color-inverted);
 	background-color: var(--font-color-inverted-background);
 	font-weight: bold;
@@ -70,23 +66,6 @@ h2 { font-size: 1.75rem; margin: 1.75rem 0rem; }
 h3 { font-size: 1.50rem; margin: 1.50rem 0rem; }
 h4 { font-size: 1.25rem; margin: 1.50rem 0rem; }
 h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
-
-/* 
- * Intended to display commonly reoccurring links to actions specific to the page
- * being displayed, such as a "Edit profile" link when displaying a user profile.
- */
-h2.with-nav, h3.with-nav { margin-bottom: 0rem }
-
-nav.subheader-nav { 
-	margin-top: 0rem;
-	margin-bottom: 1.75rem;
-	
-	text-align: right;
-	
-	display: block;
-	
-	background-color: var(--medium-background);
-}
 
 /*----------------------------------------------------------------------------*/
 /* Links */
@@ -107,6 +86,12 @@ a:focus {
 	outline: none;
 }
 
+header a, footer a {
+	color: var(--font-color-inverted);
+	background-color: var(--font-color-inverted-background);
+	font-weight: bold;
+}
+
 /*----------------------------------------------------------------------------*/
 /* Lists */
 /*----------------------------------------------------------------------------*/
@@ -120,12 +105,8 @@ ul {
 }
 
 /******************************************************************************/
-/* Semantic containers ********************************************************/
+/* Body ***********************************************************************/
 /******************************************************************************/
-
-/*----------------------------------------------------------------------------*/
-/* Body */
-/*----------------------------------------------------------------------------*/
 
 body {
 	font-family: sans-serif;
@@ -143,12 +124,21 @@ body {
 	-webkit-text-size-adjust: 100%;
 }
 
+/******************************************************************************/
+/* Header *********************************************************************/
+/******************************************************************************/
+
 /*----------------------------------------------------------------------------*/
 /* Header */
 /*----------------------------------------------------------------------------*/
 
-.header-container {
+#header-container {
 	background-color: var(--dark-background);
+}
+
+#header-links {
+	display: grid;
+	row-gap: 0.5rem;
 }
 
 header {
@@ -160,22 +150,70 @@ header {
 	column-gap: 1rem;
 }
 
-nav {
-	display: flex;
-	flex-wrap: wrap;
-	row-gap: 0.50rem;
-	column-gap: 0.50rem;
+/* Left-justify (instead of right-justify) for small screens. */
+@media (max-width: 66rem) {
+	header {
+		justify-content: flex-start;
+	}
 }
+
+/*----------------------------------------------------------------------------*/
+/* Header: Logo */
+/*----------------------------------------------------------------------------*/
 
 header h1 {
 	margin: 0rem;
 }
 
-/* Clickable site logo */
 header h1 a {
 	display: flex;
 	align-items: center;
 	column-gap: 0.75rem;
+}
+
+header #header-logo-image {
+	height: 5rem;
+}
+
+/* 
+ * Don't display the logo text on small screens
+ * in order to save horizontal space.
+ */
+@media (max-width: 66rem) {
+	header h1 #header-logo-text {
+		display: none;
+	}
+}
+
+/* 
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal available now.
+ * Display the logo text, but shrink the font size, and
+ * also reduce the size of the logo image.
+ */
+@media (max-width: 44rem) {
+	header h1 #header-logo-text {
+		display: unset;
+	}
+	
+	header #header-logo-image {
+		height: 3rem;
+	}
+	
+	header h1 {
+		font-size: 1.5rem;
+	}
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Navigation */
+/*----------------------------------------------------------------------------*/
+
+header nav {
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 0.50rem;
+	column-gap: 0.50rem;
 }
 
 /* Navigation links */
@@ -184,9 +222,58 @@ header nav a {
 	white-space: nowrap;
 }
 
+header nav a:last-child {
+	border-right-width: 0px;
+}
+
+/* Shrink the font size for very small screens. */
+@media (max-width: 44rem) {
+	header nav a {
+		font-size: 1rem;
+	}
+}
+
 /*----------------------------------------------------------------------------*/
-/* Main */
+/* Header: User bar (containing stuff like ratio and inbox) */
 /*----------------------------------------------------------------------------*/
+
+header #header-user-bar {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 0.50rem;
+	
+	color: var(--font-color-inverted);
+	
+	justify-self: end;
+}
+
+header #header-user-bar > * {
+	border-right: 1px solid #858E9D;
+	padding-right: 0.5rem;
+	white-space: nowrap;
+}
+
+header #header-user-bar > *:last-child {
+	border-right-width: 0px;
+}
+
+/* Left-justify (instead of right-justify) for small screens. */
+@media (max-width: 66rem) {
+	header #header-user-bar {
+		justify-self: start;
+	}
+}
+
+/* Shrink the font size for very small screens. */
+@media (max-width: 44rem) {
+	header #header-user-bar {
+		font-size: 0.80rem;
+	}
+}
+
+/******************************************************************************/
+/* Main ***********************************************************************/
+/******************************************************************************/
 
 main {
 	background-color: var(--light-background);
@@ -201,6 +288,10 @@ main {
 	display: flow-root;
 }
 
+/******************************************************************************/
+/* Miscellaneous navigation ***************************************************/
+/******************************************************************************/
+
 /*----------------------------------------------------------------------------*/
 /* Breadcrumb navigation */
 /*----------------------------------------------------------------------------*/
@@ -210,8 +301,29 @@ nav.breadcrumb {
 }
 
 /*----------------------------------------------------------------------------*/
-/* Article */
+/* h2/h3 underbar */
 /*----------------------------------------------------------------------------*/
+/* 
+ * Intended to display commonly reoccurring links to actions specific to the page
+ * being displayed, such as a "Edit profile" link when displaying a user profile.
+ */
+ 
+ h2.with-nav, h3.with-nav { margin-bottom: 0rem }
+
+ nav.subheader-nav { 
+	 margin-top: 0rem;
+	 margin-bottom: 1.75rem;
+	 
+	 text-align: right;
+	 
+	 display: block;
+	 
+	 background-color: var(--medium-background);
+ }
+
+/******************************************************************************/
+/* Article ********************************************************************/
+/******************************************************************************/
 
 /* Used to contain user biographies and site news. */
 article {
@@ -221,9 +333,9 @@ article {
 	padding: 0rem 1rem;
 }
 
-/*----------------------------------------------------------------------------*/
-/* Footer */
-/*----------------------------------------------------------------------------*/
+/******************************************************************************/
+/* Footer *********************************************************************/
+/******************************************************************************/
 
 footer {
 	background-color: var(--dark-background);
