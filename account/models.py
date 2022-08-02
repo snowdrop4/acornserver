@@ -1,5 +1,9 @@
+import random
+import string
+
 from django.db import models
 from django.utils import timezone
+from django.contrib import auth
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
@@ -12,10 +16,15 @@ class UserManager(BaseUserManager):
 		user.set_password(password)
 		
 		user.save(using=self._db)
+		
+		passkey = TorrentPasskey(user=user, key=random.choices(string.ascii_letters, k=20))
+		passkey.save()
+		
 		return user
 	
 	def create_superuser(self, username, email, password):
 		user = self.create_user(username, email, password)
+		
 		user.is_superuser = True
 		user.is_staff = True
 		
@@ -59,3 +68,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 	
 	def __str__(self):
 		return self.username
+
+
+class TorrentPasskey(models.Model):
+	user = models.OneToOneField(auth.get_user_model(), on_delete=models.CASCADE)
+	key  = models.CharField(max_length=20, unique=True)
+	
+	def __str__(self):
+		return self.key
