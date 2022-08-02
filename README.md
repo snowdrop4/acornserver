@@ -84,23 +84,23 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 
 ## Installing
 
-1. Install [pyenv](https://github.com/pyenv/pyenv)
-2. Install [pipenv](https://github.com/pypa/pipenv) with `pip3 install pipenv`
-3. Run `pipenv install` from the repository directory to set up a virtual environment with the necessary python version and packages
+1. If not running python 3.11, install [pyenv](https://github.com/pyenv/pyenv).
+2. Install [poetry](https://python-poetry.org/docs/).
+3. Run `poetry install` from the repository directory to set up a virtual environment with the necessary python version and packages
 
 ## Running
 
 Populate the database:
 
-* Create the default user groups: `pipenv run python3 manage.py create_user_groups`
-* Create the default forum categories: `pipenv run python3 manage.py create_forum_groups`
-* Create a super user account: `pipenv run python3 manage.py createsuperuser`
+* Create the default user groups: `poetry run python3 manage.py create_user_groups`
+* Create the default forum categories: `poetry run python3 manage.py create_forum_groups`
+* Create a super user account: `poetry run python3 manage.py createsuperuser`
 
-Run the server: `pipenv run python3 manage.py runserver`
+Run the server: `poetry run python3 manage.py runserver`
 
 ## Testing
 
-`pipenv run python3 manage.py test`
+`poetry run python3 manage.py test`
 
 # License & Credits
 

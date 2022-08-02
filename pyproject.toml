@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "acornserver"
+version = "0.1.0"
+description = "Next-generation private BitTorrent Tracker"
+authors = ["snowdrop4 <82846066+snowdrop4@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "~3.1"
+django-glrm = "1.1"
+django-markupfield = "^2.0"
+django-picklefield = "^3.0"
+django-debug-toolbar = "^3.0"
+django-countries = "^6.0"
+django-mptt = "^0.13"
+djangorestframework = "^3.0"
+bcoding = "^1.0"
+markdown = "^3.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

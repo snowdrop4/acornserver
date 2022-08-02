@@ -145,3 +145,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static', '')]
 # User-uploaded files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', '')
 MEDIA_URL  = '/media/'
+
+# Restframework-specific configuration
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissions'
+    ]
+}
