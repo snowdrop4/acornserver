@@ -17,18 +17,25 @@
 			<div id="header-links">
 				<nav id="header-site-nav">
 					<a href="{% url 'torrent:music_latest' %}">Torrents</a>
+					<div class="divider"></div>
 					<a href="{% url 'torrent:music_upload' %}">Upload</a>
+					<div class="divider"></div>
 					<a>Requests</a>
+					<div class="divider"></div>
 					<a href="{% url 'forum:index_view' %}">Forum</a>
-					
+					<div class="divider"></div>
 					<a href="{% url 'account:profile_view' pk=user.pk %}">Profile</a>
+					<div class="divider"></div>
 					<a href="{% url 'account:signout' %}">Sign Out</a>
 				</nav>
 				
 				<div id="header-user-bar">
 					<div>Inbox (0)</div>
+					<div class="divider"></div>
 					<div>Up: {{ user.uploaded|IEC_80000_13 }}</div>
+					<div class="divider"></div>
 					<div>Down: {{ user.downloaded|IEC_80000_13 }}</div>
+					<div class="divider"></div>
 					<div>Ratio: {% divide user.uploaded user.downloaded %}</div>
 				</div>
 			</div>

@@ -136,11 +136,6 @@ body {
 	background-color: var(--dark-background);
 }
 
-#header-links {
-	display: grid;
-	row-gap: 0.5rem;
-}
-
 header {
 	display: flex;
 	flex-wrap: wrap;
@@ -187,9 +182,10 @@ header #header-logo-image {
 
 /* 
  * On very small screens, things will start flowing
- * vertically, so we have horizontal available now.
- * Display the logo text, but shrink the font size, and
- * also reduce the size of the logo image.
+ * vertically, so we have horizontal space available now.
+ * 
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
  */
 @media (max-width: 44rem) {
 	header h1 #header-logo-text {
@@ -206,29 +202,41 @@ header #header-logo-image {
 }
 
 /*----------------------------------------------------------------------------*/
-/* Header: Navigation */
+/* Header: Links */
+/*----------------------------------------------------------------------------*/
+/* Right side of the header containing site nav and user bar */
+
+#header-links {
+	display: grid;
+	row-gap: 0.5rem;
+}
+
+/* Divider inbetween items  */
+#header-links .divider {
+	width: 1px;
+	background-color: #858E9D;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
 /*----------------------------------------------------------------------------*/
 
-header nav {
+header #header-site-nav {
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 0.50rem;
 	column-gap: 0.50rem;
 }
 
-/* Navigation links */
-header nav a {
+/* Links */
+header #header-site-nav a {
 	font-size: 1.25rem;
 	white-space: nowrap;
 }
 
-header nav a:last-child {
-	border-right-width: 0px;
-}
-
 /* Shrink the font size for very small screens. */
 @media (max-width: 44rem) {
-	header nav a {
+	header #header-site-nav a {
 		font-size: 1rem;
 	}
 }
@@ -245,16 +253,6 @@ header #header-user-bar {
 	color: var(--font-color-inverted);
 	
 	justify-self: end;
-}
-
-header #header-user-bar > * {
-	border-right: 1px solid #858E9D;
-	padding-right: 0.5rem;
-	white-space: nowrap;
-}
-
-header #header-user-bar > *:last-child {
-	border-right-width: 0px;
 }
 
 /* Left-justify (instead of right-justify) for small screens. */
