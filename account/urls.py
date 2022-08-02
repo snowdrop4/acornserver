@@ -13,4 +13,6 @@ urlpatterns = [
 	
 	path('profile/view/<int:pk>', account_views.profile_view, name='profile_view'),
 	path('profile/edit/<int:pk>', account_views.profile_edit, name='profile_edit'),
+	
+	path('account/edit/<int:pk>',          account_views.account_edit,          name='account_edit'),
 ]

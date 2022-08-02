@@ -11,7 +11,7 @@
 		{% if target_user.pk == user.pk %}
 			Messages
 			 | 
-			Edit Account
+			 <a href="{% url 'account:account_edit' target_user.pk %}">Edit Account</a>
 			 | 
 			<a href="{% url 'account:profile_edit' target_user.pk %}">Edit Profile</a>
 		{% else %}
