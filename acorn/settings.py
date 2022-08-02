@@ -63,13 +63,14 @@ INSTALLED_APPS = (
 	'mptt',
 	
 	# Acorn apps
-	'root.apps.RootConfig',
-	'debug.apps.DebugConfig',
 	'account.apps.AccountConfig',
-	'torrent.apps.TorrentConfig',
-	'search.apps.SearchConfig',
-	'tracker.apps.TrackerConfig',
+	'debug.apps.DebugConfig',
 	'forum.apps.ForumConfig',
+	'inbox.apps.InboxConfig',
+	'root.apps.RootConfig',
+	'search.apps.SearchConfig',
+	'torrent.apps.TorrentConfig',
+	'tracker.apps.TrackerConfig',
 	
 	# Must be last
 	'django.forms',
