@@ -21,9 +21,11 @@ class InboxThread(models.Model):
 		related_name='received_inbox_threads'
 	)
 	
+	latest_message_datetime = models.DateTimeField(auto_now_add=True)
+	
 	class Meta:
-		verbose_name = 'Inbox Thread'
-		verbose_name_plural = 'Inbox Threads'
+		verbose_name = 'Thread'
+		verbose_name_plural = 'Threads'
 
 
 class InboxMessage(models.Model):
@@ -41,8 +43,8 @@ class InboxMessage(models.Model):
 	)
 	
 	class Meta:
-		verbose_name = 'Inbox Message'
-		verbose_name_plural = 'Inbox Messages'
+		verbose_name = 'Message'
+		verbose_name_plural = 'Messages'
 	
 	def __str__(self):
-		return self.content
+		return self.content.raw

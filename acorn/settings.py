@@ -56,6 +56,9 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django.contrib.humanize',
 	
+	# REST
+	'rest_framework',
+	
 	# Development/debugging
 	'debug_toolbar',
 	
@@ -64,6 +67,7 @@ INSTALLED_APPS = (
 	
 	# Acorn apps
 	'account.apps.AccountConfig',
+	'api.apps.ApiConfig',
 	'debug.apps.DebugConfig',
 	'forum.apps.ForumConfig',
 	'inbox.apps.InboxConfig',
