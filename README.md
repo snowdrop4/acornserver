@@ -4,9 +4,9 @@ Torrent tracker. Fixes some of the annoyances with Gazelle.
 
 Multiple artists with the same name all get different pages, owing to a well-typed separation between:
 
-* artists (who may have any contributory relationship to a release group, such as "composer", "producer", "main", and so on)
-* release groups (the abstract concept of an release, that groups specific releases together)
-* releases (specific pressings of an album, special editions, alternate editions, and so on)
+* artists (who may have any contributory relationship to a release group: such as "composer", "producer", "main", and so on)
+* release groups (the abstract concept of an release that groups specific releases together, and that many artists may contribute to)
+* releases (specific pressings of an album: special editions, alternate editions, and so on)
 * torrents (an encode of a release)
 
 The upload page is dynamic. Typing in the name of an artist brings up an autocomplete function, which allows one to select from a list of pre-existing release groups and releases for said artist.
@@ -25,29 +25,30 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 # Feature List & Roadmap
 
 * 🟩 Robust database schema
-	- 🟩 capable of disambiguating multiple artists with the same name
+	- 🟩 Capable of disambiguating multiple artists with the same name
 * 🟩 Search
-	- 🟩 with autocomplete
-	- 🟨 advanced search with filters
+	- 🟩 With autocomplete
+	- 🟨 Advanced search with filters
 * 🟩 metainfo uploading
 * 🟩 metainfo downloading
 * 🟩 bittorrent announce
-	- 🟨 authentication with passkey
+	- 🟨 Authentication with passkey
 * 🟩 Progressive upload page
-	- 🟩 fields can be autocompleted by searching for an artist or album
-	- 🟩 fields can be autocompleted by clicking "upload here" on an artist/release group/release page
+	- 🟩 Fields can be autocompleted by searching for an artist or album
+	- 🟩 Fields can be autocompleted by clicking "upload here" on an artist/release group/release page
 * 🟩 Artist pages
-	- 🟩 artist portrait image
-	- 🟩 artist country flag
-	- 🟨 artist biography
+	- 🟩 Artist portrait image
+	- 🟩 Artist country flag
+	- 🟨 Artist biography
 * 🟩 Release group pages
-	- 🟩 album art image
+	- 🟩 Album art image
 * 🟩 Release pages
-	- 🟩 album art image
+	- 🟩 Album art image
 * 🟩 Torrent pages
+	- 🟩 File list
 * 🟨 Web torrent support
-	- 🟨 ability to stream an album
-	- 🟨 ability to stream album art
+	- 🟨 Ability to stream an album
+	- 🟨 Ability to stream album art
 * 🟩 Forum
 	- 🟩 Threads
 	- 🟩 Categories
@@ -58,10 +59,13 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 	- 🟩 Latest downloads/uploads
 	- 🟨 Download/uploads list
 	- 🟨 Download/upload totals and ratio
-	- 🟨 Currently seeding list
+	- 🟨 Current seeding list
 	- 🟩 Permissions system
 	- 🟨 User classes
 * 🟨 Requests
+	- 🟨 Bounties
+	- 🟨 Subscriptions
+	- 🟨 Linking relevant requests on artist/release group/release pages
 * 🟩 News
 
 # Requirements
@@ -77,6 +81,7 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 * django-debug-toolbar
 * django-countries
 * django-mptt
+* djangorestframework
 * bcoding
 * markdown
 
