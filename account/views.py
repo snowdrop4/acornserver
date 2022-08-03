@@ -47,11 +47,8 @@ def profile_view(request, pk):
 	)
 
 # For editing things like biography/avatar/etc.
-def profile_edit(request, pk):
-	if request.user.pk is not pk:
-		raise PermissionDenied
-	
-	user = get_object_or_404(get_user_model(), pk=pk)
+def profile_edit(request):
+	user = request.user
 	
 	if request.method == 'POST':
 		form = UserProfileForm(request.POST, instance=user)
@@ -71,11 +68,8 @@ def profile_edit(request, pk):
 # 
 # This view contains three forms, and the template contains a hidden
 # field identifying which form was submitted.
-def account_edit(request, pk):
-	if request.user.pk is not pk:
-		raise PermissionDenied
-	
-	user = get_object_or_404(get_user_model(), pk=pk)
+def account_edit(request):
+	user = request.user
 	
 	forms = {
 		'username_form': UserUsernameForm,
