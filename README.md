@@ -1,6 +1,6 @@
 # About
 
-Torrent tracker. Fixes some of the annoyances with Gazelle.
+Torrent tracker. Fixes some of the annoyances with [Gazelle](https://whatcd.github.io/Gazelle/).
 
 Multiple artists with the same name all get different pages, owing to a well-typed separation between:
 
@@ -32,7 +32,7 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 * 🟩 metainfo uploading
 * 🟩 metainfo downloading
 * 🟩 bittorrent announce
-	- 🟨 Authentication with passkey
+	- 🟧 Authentication with passkey
 * 🟩 Progressive upload page
 	- 🟩 Fields can be autocompleted by searching for an artist or album
 	- 🟩 Fields can be autocompleted by clicking "upload here" on an artist/release group/release page
@@ -46,31 +46,36 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 	- 🟩 Album art image
 * 🟩 Torrent pages
 	- 🟩 File list
-* 🟨 Web torrent support
+* 🟨 WebTorrent support
 	- 🟨 Ability to stream an album
-	- 🟨 Ability to stream album art
+	- 🟨 Ability to stream album art (maybe?)
 * 🟩 Forum
-	- 🟩 Threads
 	- 🟩 Categories
+		- 🟩 Subcategories/tree structure
+		- 🟨 Category descriptions
+	- 🟩 Threads
+	- 🟩 Posts
 * 🟩 Users
 	- 🟩 User biography
 	- 🟨 User avatar
 	- 🟨 User inbox/messaging system
 	- 🟩 Latest downloads/uploads
-	- 🟨 Download/uploads list
+	- 🟨 Downloads/uploads list
 	- 🟨 Download/upload totals and ratio
 	- 🟨 Current seeding list
 	- 🟩 Permissions system
 	- 🟨 User classes
+	- 🟧 User settings page
 * 🟨 Requests
 	- 🟨 Bounties
-	- 🟨 Subscriptions
+	- 🟨 Subscribing to requests (for a notification when it is fulfilled)
 	- 🟨 Linking relevant requests on artist/release group/release pages
 * 🟩 News
+* 🟨 Torrent subscription system (for a notification when an artist/release group/release has a new torrent)
 
 # Requirements
 
-* Python >=3.10
+* Python >=3.11
 
 # Dependencies
 
