@@ -118,7 +118,7 @@ Run the server: `poetry run python3 manage.py runserver`
 
 ## Type checking
 
-`poetry run pyre`
+`poetry run mypy .`
 
 # License & Credits
 

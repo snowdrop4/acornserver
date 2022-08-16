@@ -19,7 +19,15 @@ bcoding = "^1.0"
 markdown = "^3.0"
 
 [tool.poetry.dev-dependencies]
-pyre-check = "*"
+mypy = "*"
+django-stubs = "~1.8"
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+ignore_missing_imports = true
+
+[mypy.plugins.django-stubs]
+django_settings_module = "acorn.settings"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
