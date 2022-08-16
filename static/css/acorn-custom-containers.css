@@ -26,6 +26,7 @@ main.center-max-width {
 .split {
 	display: grid;
 	width: 100%;
+	margin: 1rem 0rem;
 }
 
 .split > .item1 { grid-area: item1; }
