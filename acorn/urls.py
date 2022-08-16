@@ -23,6 +23,7 @@ urlpatterns = [
 	path('account/', include('account.urls')),
 	path('api/',     include('api.urls')),
 	path('forum/',   include('forum.urls')),
+	path('inbox/',   include('inbox.urls')),
 	path('search/',  include('search.urls')),
 	path('torrent/', include('torrent.urls')),
 	path('tracker/', include('tracker.urls')),

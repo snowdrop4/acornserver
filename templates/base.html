@@ -30,7 +30,7 @@
 				</nav>
 				
 				<div id="header-user-bar">
-					<div>Inbox (0)</div>
+					<a href="{% url 'inbox:inbox_view' %}">Inbox (0)</a>
 					<div class="divider"></div>
 					<div>Up: {{ user.uploaded|IEC_80000_13 }}</div>
 					<div class="divider"></div>

@@ -74,3 +74,64 @@ table.forum-listings {
 		grid-template-columns: 1fr;
 	}
 }
+
+/******************************************************************************/
+/* User Inbox *****************************************************************/
+/******************************************************************************/
+/* Used on: `inbox/thread/view` */
+
+#inbox-messages {
+	flex: 1 1 auto;
+	
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
+	
+	margin: 1rem 0rem;
+}
+
+#inbox-messages .item {
+	display: grid;
+	column-gap: 1rem;
+}
+
+/* Display the message on the right-hand side for sent messages */
+#inbox-messages .item.sent {
+	grid-template-columns: minmax(10px, 1fr) 3fr;
+	grid-template-areas: "author message";
+}
+
+/* Display the message on the left-hand side for received messages */
+#inbox-messages .item.received {
+	grid-template-columns: 3fr minmax(10px, 1fr);
+	grid-template-areas: "message author";
+}
+
+#inbox-messages .item .message-author {
+	grid-area: author;
+	align-self: top;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+#inbox-messages .item .message-body {
+	grid-area: message;
+	
+	padding: 0rem 1rem;
+	
+	border: 1px solid var(--dark-background);
+	background-color: var(--element-background);
+}
+
+#inbox-messages .item .message-datetime {
+	text-align: right;
+}
+
+#inbox-messages .item.sent .message-author {
+	text-align: right;
+}
+
+#inbox-messages .item.received .message-author {
+	text-align: left;
+}

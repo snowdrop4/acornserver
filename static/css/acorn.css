@@ -255,6 +255,10 @@ header #header-user-bar {
 	justify-self: end;
 }
 
+header #header-user-bar a {
+	font-weight: normal;
+}
+
 /* Left-justify (instead of right-justify) for small screens. */
 @media (max-width: 66rem) {
 	header #header-user-bar {

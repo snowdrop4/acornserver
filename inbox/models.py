@@ -23,6 +23,9 @@ class InboxThread(models.Model):
 	
 	latest_message_datetime = models.DateTimeField(auto_now_add=True)
 	
+	sender_unread_messages = models.PositiveIntegerField(default='0')
+	receiver_unread_messages = models.PositiveIntegerField(default='1')
+	
 	class Meta:
 		verbose_name = 'Thread'
 		verbose_name_plural = 'Threads'
@@ -32,8 +35,8 @@ class InboxMessage(models.Model):
 	thread = models.ForeignKey(InboxThread, on_delete=models.CASCADE, related_name='messages')
 	content = MarkupField(markup_type='markdown', escape_html=True, default='')
 	
-	mod_date = models.DateTimeField(auto_now=True)
-	pub_date = models.DateTimeField(auto_now_add=True)
+	mod_date = models.DateTimeField()
+	pub_date = models.DateTimeField()
 	
 	sender = models.ForeignKey(
 		get_user_model(),

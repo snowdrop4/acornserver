@@ -58,7 +58,7 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 * 🟩 Users
 	- 🟩 User biography
 	- 🟨 User avatar
-	- 🟨 User inbox/messaging system
+	- 🟧 User inbox/messaging system
 	- 🟩 Latest downloads/uploads
 	- 🟨 Downloads/uploads list
 	- 🟨 Download/upload totals and ratio
