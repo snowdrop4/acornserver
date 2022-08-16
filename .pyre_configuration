@@ -1,0 +1,7 @@
+{
+  "site_package_search_strategy": "all",
+  "source_directories": [
+    "."
+  ],
+  "taint_models_path": "/Users/shire/Library/Caches/pypoetry/virtualenvs/acornserver-m4Tvy62_-py3.11/lib/pyre_check/taint"
+}

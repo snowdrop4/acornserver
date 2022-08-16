@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "~3.1"
-django-glrm = "1.1"
+django-glrm = "^1.1"
 django-markupfield = "^2.0"
 django-picklefield = "^3.0"
 django-debug-toolbar = "^3.0"
@@ -19,6 +19,7 @@ bcoding = "^1.0"
 markdown = "^3.0"
 
 [tool.poetry.dev-dependencies]
+pyre-check = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

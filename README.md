@@ -90,6 +90,10 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 * bcoding
 * markdown
 
+Development dependencies:
+
+* pyre-check
+
 # Development
 
 ## Installing
@@ -111,6 +115,10 @@ Run the server: `poetry run python3 manage.py runserver`
 ## Testing
 
 `poetry run python3 manage.py test`
+
+## Type checking
+
+`poetry run pyre`
 
 # License & Credits
 
