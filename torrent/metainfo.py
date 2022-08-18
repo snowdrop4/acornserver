@@ -1,4 +1,3 @@
-from typing import List, Tuple
 import hashlib
 import bisect
 
@@ -15,12 +14,12 @@ from bcoding import bencode
 
 
 # The URL of the tracker.
-def get_announce(decoded) -> str:
+def get_announce(decoded: dict) -> str:
 	return decoded['announce']
 
 
 # This maps to a dictionary, with keys described below.
-def get_info(decoded):
+def get_info(decoded: dict) -> dict:
 	return decoded['info']
 
 
@@ -29,7 +28,7 @@ def get_info(decoded):
 
 # The `name` key maps to a UTF-8 encoded string which is the suggested name to
 # save the file (or directory) as. It is purely advisory.
-def get_name(decoded) -> str:
+def get_name(decoded: dict) -> str:
 	return decoded['info']['name']
 
 
@@ -38,13 +37,13 @@ def get_name(decoded) -> str:
 # all the same length except for possibly the last one which may be truncated.
 # `piece length` is almost always a power of two, most commonly 2 18 = 256 K
 # (BitTorrent prior to version 3.2 uses 2 20 = 1 M as default).
-def get_piece_length(decoded) -> int:
+def get_piece_length(decoded: dict) -> int:
 	return decoded['info']['piece length']
 
 
 # `pieces` maps to a string whose length is a multiple of 20. It is to be subdivided
 # into strings of length 20, each of which is the SHA1 hash of the piece at the corresponding index.
-def get_pieces(decoded) -> List[str]:
+def get_pieces(decoded: dict) -> list[str]:
 	pieces = []
 	pieces_raw = decoded['info']['pieces']
 	pieces_num = int(len(pieces_raw) / 20)
@@ -59,7 +58,7 @@ def get_pieces(decoded) -> List[str]:
 
 
 # In the single file case, length maps to the length of the file in bytes.
-def get_length(decoded) -> int:
+def get_length(decoded: dict) -> int:
 	return decoded['info']['length']
 
 
@@ -73,7 +72,7 @@ def get_length(decoded) -> int:
 # the last of which is the actual file name (a zero length list is an error case).
 
 
-def get_files(decoded) -> List[Tuple[int, str]]:
+def get_files(decoded: dict) -> list[tuple[int, str]]:
 	return [(i['length'], i['path']) for i in decoded['info']['files']]
 
 
@@ -87,13 +86,13 @@ def get_files(decoded) -> List[Tuple[int, str]]:
 # extract the substring directly. They must not perform a decode-encode roundtrip on invalid data.
 
 
-def get_infohash_sha1_digest(decoded) -> str:
+def get_infohash_sha1_digest(decoded: dict) -> bytes:
 	info = bencode(decoded["info"])
 	# Returns the digest (i.e., the series of raw bytes representing the hash). This is 20 bytes long.
 	return hashlib.sha1(info).digest()
 
 
-def get_infohash_sha1_hexdigest(decoded) -> str:
+def get_infohash_sha1_hexdigest(decoded: dict) -> str:
 	info = bencode(decoded["info"])
 	# returns the hexdigest (i.e., a UTF8 hexadecimal encoding of the raw bytes). This is 40 characters long.
 	return hashlib.sha1(info).hexdigest()
@@ -104,7 +103,7 @@ def get_infohash_sha1_hexdigest(decoded) -> str:
 # ---------------------------------------- #
 
 
-def validate_v1_metainfo(decoded) -> bool:
+def validate_v1_metainfo(decoded: dict) -> bool:
 	# metainfo file must contain all of the following attributes:
 	try:
 		get_announce(decoded)
@@ -137,7 +136,7 @@ def validate_v1_metainfo(decoded) -> bool:
 # ---------------------------------------- #
 
 
-def get_torrent_size(decoded) -> int:
+def get_torrent_size(decoded: dict) -> int:
 	try:
 		size = sum(i[0] for i in get_files(decoded))
 	except KeyError:
@@ -148,7 +147,7 @@ def get_torrent_size(decoded) -> int:
 
 # Returns a dictionary with keys being directory names and values being dictionaries.
 # Key names equal to './' instead contain a list of tuples of file names plus file sizes.
-def get_torrent_file_listing(decoded):
+def get_torrent_file_listing(decoded: dict) -> dict[str, dict]:
 	name = get_name(decoded)
 	
 	tree = { }

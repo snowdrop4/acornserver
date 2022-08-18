@@ -1,8 +1,10 @@
+from typing import Any
+
 from bcoding import bdecode
 
 from django.views.generic.edit import DeleteView
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import FileResponse
+from django.http import HttpRequest, HttpResponse, FileResponse
 from django.utils import timezone
 
 from root import messages, renderers
@@ -12,13 +14,13 @@ from torrent.models.music import MusicArtist, MusicTorrent, MusicTorrentDownload
 from torrent.forms.music.torrent import MusicTorrentFormAdd, MusicTorrentFormEdit
 
 
-def add(request):
+def add(request: HttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'release': (True, int, 'must be an integer') }
 		)
 	except ValueError as e:
-		return renderers.render_http_bad_request(request, e)
+		return renderers.render_http_bad_request(request, str(e))
 	
 	fk = get_object_or_404(MusicRelease, pk=get_params['release'])
 	
@@ -50,13 +52,13 @@ def add(request):
 	return render(request, 'torrent/music/torrent/add.html', { 'form': form })
 
 
-def view(request, pk):
+def view(request: HttpRequest, pk: int) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'artist': (False, int, 'must be an integer') }
 		)
 	except ValueError as e:
-		return renderers.render_http_bad_request(request, e)
+		return renderers.render_http_bad_request(request, str(e))
 	
 	try:
 		torrent = MusicTorrent.objects\
@@ -77,7 +79,7 @@ def view(request, pk):
 	return render(request, 'torrent/music/torrent/view.html', template_args)
 
 
-def edit(request, pk):
+def edit(request: HttpRequest, pk: int) -> HttpResponse:
 	torrent = get_object_or_404(MusicTorrent, pk=pk)
 	
 	if request.method == 'POST':
@@ -98,7 +100,7 @@ class Delete(DeleteView):
 	template_name = 'torrent/music/torrent/delete.html'  # template to use
 	context_object_name = 'torrent'  # name of object in template
 	
-	def post(self, *args, **kwargs):
+	def post(self, *args: Any, **kwargs: Any) -> HttpResponse:
 		user = self.request.user
 		torrent = self.get_object()
 		
@@ -118,7 +120,7 @@ class Delete(DeleteView):
 # Register the torrent in the user's downloads if the user has not downloaded the torrent before.
 # If the user has already downloaded the torrent before, update the download date.
 # Finally, send the torrent metainfo file as a response.
-def download(request, pk):
+def download(request: HttpRequest, pk: int) -> FileResponse:
 	torrent = get_object_or_404(MusicTorrent, pk=pk)
 	
 	(torrent_download, created) = MusicTorrentDownload.objects.get_or_create(torrent=torrent, user=request.user)

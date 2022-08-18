@@ -8,14 +8,14 @@ import torrent.views.music.contribution as contribution_views
 
 
 class TestContribution(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.requestFactory = RequestFactory()
 		self.user = create_random_user()
 		
 		self.artist, _ = create_random_artist()
 		self.release_group, _ = create_random_release_group()
 	
-	def test_edit(self):
+	def test_edit(self) -> None:
 		contribution = MusicContribution.objects.create(
 			artist=self.artist,
 			release_group=self.release_group,

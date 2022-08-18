@@ -30,7 +30,7 @@ def file_sha1_hexdigest(file: models.FileField) -> str:
 #   relative to MEDIA_ROOT (which is set in `acorn/settings.py`).
 # 
 # `MEDIA_ROOT/torrents/<sha1 hash of the uploaded file>.torrent`
-def upload_to(instance, _):
+def upload_to(instance: "Torrent", filename: str) -> str:
 	return os.path.join('torrents', file_sha1_hexdigest(instance.metainfo_file) + '.torrent')
 
 
@@ -69,7 +69,7 @@ class Peer(models.Model):
 	peer_bytes_left = models.IntegerField()
 	last_seen = models.DateTimeField(default=timezone.now)
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return f'{self.peer_id} {self.peer_ip} {str(self.peer_port)} {str(self.last_seen)}'
 	
 	class Meta:

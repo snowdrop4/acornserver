@@ -1,5 +1,10 @@
-# built-in function `id` is not actually id(!)
-def identity(x):
+from typing import Any, Callable
+
+from django.http import HttpRequest
+
+
+# built-in function `id()` is not actually the identity function!
+def identity(x: Any) -> Any:
 	return x
 
 
@@ -28,16 +33,20 @@ def identity(x):
 # 
 # On an error with one of the parameters, this function raises a ValueError
 #   with a string describing the error.
-def fill_typed_get_parameters(request, parameters):
+ParamName = str
+ParamInfo = tuple[bool, Callable[str, Any], str]
+Params = dict[ParamName, ParamInfo]
+
+def fill_typed_get_parameters(request: HttpRequest, parameters: Params) -> dict[str, Any]:
 	dict = { }
 	
-	for k, (required, constructor, error_message) in parameters.items():
+	for (k, (required, constructor, error_message)) in parameters.items():
 		if k in request.GET:
 			try:
 				dict[k] = constructor(request.GET[k])
 			except ValueError:
-				raise ValueError("The GET parameter '" + k + "' " + error_message + ".")
+				raise ValueError(f"The GET parameter '{k}' {error_message}.")
 		elif required:
-			raise ValueError("'" + k + "' is a required GET parameter.")
+			raise ValueError(f"'{k}' is a required GET parameter.")
 	
 	return dict

@@ -1,5 +1,6 @@
 from django.db import Error, transaction
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpRequest, HttpResponse
 from django.utils import timezone
 
 from forum.models import ForumCategory, ForumThread
@@ -10,7 +11,7 @@ from root import messages, renderers
 from root.utils.get_parameters import fill_typed_get_parameters
 
 
-def view(request, pk):
+def view(request: HttpRequest, pk: int) -> HttpResponse:
 	try:
 		thread = ForumThread.objects\
 			.select_related('category')\
@@ -51,7 +52,7 @@ def view(request, pk):
 					thread.save()
 					category.save()
 			except Error as e:
-				return renderers.render_http_server_error(request, "Could not post reply. Error: " + str(e))
+				return renderers.render_http_server_error(request, f"Could not post reply. Error: {e}")
 			
 			messages.creation(request, 'Posted reply.')
 			return redirect('forum:thread_view', pk=thread.pk)
@@ -66,12 +67,12 @@ def view(request, pk):
 	return render(request, 'forum/thread/view.html', template_args)
 
 
-def add(request):
+def add(request: HttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'category': (True, int, "must be an integer") })
 	except ValueError as e:
-		return renderers.render_http_bad_request(request, e)
+		return renderers.render_http_bad_request(request, str(e))
 	
 	category = get_object_or_404(ForumCategory, pk=get_params['category'])
 	
@@ -101,7 +102,7 @@ def add(request):
 					category.latest_post_thread = thread
 					category.save()
 			except Error as e:
-				return renderers.render_http_server_error(request, "Could not create thread. Error: " + str(e))
+				return renderers.render_http_server_error(request, f"Could not create thread. Error: {e}")
 			
 			messages.creation(request, 'Created thread.')
 			return redirect('forum:thread_view', pk=thread.pk)

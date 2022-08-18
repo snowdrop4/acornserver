@@ -25,6 +25,11 @@ django-stubs = "~1.8"
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
 ignore_missing_imports = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+warn_unreachable = true
+exclude = ["migrations/*"]
 
 [mypy.plugins.django-stubs]
 django_settings_module = "acorn.settings"

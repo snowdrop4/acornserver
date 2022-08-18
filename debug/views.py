@@ -3,6 +3,7 @@ import random
 from django.urls import reverse
 from django.test import RequestFactory
 from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse
 
 from root import messages
 
@@ -21,11 +22,11 @@ from torrent.models.music_randomiser import (
 from torrent.metainfo_randomiser import create_random_metainfo_file
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
 	return render(request, 'debug/index.html')
 
 
-def populate_music_database(request):
+def populate_music_database(request: HttpRequest) -> HttpResponse:
 	user = create_random_user()
 	
 	# create 1 artist
@@ -62,7 +63,7 @@ def populate_music_database(request):
 	return render(request, 'debug/populate_database.html', { 'database_type': 'Music' })
 
 
-def populate_forum_database(request):
+def populate_forum_database(request: HttpRequest) -> HttpResponse:
 	root = ForumCategory.objects.get(pk=1) # get the root category
 	
 	# create one category
@@ -81,13 +82,13 @@ def populate_forum_database(request):
 	return render(request, 'debug/populate_database.html', { 'database_type': 'Forum' })
 
 
-def populate_news_database(request):
+def populate_news_database(request: HttpRequest) -> HttpResponse:
 	(news_article, _) = create_random_news_article()
 	
 	return render(request, 'debug/populate_database.html', { 'database_type': 'News' })
 
 
-def test_messages(request):
+def test_messages(request: HttpRequest) -> HttpResponse:
 	messages.success(request,      'Something succeeded.')
 	messages.failure(request,      'Something failed.')
 	messages.creation(request,     'Something created.')

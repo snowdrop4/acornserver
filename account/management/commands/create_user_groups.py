@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -29,7 +31,7 @@ groups = {
 class Command(BaseCommand):
 	help = 'Create default user groups'
 	
-	def handle(self, *args, **options):
+	def handle(self, *args: Any, **options: Any) -> None:
 		for (group_name, models) in groups.items():
 			
 			# Create the group, if it doesn't exist

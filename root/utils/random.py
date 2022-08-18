@@ -3,19 +3,19 @@ import datetime
 import string
 
 
-def random_bool():
+def random_bool() -> bool:
 	return choice([True, False])
 
 
-def random_str(k=10):
+def random_str(k: int = 10) -> str:
 	return choice(string.ascii_uppercase) + ''.join(choices(string.ascii_lowercase, k=k - 1))
 
 
-def random_prose(k=20):
+def random_prose(k: int = 20) -> str:
 	return ' '.join([ random_str(randint(1, 12)) for _ in range(0, k) ])
 
 
-def random_date():
+def random_date() -> datetime.date:  # the date object is lowercase???
 	year = randint(1982, 2020)
 	
 	month = randint(1,12)

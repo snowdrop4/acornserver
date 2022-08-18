@@ -2,7 +2,7 @@ from bcoding import bdecode
 
 from django.db import Error, transaction
 from django.shortcuts import redirect, render
-from django.http import Http404
+from django.http import HttpRequest, HttpResponse, Http404
 
 from root import messages, renderers
 from torrent.metainfo import get_infohash_sha1_hexdigest, get_torrent_size, get_torrent_file_listing
@@ -42,7 +42,7 @@ class PkProvider:
 		return pk_name in self.pks
 
 
-def upload(request):
+def upload(request: HttpRequest) -> HttpResponse:
 	# Sets of valid GET parameters and the corresponding forms that will be used for the given parameters.
 	# The order of the forms is important here, as they are instantiated in this order. 'model_pk', 'contribution_select',
 	#   and 'release_select' provide PKs to the other forms through PkProvider, so they must come first.
@@ -90,16 +90,6 @@ def upload(request):
 	for k, v in model_forms.items():
 		v.instantiate(request)
 	
-	# print("### Valid forms:")
-	# if request.method == 'POST':
-	# 	[ print(k + ": " + str(v.is_valid())) for (k, v) in model_forms.items() ]
-	
-	# print("### POST:")
-	# print(request.POST)
-	
-	# print("### GET:")
-	# print(request.GET)
-	
 	# If it was a POST and all the forms pass validation, save them to the database and finally redirect
 	#   to a view to display the new torrent.
 	if request.method == 'POST' and False not in [ v.is_valid() for (k, v) in model_forms.items() ]:
@@ -132,7 +122,7 @@ def upload(request):
 				
 				model_forms['torrent'].object.save()
 		except Error as e:
-			return renderers.render_http_server_error(request, "Could not upload torrent. Error: " + str(e))
+			return renderers.render_http_server_error(request, f"Could not upload torrent. Error: {e}")
 		
 		messages.creation(request, 'Uploaded torrent.')
 		return redirect('torrent:music_torrent_view', pk=model_forms['torrent'].object.pk)

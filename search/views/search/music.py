@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator
 
 from root import renderers
@@ -7,12 +8,12 @@ from search.forms.music import MusicAdvancedSearch
 from torrent.models.music import MusicArtist, MusicReleaseGroup
 
 
-def search(request):
+def search(request: HttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'page': (False, int, "must be an integer") })
 	except ValueError as e:
-		return renderers.render_http_bad_request(request, e)
+		return renderers.render_http_bad_request(request, str(e))
 	
 	form = MusicAdvancedSearch(request.GET)
 	

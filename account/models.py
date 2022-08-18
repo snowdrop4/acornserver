@@ -11,7 +11,7 @@ from markupfield.fields import MarkupField
 
 
 class UserManager(BaseUserManager):
-	def create_user(self, username, email, password):
+	def create_user(self, username: str, email: str, password: str) -> "User":
 		user = self.model(username=username, email=self.normalize_email(email))
 		user.set_password(password)
 		
@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
 		
 		return user
 	
-	def create_superuser(self, username, email, password):
+	def create_superuser(self, username: str, email: str, password: str) -> "User":
 		user = self.create_user(username, email, password)
 		
 		user.is_superuser = True
@@ -66,7 +66,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	# by telling it that it needs to also ask for email.
 	REQUIRED_FIELDS = ["email"]
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.username
 
 
@@ -74,5 +74,5 @@ class TorrentPasskey(models.Model):
 	user = models.OneToOneField(auth.get_user_model(), on_delete=models.CASCADE)
 	key  = models.CharField(max_length=20, unique=True)
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.key

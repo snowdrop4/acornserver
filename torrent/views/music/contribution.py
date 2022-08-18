@@ -1,7 +1,9 @@
+from typing import Any
+
 from django.core import serializers
 from django.core.paginator import Paginator
 from django.db import models, IntegrityError
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic.edit import DeleteView
 
@@ -14,7 +16,7 @@ from torrent.forms.music.contribution import (
 )
 
 
-def add(request):
+def add(request: HttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request, {
 				'release_group': (True,  int, 'must be an integer'),
@@ -22,7 +24,7 @@ def add(request):
 			}
 		)
 	except ValueError as e:
-		return renderers.render_http_bad_request(request, e)
+		return renderers.render_http_bad_request(request, str(e))
 	
 	release_group = get_object_or_404(MusicReleaseGroup, pk=get_params['release_group'])
 	
@@ -65,7 +67,7 @@ def add(request):
 	return render(request, 'torrent/music/contribution/add.html', template_args)
 
 
-def edit(request, pk):
+def edit(request: HttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
 	
 	if request.method == 'POST':
@@ -89,7 +91,7 @@ class Delete(DeleteView):
 	template_name = 'torrent/music/contribution/delete.html'  # template to use
 	context_object_name = 'contribution'  # name of object in template
 	
-	def post(self, *args, **kwargs):
+	def post(self, *args: Any, **kwargs: Any) -> HttpResponse:
 		user = self.request.user
 		contribution = self.get_object()
 		
@@ -110,7 +112,7 @@ class Delete(DeleteView):
 		return redirect('torrent:music_release_group_view', pk=contribution.release_group.pk)
 
 
-def view_json(request, pk):
+def view_json(request: HttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
 	to_serialize = [contribution]
 	
@@ -121,7 +123,7 @@ def view_json(request, pk):
 	return HttpResponse(data, content_type='application/json')
 
 
-def view_releases_json(request, pk):
+def view_releases_json(request: HttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
 	
 	data = { }

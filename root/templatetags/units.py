@@ -4,7 +4,7 @@ from django import template
 register = template.Library()
 
 @register.filter
-def IEC_80000_13(size):
+def IEC_80000_13(size: int | float) -> str:
 	if abs(size) < 1024.0:
 		return '{} {}'.format(size, 'B')
 	

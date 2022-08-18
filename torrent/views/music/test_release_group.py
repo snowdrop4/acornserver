@@ -10,7 +10,7 @@ import torrent.views.music.release_group as release_group_views
 
 
 class TestReleaseGroup(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.requestFactory = RequestFactory()
 		self.user = create_random_user()
 		
@@ -25,7 +25,7 @@ class TestReleaseGroup(TestCase):
 			'contribution-contribution_type': MusicContribution.ContributionType.COMPOSER
 		}
 	
-	def test_add(self):
+	def test_add(self) -> None:
 		url = reverse('torrent:music_release_group_add') + '?artist=' + str(self.artist.pk)
 		
 		request = self.requestFactory.post(url, { **self.data, **self.contribution_data })
@@ -37,7 +37,7 @@ class TestReleaseGroup(TestCase):
 		self.assertEquals(release_group.name,       self.data['release_group-name'])
 		self.assertEquals(release_group.group_type, self.data['release_group-group_type'])
 	
-	def test_edit(self):
+	def test_edit(self) -> None:
 		args = { a.removeprefix('release_group-'): b for (a, b) in self.data.items() }
 		release_group = MusicReleaseGroup.objects.create(**args)
 		

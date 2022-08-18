@@ -1,7 +1,8 @@
 from django.views import View
 from django.db import Error, transaction
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.utils import timezone
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from root import renderers
@@ -10,7 +11,7 @@ from inbox.forms import MessageFormAdd
 
 
 class InboxView(View):
-	def get(self, request):
+	def get(self, request: HttpRequest) -> HttpResponse:
 		threads = InboxThread.objects\
 			.filter(Q(sender=request.user) | Q(receiver=request.user))\
 			.order_by('-latest_message_datetime')\
@@ -25,13 +26,13 @@ class InboxView(View):
 
 # TODO: add pagination
 class ThreadView(View):
-	def get_thread_and_messages(self, pk):
+	def get_thread_and_messages(self, pk: int) -> tuple[InboxThread, QuerySet[InboxMessage]]:
 		thread = get_object_or_404(InboxThread, pk=pk)
 		messages = thread.messages.order_by('-pub_date')
 		
 		return (thread, messages)
 	
-	def get(self, request, pk):
+	def get(self, request: HttpRequest, pk: int) -> HttpResponse:
 		form = MessageFormAdd()
 		(thread, messages) = self.get_thread_and_messages(pk)
 		
@@ -50,7 +51,7 @@ class ThreadView(View):
 			}
 		)
 	
-	def post(self, request, pk):
+	def post(self, request: HttpRequest, pk: int) -> HttpResponse:
 		form = MessageFormAdd(request.POST)
 		(thread, messages) = self.get_thread_and_messages(pk)
 		

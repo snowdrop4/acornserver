@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.core.management.base import BaseCommand, CommandError
 
 from forum.models import ForumCategory
@@ -41,7 +43,7 @@ categories = {
 class Command(BaseCommand):
 	help = 'Create default forum categories'
 	
-	def handle(self, *args, **options):
+	def handle(self, *args: Any, **options: Any) -> None:
 		try:
 			root = ForumCategory.objects.get(pk=1)
 		except ForumCategory.DoesNotExist:
@@ -50,7 +52,7 @@ class Command(BaseCommand):
 		
 		self.create_categories(categories, root)
 	
-	def create_categories(self, parent, parent_obj):
+	def create_categories(self, parent: dict, parent_obj: ForumCategory) -> None:
 		for (k, v) in parent.items():
 			if v == None:
 				ForumCategory(parent=parent_obj, title=k, folder=False).save()

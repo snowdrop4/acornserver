@@ -1,3 +1,4 @@
+from typing import Any
 import os
 
 from django.conf import settings
@@ -11,7 +12,7 @@ from account.account_randomiser import create_random_user
 
 
 class TestUpload(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.requestFactory = RequestFactory()
 		
 		# We need a user, since the view obviously expects a user to be logged in.
@@ -50,36 +51,42 @@ class TestUpload(TestCase):
 			'torrent-encode_format': MusicTorrent.EncodeFormat.FLAC16
 		}
 	
-	def tearDown(self):
+	def tearDown(self) -> None:
 		self.torrent_file.close()
 	
-	def check_artist(self, artist, data):
+	def check_artist(self, artist: MusicArtist, data: dict) -> None:
 		self.assertEquals(artist.name, data['artist-name'])
 	
-	def check_release_group(self, release_group, data):
+	def check_release_group(self, release_group: MusicReleaseGroup, data: dict) -> None:
 		self.assertEquals(release_group.name, data['release_group-name'])
 		self.assertEquals(release_group.group_type, data['release_group-group_type'])
 	
-	def check_contribution(self, contribution, data):
+	def check_contribution(self, contribution: MusicContribution, data: dict) -> None:
 		self.assertEquals(contribution.contribution_type, data['contribution-contribution_type'])
 	
-	def check_release(self, release, data):
+	def check_release(self, release: MusicRelease, data: dict) -> None:
 		self.assertEquals(release.date.strftime("%Y-%m-%d"), data['release-date'])
 		self.assertEquals(release.label, data['release-label'])
 		self.assertEquals(release.catalog_number, data['release-catalog_number'])
 		self.assertEquals(release.release_format, data['release-release_format'])
 	
-	def check_torrent(self, torrent, data):
+	def check_torrent(self, torrent: MusicTorrent, data: dict) -> None:
 		self.assertEquals(torrent.uploader, self.user)
 		self.assertEquals(torrent.encode_format, data['torrent-encode_format'])
 	
-	def check_relations(self, artist, release_group, contribution, release, torrent):
+	def check_relations(self,
+		artist: MusicArtist,
+		release_group: MusicReleaseGroup,
+		contribution: MusicContribution,
+		release: MusicRelease,
+		torrent: MusicTorrent
+	) -> None:
 		self.assertEquals(contribution.artist, artist)
 		self.assertEquals(contribution.release_group, release_group)
 		self.assertEquals(release.release_group, release_group)
 		self.assertEquals(torrent.release, release)
 	
-	def check_everything(self, **kwargs):
+	def check_everything(self, **kwargs: Any) -> None:
 		ao, ad = kwargs.get('artist')
 		self.check_artist(ao, ad)
 		
@@ -98,7 +105,7 @@ class TestUpload(TestCase):
 		self.check_relations(ao, go, co, ro, to)
 	
 	# Test the basic form without autocomplete or autofill.
-	def test_from_new(self):
+	def test_from_new(self) -> None:
 		data = \
 			{ **self.artist_data
 			, **self.release_group_data
@@ -126,7 +133,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the artist autocompleted.
-	def test_autocompleted_artist(self):
+	def test_autocompleted_artist(self) -> None:
 		# Create a throwaway artist to increment the PK counter, to additionally test that the right PK is going through.
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()
@@ -157,7 +164,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the artist autocompleted and the contribution selected from an autofill candidate.
-	def test_autofilled_contribution(self):
+	def test_autofilled_contribution(self) -> None:
 		# Create a throwaway artist to increment the PK counter, to additionally test that the right PK is going through.
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()
@@ -192,7 +199,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the artist autocompleted and the contribution and release selected from the autofill candidates.
-	def test_autofilled_release(self):
+	def test_autofilled_release(self) -> None:
 		# Create a throwaway artist to increment the PK counter, to additionally test that the right PK is going through.
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()
@@ -232,7 +239,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the artist set by GET parameter.
-	def test_get_parameter_artist(self):
+	def test_get_parameter_artist(self) -> None:
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()
 		
@@ -261,7 +268,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the contribution set by GET parameter.
-	def test_get_parameter_contribution(self):
+	def test_get_parameter_contribution(self) -> None:
 		# Create a throwaway artist to increment the PK counter, to additionally test that the right PK is going through.
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()
@@ -294,7 +301,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the contribution set by GET parameter.
-	def test_get_parameter_release_group(self):
+	def test_get_parameter_release_group(self) -> None:
 		# Create a throwaway artist to increment the PK counter, to additionally test that the right PK is going through.
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()
@@ -327,7 +334,7 @@ class TestUpload(TestCase):
 		)
 	
 	# Test the form with the contribution set by GET parameter.
-	def test_get_parameter_release(self):
+	def test_get_parameter_release(self) -> None:
 		# Create a throwaway artist to increment the PK counter, to additionally test that the right PK is going through.
 		(_     , _          ) = create_random_artist()
 		(artist, artist_data) = create_random_artist()

@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse
 
 from root import renderers
 from forum.models import ForumCategory
 
 
-def view(request, pk):
+def view(request: HttpRequest, pk: int) -> HttpResponse:
 	try:
 		category = ForumCategory.objects\
 			.prefetch_related('children__latest_post_thread__latest_post_author')\

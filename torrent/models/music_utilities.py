@@ -1,15 +1,13 @@
-from typing import Dict, List
-
 from torrent.models.music import MusicReleaseGroup, MusicRelease, MusicTorrent
 
 
-TorrentList = List[MusicTorrent]
-ReleaseDictionary = Dict[MusicRelease, TorrentList]
-ReleaseGroupDictionary = Dict[MusicReleaseGroup, ReleaseDictionary]
+TorrentList = list[MusicTorrent]
+ReleaseDictionary = dict[MusicRelease, TorrentList]
+ReleaseGroupDictionary = dict[MusicReleaseGroup, ReleaseDictionary]
 
 
 def group_torrents(torrents: TorrentList) -> ReleaseGroupDictionary:
-	grouped = { }
+	grouped: ReleaseGroupDictionary = { }
 	
 	for t in torrents:
 		r  = t.release

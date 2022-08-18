@@ -1,7 +1,8 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 
-def render_http_bad_request(request, message):
+def render_http_bad_request(request: HttpRequest, message: str) -> HttpResponse:
 	status_code_number = 400
 	
 	template_args = \
@@ -12,7 +13,7 @@ def render_http_bad_request(request, message):
 	return render(request, 'root/error_pages/base.html', template_args, status=status_code_number)
 
 
-def render_http_not_found(request, message):
+def render_http_not_found(request: HttpRequest, message: str) -> HttpResponse:
 	status_code_number = 404
 	
 	template_args = \
@@ -23,7 +24,7 @@ def render_http_not_found(request, message):
 	return render(request, 'root/error_pages/base.html', template_args, status=status_code_number)
 
 
-def render_http_server_error(request, message):
+def render_http_server_error(request: HttpRequest, message: str) -> HttpResponse:
 	status_code_number = 500
 	
 	template_args = \

@@ -1,10 +1,11 @@
 from django.utils import timezone
 
+from account.models import User
 from root.utils.random import random_str, random_prose
 from forum.models import ForumCategory, ForumThread, ForumPost
 
 
-def create_random_category(parent):
+def create_random_category(parent: ForumCategory) -> tuple[ForumCategory, dict]:
 	data = {
 		'category-title': random_str(),
 		'category-folder': False
@@ -16,7 +17,7 @@ def create_random_category(parent):
 	return category, data
 
 
-def create_random_thread(category, author):
+def create_random_thread(category: ForumCategory, author: User) -> tuple[ForumThread, dict]:
 	data = {
 		'thread-title': random_str(),
 		'thread-body': random_prose()
@@ -35,7 +36,7 @@ def create_random_thread(category, author):
 	return thread, data
 
 
-def create_random_post(category, thread, author):
+def create_random_post(category: ForumCategory, thread: ForumThread, author: User) -> tuple[ForumPost, dict]:
 	data = { 'post-body': random_prose() }
 	
 	now = timezone.now()

@@ -1,43 +1,46 @@
+from typing import Any
 import datetime
 import ipaddress
 import urllib.parse
 
 from bcoding import bencode
 
+from django.db.models import QuerySet
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 
+from torrent.models.torrent import Peer
 from torrent.models.music import MusicTorrent, MusicTorrentPeer
 from root.utils.get_parameters import fill_typed_get_parameters, identity
 
 
-def peer_id(x):
+def peer_id(x: str) -> str:
 	if len(x) != 20:
 		raise ValueError
 	return x
 
 
-def port(x):
+def port(x: int) -> int:
 	y = int(x)
 	if y < 0 or y > 65535:
 		raise ValueError
 	return y
 
 
-def byte_size(x):
+def byte_size(x: int) -> int:
 	y = int(x)
 	if y < 0:
 		raise ValueError
 	return y
 
 
-def event(x):
+def event(x: str) -> str:
 	if x not in ['started', 'completed', 'stopped', 'empty']:
 		raise ValueError
 	return x
 
 
-def BencodedResponse(x):
+def BencodedResponse(x: dict) -> HttpResponse:
 	return HttpResponse(bencode(x), content_type='text/plain')
 
 
@@ -47,7 +50,7 @@ def BencodedResponse(x):
 # 
 # This means that whenever any of the raw bytes don't line up with a
 #   unicode codepoint, they get replaced with the � character (unicode name
-#   'REPLACEMENT CHARACTER', hex of `0xEF 0xBF 0xBD`).
+#   'REPLACEMENT CHARACTER', with a hex of `0xEF 0xBF 0xBD`).
 # 
 # This is the fault of the django `QueryDict` object.
 # 
@@ -55,7 +58,7 @@ def BencodedResponse(x):
 #   query string comes to us with its value set to a raw sha1 digest
 #   (a series of bytes). Thus, we have to use this function instead
 #   of `QueryDict` for this key.
-def get_raw_querystring_value(request, key):
+def get_raw_querystring_value(request: HttpRequest, key: str) -> Any:
 	qs = request.META['QUERY_STRING']
 	qs_key = key + '='
 	
@@ -76,7 +79,7 @@ def get_raw_querystring_value(request, key):
 #   the bittorrent protocol.
 # 
 # Currently unused but left in for debugging or future compatability if needed.
-def bloated_peer_list(peers):
+def bloated_peer_list(peers: QuerySet[Peer]) -> list[dict]:
 	peer_list = []
 	
 	for i in peers:
@@ -93,7 +96,7 @@ def bloated_peer_list(peers):
 # 
 # Initial BEP: https://www.bittorrent.org/beps/bep_0023.html
 # IPv6 extension: https://www.bittorrent.org/beps/bep_0007.html
-def compact_peer_lists(peers):
+def compact_peer_lists(peers: QuerySet[Peer]) -> tuple[bytes, bytes]:
 	ipv4 = b''
 	ipv6 = b''
 	
@@ -110,7 +113,7 @@ def compact_peer_lists(peers):
 	return (ipv4, ipv6)
 
 
-def bittorrent_announce(request, passkey, torrent_type):
+def bittorrent_announce(request: HttpRequest, passkey: str, torrent_type: str) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request, {
 			# `info_hash` key is missing here as we have to get it manually.

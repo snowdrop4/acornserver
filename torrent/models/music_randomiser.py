@@ -9,7 +9,7 @@ from root.utils.random import random_str, random_date
 from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution, MusicRelease
 
 
-def create_random_artist():
+def create_random_artist() -> tuple[MusicArtist, dict]:
 	data = {
 		'artist-name': random_str(),
 		'artist-artist_type': random.choice(MusicArtist.ArtistType.values),
@@ -22,7 +22,7 @@ def create_random_artist():
 	return artist, data
 
 
-def create_random_release_group():
+def create_random_release_group() -> tuple[MusicReleaseGroup, dict]:
 	data = {
 		'release_group-name': random_str(),
 		'release_group-group_type': random.choice(MusicReleaseGroup.GroupType.values)
@@ -34,7 +34,10 @@ def create_random_release_group():
 	return release_group, data
 
 
-def create_random_contribution(artist, release_group):
+def create_random_contribution(
+		artist: MusicArtist,
+		release_group: MusicReleaseGroup
+	) -> tuple[MusicContribution, dict]:
 	data = { 'contribution-contribution_type': random.choice(MusicContribution.ContributionType.values) }
 	
 	args = { a.removeprefix('contribution-'): b for (a, b) in data.items() }
@@ -43,7 +46,7 @@ def create_random_contribution(artist, release_group):
 	return contribution, data
 
 
-def create_random_release(release_group):
+def create_random_release(release_group: MusicReleaseGroup) -> tuple[MusicRelease, dict]:
 	date = random_date()
 	
 	data = {

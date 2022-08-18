@@ -1,4 +1,7 @@
+from typing import Any
+
 from django import forms
+from django.db.models import QuerySet
 
 from torrent.models.music import MusicContribution
 from torrent.widgets.music.artist import ArtistRadioSelect
@@ -19,7 +22,7 @@ class MusicContributionFormWithArtistFK(forms.ModelForm):
 		model = MusicContribution
 		fields = ('artist', 'contribution_type',)
 	
-	def __init__(self, artist_fk, *args, **kwargs):
+	def __init__(self, artist_fk: int, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		self.artist_fk = artist_fk
@@ -32,7 +35,7 @@ class MusicContributionFormWithArtistFK(forms.ModelForm):
 		self.fields['artist'].required = False
 	
 	# Always return the artist as specified by `artist_fk` for the value for the field.
-	def clean_artist(self):
+	def clean_artist(self) -> int:
 		return self.artist_fk
 
 
@@ -44,7 +47,7 @@ class MusicContributionFormAdd(forms.ModelForm):
 		fields = ('artist', 'contribution_type',)
 		widgets = { 'artist': ArtistRadioSelect }
 		
-	def __init__(self, queryset, *args, **kwargs):
+	def __init__(self, queryset: QuerySet, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		# Manually fill in `choices` here, rather than let django automatically

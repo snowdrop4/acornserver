@@ -1,6 +1,7 @@
 # This is used in `torrent/views/music/upload.py` to simplify the process of using multiple forms that must
 #   all correspond to each other and that may or may not be pre-filled and uneditable.
 
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 
 from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution
@@ -8,12 +9,12 @@ from torrent.forms.music import upload
 
 
 # The value for the HTML ID for each field when rendered in the template.
-def auto_id():
+def auto_id() -> str:
 	return 'upload-%s'
 
 
 class BaseForm:
-	def __init__(self, pk_provider, pk_name, form_class):
+	def __init__(self, pk_provider: dict, pk_name, form_class):
 		self.pk_provider = pk_provider
 		self.pk_name = pk_name
 		
@@ -22,7 +23,7 @@ class BaseForm:
 		
 		self.is_valid_override = False
 	
-	def instantiate(self, request):
+	def instantiate(self, request: HttpRequest) -> None:
 		# If the request method is a POST, construct a form and object based on the POSTed values.
 		if request.method == 'POST':
 			self.instantiate_post(request)
@@ -30,10 +31,10 @@ class BaseForm:
 		else:
 			self.instantiate_empty()
 	
-	def instantiate_post(self, request):
+	def instantiate_post(self, request: HttpRequest) -> None:
 		self.form = self.form_class(request.POST, auto_id=auto_id())
 	
-	def instantiate_empty(self):
+	def instantiate_empty(self) -> None:
 		self.form = self.form_class(auto_id=auto_id())
 	
 	# For `is_valid()` to return true, a form needs to be BOTH bound and valid. For a form to be considered bound
@@ -46,20 +47,20 @@ class BaseForm:
 	# 
 	# By overriding the `is_valid()` method, and then setting `is_valid_override` to True somewhere in our code at a later stage,
 	#   we can create a form that will pretend to be valid even though it was constructed with a primary key and not POST data.
-	def is_valid(self):
+	def is_valid(self) -> bool:
 		return self.is_valid_override or self.form.is_valid()
 	
-	def disable_all_fields(self):
-		for name, field in self.form.fields.items():
+	def disable_all_fields(self) -> None:
+		for (name, field) in self.form.fields.items():
 			field.disabled = True
 
 
 # Holds a hidden input field for an artist pk, which might be filled by javascript if the user autocompletes an artist.
 class MusicModelPkForm(BaseForm):
-	def __init__(self, pk_provider):
+	def __init__(self, pk_provider: dict):
 		super().__init__(pk_provider, 'model_pk', upload.MusicModelPkForm)
 	
-	def instantiate_post(self, request):
+	def instantiate_post(self, request: HttpRequest) -> None:
 		super().instantiate_post(request)
 		
 		if self.form.is_valid():
@@ -72,7 +73,7 @@ class MusicModelPkForm(BaseForm):
 # Partial class that extends BaseForm to let the form be instantiated from a PK provided by `pk_provider`.
 # Any class inheriting this must implement `instantiate_pk`.
 class MusicPkForm(BaseForm):
-	def instantiate(self, request):
+	def instantiate(self, request: HttpRequest) -> None:
 		if self.pk_name in self.pk_provider:
 			self.instantiate_pk(self.pk_provider[self.pk_name])
 			self.is_valid_override = True
@@ -82,7 +83,7 @@ class MusicPkForm(BaseForm):
 
 # Class to group up a form based on a model with an object based on that same model.
 class MusicObjectForm(MusicPkForm):
-	def __init__(self, pk_provider, pk_name, form_class, object_class):
+	def __init__(self, pk_provider: dict, pk_name, form_class, object_class):
 		super().__init__(pk_provider, pk_name, form_class)
 		
 		self.object_class = object_class
@@ -91,13 +92,13 @@ class MusicObjectForm(MusicPkForm):
 		# Whether the form was constructed from a primary key (used to tell us if we need to save the object or not)
 		self.from_pk = False
 		
-	def instantiate_pk(self, pk):
+	def instantiate_pk(self, pk: int) -> None:
 		self.object = get_object_or_404(self.object_class, pk=pk)
 		self.form = self.form_class(instance=self.object, auto_id=auto_id())
 		self.disable_all_fields()
 		self.from_pk = True
 		
-	def instantiate_post(self, request):
+	def instantiate_post(self, request: HttpRequest) -> None:
 		super().instantiate_post(request)
 		
 		if self.form.is_valid():
@@ -105,19 +106,19 @@ class MusicObjectForm(MusicPkForm):
 
 
 class MusicContributionSelectForm(MusicPkForm):
-	def __init__(self, pk_provider):
+	def __init__(self, pk_provider: dict):
 		super().__init__(pk_provider, 'contribution', upload.MusicContributionSelectForm)
 		
 		self.object = None
 		
-	def populate_choices(self):
+	def populate_choices(self) -> None:
 		if 'artist' in self.pk_provider:
 			artist = get_object_or_404(MusicArtist, pk=self.pk_provider['artist'])
 			
 			choices = [('', '---------')]
 			
 			for i in artist.contributions.all():
-				choices.append((i.pk, i.get_contribution_type_display() + " - " + str(i.release_group)))
+				choices.append((i.pk, f"{i.get_contribution_type_display()} - {i.release_group}"))
 			
 			self.form.fields['contribution'].choices = choices
 			
@@ -127,7 +128,7 @@ class MusicContributionSelectForm(MusicPkForm):
 			self.form.fields['contribution'].choices = [('', '---------')]
 			self.disable_all_fields()
 	
-	def instantiate_pk(self, pk):
+	def instantiate_pk(self, pk: int) -> None:
 		super().instantiate_empty()
 		
 		self.object = get_object_or_404(MusicContribution, pk=pk)
@@ -136,7 +137,7 @@ class MusicContributionSelectForm(MusicPkForm):
 		
 		self.populate_choices()
 	
-	def instantiate_post(self, request):
+	def instantiate_post(self, request: HttpRequest) -> None:
 		super().instantiate_post(request)
 		self.populate_choices()
 		
@@ -152,18 +153,18 @@ class MusicContributionSelectForm(MusicPkForm):
 				self.pk_provider['artist'] = self.object.artist.pk
 				self.pk_provider['release_group'] = self.object.release_group.pk
 	
-	def instantiate_empty(self):
+	def instantiate_empty(self) -> None:
 		super().instantiate_empty()
 		self.populate_choices()
 
 
 class MusicReleaseSelectForm(MusicPkForm):
-	def __init__(self, pk_provider):
+	def __init__(self, pk_provider: dict):
 		super().__init__(pk_provider, 'release', upload.MusicReleaseSelectForm)
 		
 		self.object = None
 	
-	def populate_choices(self):
+	def populate_choices(self) -> None:
 		if 'release_group' in self.pk_provider:
 			release_group = get_object_or_404(MusicReleaseGroup, pk=self.pk_provider['release_group'])
 			
@@ -180,11 +181,11 @@ class MusicReleaseSelectForm(MusicPkForm):
 			self.form.fields['release'].choices = [('', '---------')]
 			self.disable_all_fields()
 	
-	def instantiate_pk(self, pk):
+	def instantiate_pk(self, pk: int) -> None:
 		super().instantiate_empty()
 		self.populate_choices()
 	
-	def instantiate_post(self, request):
+	def instantiate_post(self, request: HttpRequest) -> None:
 		super().instantiate_post(request)
 		self.populate_choices()
 		
@@ -196,6 +197,6 @@ class MusicReleaseSelectForm(MusicPkForm):
 			if pk_str != '':
 				self.pk_provider['release'] = pk_str
 	
-	def instantiate_empty(self):
+	def instantiate_empty(self) -> None:
 		super().instantiate_empty()
 		self.populate_choices()

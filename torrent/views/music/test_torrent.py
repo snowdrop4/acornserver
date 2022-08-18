@@ -12,7 +12,7 @@ import torrent.views.music.torrent as torrent_views
 
 
 class TestTorrent(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.requestFactory = RequestFactory()
 		self.user = create_random_user()
 		
@@ -28,10 +28,10 @@ class TestTorrent(TestCase):
 			'torrent-release': str(self.release.pk)
 		}
 	
-	def tearDown(self):
+	def tearDown(self) -> None:
 		self.torrent_file.close()
 	
-	def test_add(self):
+	def test_add(self) -> None:
 		url = reverse('torrent:music_torrent_add') + '?release=' + str(self.release.pk)
 		
 		request = self.requestFactory.post(url, self.torrent_data, format='multipart')
@@ -44,7 +44,7 @@ class TestTorrent(TestCase):
 		self.assertEquals(torrent.release.pk, self.release.pk)
 		self.assertEquals(torrent.encode_format, self.torrent_data['torrent-encode_format'])
 	
-	def test_edit(self):
+	def test_edit(self) -> None:
 		# First, create a new torrent.
 		url = reverse('torrent:music_torrent_add') + '?release=' + str(self.release.pk)
 		

@@ -1,7 +1,8 @@
+from typing import Any
 import datetime
 
 from django.db import models
-from django.db.models import signals
+from django.db.models import QuerySet, signals
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib import auth
@@ -30,10 +31,10 @@ class MusicArtist(models.Model):
 		on_delete=models.SET_NULL, null=True, related_name='created_musicartists'
 	)
 	
-	def get_absolute_url(self):
+	def get_absolute_url(self) -> str:
 		return reverse('torrent:music_artist_view', kwargs={ 'pk': self.pk })
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.name
 	
 	class Meta:
@@ -60,25 +61,25 @@ class MusicReleaseGroup(models.Model):
 		on_delete=models.SET_NULL, null=True, related_name='created_musicreleasegroups'
 	)
 	
-	def get_earliest_release_date(self):
+	def get_earliest_release_date(self) -> datetime.date:
 		return min(self.releases.values_list('date', flat=True), default=datetime.date(1, 1, 1))
 	
 	# Used in the templates `as_table.html` and `as_table_no_header.html`
 	#   inside `torrent/templates/torrent/music/release_group/`.
-	def get_releases_by_newest_prefetch_related(self):
+	def get_releases_by_newest_prefetch_related(self) -> QuerySet["MusicRelease"]:
 		return self.releases.order_by('-date')\
 			.prefetch_related('torrents__downloads')\
 			.prefetch_related('torrents__peers')
 	
-	def get_releases_by_oldest_prefetch_related(self):
+	def get_releases_by_oldest_prefetch_related(self) -> QuerySet["MusicRelease"]:
 		return self.releases.order_by('date')\
 			.prefetch_related('torrents__downloads')\
 			.prefetch_related('torrents__peers')
 	
-	def get_absolute_url(self):
+	def get_absolute_url(self) -> str:
 		return reverse('torrent:music_release_group_view', kwargs={ 'pk': self.pk })
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"{self.group_type} - {self.name}"
 	
 	class Meta:
@@ -107,7 +108,7 @@ class MusicContribution(models.Model):
 		on_delete=models.SET_NULL, null=True, related_name='created_musiccontribution'
 	)
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"'{self.artist.name}' as {self.contribution_type} in '{self.release_group.name}'"
 	
 	class Meta:
@@ -125,7 +126,11 @@ class MusicContribution(models.Model):
 #   keys for many models. It doesn't make sense to have orphaned torrents or
 #   releases or release groups in our database.
 @receiver(signals.pre_delete, sender=MusicContribution)
-def contribution_pre_delete_signal_handler(sender, instance, **kwargs):
+def contribution_pre_delete_signal_handler(
+	sender: MusicContribution,
+	instance: MusicContribution,
+	**kwargs: Any
+) -> None:
 	if instance.release_group.contributions.count() == 1:
 		raise models.ProtectedError(
 			'A contribution cannot be deleted if it is the only contribution to a release group.',
@@ -156,10 +161,10 @@ class MusicRelease(models.Model):
 		on_delete=models.SET_NULL, null=True, related_name='created_musicreleases'
 	)
 	
-	def get_absolute_url(self):
+	def get_absolute_url(self) -> str:
 		return reverse('torrent:music_release_view', kwargs={ 'pk': self.pk })
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"{self.date.strftime('%Y-%m-%d')}\
 			, label: '{self.label}'\
 			, cat#: '{self.catalog_number}'\
@@ -195,7 +200,7 @@ class MusicTorrent(torrent.Torrent):
 	
 	encode_format = models.CharField(max_length=6, choices=EncodeFormat.choices)
 	
-	def get_absolute_url(self):
+	def get_absolute_url(self) -> str:
 		return reverse('torrent:music_torrent_view', kwargs={ 'pk': self.pk })
 	
 	def get_num_seeders(self) -> int:
@@ -204,7 +209,7 @@ class MusicTorrent(torrent.Torrent):
 	def get_num_leechers(self) -> int:
 		return self.peers.filter(peer_bytes_left__gt=0).count()
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"'{self.encode_format}' encode of release: {self.release}"
 	
 	class Meta:

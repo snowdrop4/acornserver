@@ -1,6 +1,8 @@
+from typing import Any
+
 from django.core import serializers
 from django.db import models
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic.edit import DeleteView
 
@@ -9,7 +11,7 @@ from torrent.models.music import MusicArtist
 from torrent.forms.music.artist import MusicArtistFormAdd, MusicArtistFormEdit
 
 
-def add(request):
+def add(request: HttpRequest) -> HttpResponse:
 	if request.method == 'POST':
 		form = MusicArtistFormAdd(request.POST)
 		
@@ -23,7 +25,7 @@ def add(request):
 	return render(request, 'torrent/music/artist/add.html', { 'form': form })
 
 
-def view(request, pk):
+def view(request: HttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
 	# `torrents` and `peers` both used in template, so prefetch them now to save database time
@@ -53,7 +55,7 @@ def view(request, pk):
 	return render(request, 'torrent/music/artist/view.html', template_args)
 
 
-def edit(request, pk):
+def edit(request: HttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
 	if request.method == 'POST':
@@ -74,7 +76,7 @@ class Delete(DeleteView):
 	template_name = 'torrent/music/artist/delete.html'  # template to use
 	context_object_name = 'artist'  # name of object in template
 	
-	def post(self, *args, **kwargs):
+	def post(self, *args: Any, **kwargs: Any) -> HttpResponse:
 		user = self.request.user
 		artist = self.get_object()
 		
@@ -96,13 +98,13 @@ class Delete(DeleteView):
 		return redirect('torrent:music_artist_view', pk=artist.pk)
 
 
-def view_json(request, pk):
+def view_json(request: HttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	data = serializers.serialize('json', [artist])
 	return HttpResponse(data, content_type='application/json')
 
 
-def view_contributions_json(request, pk):
+def view_contributions_json(request: HttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
 	data = { }

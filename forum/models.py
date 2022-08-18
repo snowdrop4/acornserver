@@ -19,7 +19,7 @@ class ForumCategory(MPTTModel):
 	
 	latest_post_thread = models.ForeignKey('ForumThread', on_delete=models.SET_NULL, null=True, blank=True)
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.title
 	
 	class Meta:
@@ -48,10 +48,10 @@ class ForumThread(ForumContent):
 	latest_post_datetime = models.DateTimeField(null=True, blank=True)
 	
 	@property
-	def reply_count(self):
+	def reply_count(self) -> int:
 		return self.post_count - 1
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.title
 	
 	class Meta:

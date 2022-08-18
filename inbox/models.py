@@ -49,5 +49,5 @@ class InboxMessage(models.Model):
 		verbose_name = 'Message'
 		verbose_name_plural = 'Messages'
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.content.raw

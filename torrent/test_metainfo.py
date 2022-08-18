@@ -10,7 +10,7 @@ import torrent.metainfo as mi
 
 
 class TestMetainfo(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		multiTorrentPath = os.path.join(settings.BASE_DIR, 'test', 'metainfo-v1-multi.torrent')
 		with open(multiTorrentPath, 'rb') as f:
 			self.multiTorrent = bdecode(f)
@@ -19,7 +19,7 @@ class TestMetainfo(TestCase):
 		with open(singleTorrentPath, 'rb') as f:
 			self.singleTorrent = bdecode(f)
 	
-	def test_get_announce(self):
+	def test_get_announce(self) -> None:
 		announce = 'https://example.com/1234567890/announce'
 		mt = mi.get_announce(self.multiTorrent)
 		st = mi.get_announce(self.singleTorrent)
@@ -27,21 +27,21 @@ class TestMetainfo(TestCase):
 		self.assertEquals(mt, announce)
 		self.assertEquals(st, announce)
 	
-	def test_get_name(self):
+	def test_get_name(self) -> None:
 		mt = mi.get_name(self.multiTorrent)
 		st = mi.get_name(self.singleTorrent)
 		
 		self.assertEquals(mt, 'multi')
 		self.assertEquals(st, 'single')
 	
-	def test_get_piece_length(self):
+	def test_get_piece_length(self) -> None:
 		mt = mi.get_piece_length(self.multiTorrent)
 		st = mi.get_piece_length(self.singleTorrent)
 		
 		self.assertEquals(mt, 16384)
 		self.assertEquals(st, 16384)
 	
-	def test_get_pieces(self):
+	def test_get_pieces(self) -> None:
 		mt = mi.get_pieces(self.multiTorrent)
 		st = mi.get_pieces(self.singleTorrent)
 		
@@ -51,13 +51,13 @@ class TestMetainfo(TestCase):
 		self.assertEquals(reduce(f, st, True), True)
 	
 	# get_length is only defined for single file torrents
-	def test_get_length(self):
+	def test_get_length(self) -> None:
 		st = mi.get_length(self.singleTorrent)
 		
 		self.assertEquals(st, 5)
 	
 	# get_files is only defined for multi file torrents
-	def test_get_files(self):
+	def test_get_files(self) -> None:
 		mt = mi.get_files(self.multiTorrent)
 		
 		self.assertEquals(len(mt), 2)
@@ -71,7 +71,7 @@ class TestMetainfo(TestCase):
 		self.assertEquals(l1, 5)
 		self.assertEquals(p1, ['multi2'])
 	
-	def test_get_infohash_sha1_hexdigest(self):
+	def test_get_infohash_sha1_hexdigest(self) -> None:
 		mt = mi.get_infohash_sha1_hexdigest(self.multiTorrent)
 		st = mi.get_infohash_sha1_hexdigest(self.singleTorrent)
 		

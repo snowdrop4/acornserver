@@ -1,9 +1,10 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from forum.models import ForumCategory
 
 
-def view(request):
+def view(request: HttpRequest) -> HttpResponse:
 	# Every category must be a child of a root category at `pk=1`.
 	# 
 	# The children of the root category are assumed to have `folder` set

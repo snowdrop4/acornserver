@@ -1,3 +1,5 @@
+from typing import Any, IO
+
 from bcoding import bdecode
 
 from django import forms
@@ -6,7 +8,7 @@ from torrent.models.music import MusicTorrent
 from torrent.metainfo import validate_v1_metainfo
 
 
-def clean_metainfo_file(self):
+def clean_metainfo_file(self: forms.ModelForm) -> IO[bytes]:
 	metainfo = self.cleaned_data['metainfo_file']
 	exception = forms.ValidationError("Invalid torrent file.")
 	
@@ -29,7 +31,7 @@ class MusicTorrentForm(forms.ModelForm):
 		model = MusicTorrent
 		fields = ('metainfo_file', 'encode_format')
 	
-	def clean_metainfo_file(self):
+	def clean_metainfo_file(self) -> IO[bytes]:
 		return clean_metainfo_file(self)
 
 
@@ -40,7 +42,7 @@ class MusicTorrentFormAdd(forms.ModelForm):
 		model = MusicTorrent
 		fields = ('release', 'metainfo_file', 'encode_format')
 	
-	def __init__(self, fk, *args, **kwargs):
+	def __init__(self, fk: int, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		# Set the default value for the `release` form field to the `release` specified by `fk`.
@@ -50,7 +52,7 @@ class MusicTorrentFormAdd(forms.ModelForm):
 		self.fields['release'].queryset = fk.release_group.releases
 		self.fields['release'].initial = fk
 	
-	def clean_metainfo_file(self):
+	def clean_metainfo_file(self) -> IO[bytes]:
 		return clean_metainfo_file(self)
 
 
@@ -63,7 +65,7 @@ class MusicTorrentFormEdit(forms.ModelForm):
 		model = MusicTorrent
 		fields = ('release', 'metainfo_file', 'encode_format')
 	
-	def __init__(self, *args, **kwargs):
+	def __init__(self, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		# If `instance` is supplied as a kwarg, restrict the possible values for the `release` form field
@@ -75,5 +77,5 @@ class MusicTorrentFormEdit(forms.ModelForm):
 		else:
 			raise TypeError('MusicTorrentFormEdit() missing required keyword argument: \'instance\'')
 	
-	def clean_metainfo_file(self):
+	def clean_metainfo_file(self) -> IO[bytes]:
 		return clean_metainfo_file(self)

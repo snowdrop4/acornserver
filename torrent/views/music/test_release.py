@@ -10,7 +10,7 @@ import torrent.views.music.release as release_views
 
 
 class TestRelease(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.requestFactory = RequestFactory()
 		self.user = create_random_user()
 		
@@ -25,7 +25,7 @@ class TestRelease(TestCase):
 			'release-release_format': MusicRelease.ReleaseFormat.WEB
 		}
 		
-	def test_add(self):
+	def test_add(self) -> None:
 		url = reverse('torrent:music_release_add') + '?release_group=' + str(self.release_group.pk)
 		
 		request = self.requestFactory.post(url, self.data)
@@ -39,7 +39,7 @@ class TestRelease(TestCase):
 		self.assertEquals(release.catalog_number, self.data['release-catalog_number'])
 		self.assertEquals(release.release_format, self.data['release-release_format'])
 	
-	def test_edit(self):
+	def test_edit(self) -> None:
 		args = { a.removeprefix('release-'): b for (a, b) in self.data.items() }
 		args['date'] = self.date
 		args['release_group'] = self.release_group

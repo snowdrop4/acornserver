@@ -5,7 +5,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def divide(numerator, denominator):
+def divide(numerator: int | float, denominator: int | float) -> str:
 	if numerator == 0 or denominator == 0:
 		return "∞"
 	
@@ -13,5 +13,5 @@ def divide(numerator, denominator):
 
 
 @register.simple_tag
-def multiply(x1, x2):
+def multiply(x1: int | float, x2: int | float) -> str:
 	return str(x1 * x2)

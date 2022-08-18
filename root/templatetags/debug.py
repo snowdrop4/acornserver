@@ -1,3 +1,4 @@
+from typing import Any
 from django import template
 
 
@@ -5,6 +6,6 @@ register = template.Library()
 
 
 @register.simple_tag
-def print(a):
-	print(str(a))
-	return a
+def print(value: Any) -> Any:
+	print(str(value))
+	return value

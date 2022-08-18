@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
+from django.http import HttpRequest, HttpResponse
 
 from rest_framework import permissions
 from rest_framework.views import APIView
@@ -16,7 +17,7 @@ class InboxThreadView(APIView):
 	"""
 	permission_classes = [permissions.IsAuthenticated]
 	
-	def get(self, request, format=None):
+	def get(self, request: HttpRequest) -> HttpResponse:
 		user = request.user.pk
 		threads = InboxThread.objects\
 			.filter(Q(sender=user) | Q(receiver=user))\
@@ -34,7 +35,7 @@ class InboxMessagesView(APIView):
 	
 	permission_classes = [permissions.IsAuthenticated]
 	
-	def get(self, request, thread_pk, format=None):
+	def get(self, request: HttpRequest, thread_pk: int) -> HttpResponse:
 		user = request.user.pk
 		thread = get_object_or_404(InboxThread, pk=thread_pk)
 		

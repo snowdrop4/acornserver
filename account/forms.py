@@ -1,3 +1,5 @@
+from typing import Any
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -7,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 class SignUpForm(UserCreationForm):
 	prefix = 'signup'
 	
-	def __init__(self, *args, **kwargs):
+	def __init__(self, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		# Since the password fields are specified within UserCreationForm directly

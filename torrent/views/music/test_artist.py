@@ -9,7 +9,7 @@ import torrent.views.music.artist as artist_views
 
 
 class TestArtist(TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.requestFactory = RequestFactory()
 		self.user = create_random_user()
 		
@@ -18,7 +18,7 @@ class TestArtist(TestCase):
 			'artist-artist_type': MusicArtist.ArtistType.ARTIST
 		}
 		
-	def test_add(self):
+	def test_add(self) -> None:
 		url = reverse('torrent:music_artist_add')
 		
 		request = self.requestFactory.post(url, self.data)
@@ -30,7 +30,7 @@ class TestArtist(TestCase):
 		self.assertEquals(artist.name,        self.data['artist-name'])
 		self.assertEquals(artist.artist_type, self.data['artist-artist_type'])
 	
-	def test_edit(self):
+	def test_edit(self) -> None:
 		args = { a.removeprefix('artist-'): b for (a, b) in self.data.items() }
 		artist = MusicArtist.objects.create(**args)
 		

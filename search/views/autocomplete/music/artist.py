@@ -1,9 +1,9 @@
-from django.http import JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 
 from torrent.models.music import MusicArtist
 
 
-def autocomplete(request):
+def autocomplete(request: HttpRequest) -> HttpResponse:
 	if 'q' in request.GET:
 		search_term = request.GET['q']
 		results = MusicArtist.objects.filter(name__contains=search_term)[:5]

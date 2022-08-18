@@ -1,3 +1,5 @@
+from typing import Any
+
 from django import forms
 
 from torrent.models.music import MusicRelease
@@ -18,7 +20,7 @@ class MusicReleaseFormAdd(forms.ModelForm):
 		model = MusicRelease
 		fields = ('release_group', 'date', 'label', 'catalog_number', 'release_format')
 	
-	def __init__(self, fk, *args, **kwargs):
+	def __init__(self, fk: int, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		self.fk = fk
@@ -31,7 +33,7 @@ class MusicReleaseFormAdd(forms.ModelForm):
 		self.fields['release_group'].required = False
 	
 	# Always return the release group as specified by `fk` for the value for the field.
-	def clean_release_group(self):
+	def clean_release_group(self) -> int:
 		return self.fk
 
 
@@ -42,7 +44,7 @@ class MusicReleaseFormEdit(forms.ModelForm):
 		model = MusicRelease
 		fields = ('release_group', 'date', 'label', 'catalog_number', 'release_format')
 	
-	def __init__(self, *args, **kwargs):
+	def __init__(self, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
 		# Performance: Restrict the choices to the current release group,
