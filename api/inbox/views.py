@@ -7,7 +7,7 @@ from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from inbox.models import InboxThread, InboxMessage
+from inbox.models import InboxThread
 from .serializers import InboxThreadSerializer, InboxMessageSerializer
 
 
@@ -39,7 +39,7 @@ class InboxMessagesView(APIView):
 		user = request.user.pk
 		thread = get_object_or_404(InboxThread, pk=thread_pk)
 		
-		if thread.sender.pk == user or thread.receiver.pk == user:
+		if (thread.sender and thread.sender.pk == user) or (thread.receiver and thread.receiver.pk == user):
 			messages = thread.messages.order_by('-pub_date')[:10]
 			serializer = InboxMessageSerializer(messages, many=True)
 			return Response(serializer.data)

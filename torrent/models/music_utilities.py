@@ -1,12 +1,13 @@
+from django.db.models import QuerySet
 from torrent.models.music import MusicReleaseGroup, MusicRelease, MusicTorrent
 
 
-TorrentList = list[MusicTorrent]
-ReleaseDictionary = dict[MusicRelease, TorrentList]
+Torrents = list[MusicTorrent]
+ReleaseDictionary = dict[MusicRelease, Torrents]
 ReleaseGroupDictionary = dict[MusicReleaseGroup, ReleaseDictionary]
 
 
-def group_torrents(torrents: TorrentList) -> ReleaseGroupDictionary:
+def group_torrents(torrents: QuerySet[MusicTorrent] | list[MusicTorrent]) -> ReleaseGroupDictionary:
 	grouped: ReleaseGroupDictionary = { }
 	
 	for t in torrents:

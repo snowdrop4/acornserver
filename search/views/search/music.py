@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator
@@ -17,7 +19,7 @@ def search(request: HttpRequest) -> HttpResponse:
 	
 	form = MusicAdvancedSearch(request.GET)
 	
-	template_args = { 'form': form }
+	template_args: dict[str, Any] = { 'form': form }
 	
 	if form.is_valid():
 		query = None

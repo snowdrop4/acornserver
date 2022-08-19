@@ -1,4 +1,5 @@
 import random
+from typing import Any
 
 from django.urls import reverse
 from django.test import RequestFactory
@@ -48,7 +49,7 @@ def populate_music_database(request: HttpRequest) -> HttpResponse:
 				
 				# We don't need to provide the `release_group` pk,
 				#   as the upload view deduces it from the `contribution` pk.
-				data = \
+				data: dict[str, Any] = \
 					{ **{ 'model_pk-artist_pk':               str(artist.pk),       }
 					, **{ 'contribution_select-contribution': str(contribution.pk), }
 					, **{ 'release_select-release':           str(release.pk),      }

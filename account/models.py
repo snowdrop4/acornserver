@@ -17,7 +17,7 @@ class UserManager(BaseUserManager):
 		
 		user.save(using=self._db)
 		
-		passkey = TorrentPasskey(user=user, key=random.choices(string.ascii_letters, k=20))
+		passkey = TorrentPasskey(user=user, key=''.join(random.choices(string.ascii_letters, k=20)))
 		passkey.save()
 		
 		return user

@@ -33,8 +33,13 @@ def identity(x: Any) -> Any:
 # 
 # On an error with one of the parameters, this function raises a ValueError
 #   with a string describing the error.
+Required = bool
+ErrorMessage = str
+Constructor = Callable
+ParamInfo = tuple[Required, Constructor, ErrorMessage]
+
 ParamName = str
-ParamInfo = tuple[bool, Callable[str, Any], str]
+
 Params = dict[ParamName, ParamInfo]
 
 def fill_typed_get_parameters(request: HttpRequest, parameters: Params) -> dict[str, Any]:

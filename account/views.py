@@ -1,8 +1,9 @@
+from typing import Any
+
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import login, get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import redirect, render, get_object_or_404
-from django.core.exceptions import PermissionDenied
 
 from .forms import SignUpForm, UserProfileForm, UserUsernameForm, UserEmailForm
 from root import messages
@@ -72,7 +73,7 @@ def profile_edit(request: HttpRequest) -> HttpResponse:
 def account_edit(request: HttpRequest) -> HttpResponse:
 	user = request.user
 	
-	forms = {
+	forms: dict[str, Any] = {
 		'username_form': UserUsernameForm,
 		'email_form': UserEmailForm,
 		'password_form': PasswordChangeForm

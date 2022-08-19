@@ -1,3 +1,5 @@
+from typing import no_type_check
+
 import hashlib
 import bisect
 
@@ -145,19 +147,40 @@ def get_torrent_size(decoded: dict) -> int:
 	return size
 
 
-# Returns a dictionary with keys being directory names and values being dictionaries.
-# Key names equal to './' instead contain a list of tuples of file names plus file sizes.
-def get_torrent_file_listing(decoded: dict) -> dict[str, dict]:
+# Returns a dictionary with directory names as keys, and values differing
+# based on the directory name.
+#
+# For directory names equal to './', the values are a list of tuples,
+# with each tuple containing a file name and a file size.
+# 
+# For all other directory names, the values are dictionaries of the same type
+# being described here -- this is a recursive data structure.
+
+# Type checking is disabled because mypy doesn't support recursive types,
+# and because it incorrectly infers the types of all of the {}.setdefault()
+# calls and throws a wobbly.
+
+Filename = str
+Filesize = int
+
+File = tuple[Filename, Filesize]
+
+Dirname = str
+
+@no_type_check
+def get_torrent_file_listing(decoded: dict) -> dict[Dirname, dict | list[File]]:
 	name = get_name(decoded)
 	
-	tree = { }
+	tree: dict[Dirname, dict | list[File]] = { }
 	
 	try:
+		# for a multi-file torrent, create the root directory
 		files = get_files(decoded)
-		root = tree.setdefault(name, { }) # for a multi-file torrent, create the root directory
+		root = tree.setdefault(name, { })
 	except KeyError:
+		# for a single-file torrent, we don't need a special root directory
 		files = [(get_length(decoded), [name])]
-		root = tree # for a single-file torrent, we don't need a special root directory
+		root = tree
 	
 	for (size, path_segments) in files:
 		if len(path_segments) == 1: # if the file isn't contained under any directories:
@@ -168,12 +191,10 @@ def get_torrent_file_listing(decoded: dict) -> dict[str, dict]:
 			# For every directory in the list:
 			# 
 			# Create a new entry in the dictionary pointed to by `node`,
-			#   with the key being the directory name, and the value being an empty dictionary.
-			# 
-			# Finally, assign `node` to said value.
+			# with the key being the directory name, and the value being an
+			# empty dictionary. Assign `node` to said value.
 			for segment in path_segments[0:-1]:
-				node.setdefault(segment, { })
-				node = node[segment]
+				node = node.setdefault(segment, { })
 			
 			# After the loop has finished, `node` points to the final directory that contains the file.
 			bisect.insort_left(node.setdefault('./', []), (path_segments[-1], size))

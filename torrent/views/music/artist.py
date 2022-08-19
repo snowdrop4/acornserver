@@ -2,12 +2,13 @@ from typing import Any
 
 from django.core import serializers
 from django.db import models
+from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic.edit import DeleteView
 
 from root import messages
-from torrent.models.music import MusicArtist
+from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicRelease
 from torrent.forms.music.artist import MusicArtistFormAdd, MusicArtistFormEdit
 
 
@@ -37,7 +38,7 @@ def view(request: HttpRequest, pk: int) -> HttpResponse:
 	# Construct a dictionary like: { role: { release_group: [releases] } }
 	#   so that the template can simply iterate over to display
 	#   each release for every release group, grouped by contribution type. 
-	releases_by_release_groups_by_roles = { }
+	releases_by_release_groups_by_roles: dict[str, dict[MusicReleaseGroup, QuerySet[MusicRelease]]] = { }
 	
 	for i in contributions:
 		contribution_type = i.get_contribution_type_display()

@@ -1,6 +1,7 @@
 # Functions that create random entries in the database based on the models in `music.py`.
 # This is for using in automated testing and seeding the database with data for development.
 
+from typing import Any
 import random
 
 from django_countries import countries
@@ -49,7 +50,7 @@ def create_random_contribution(
 def create_random_release(release_group: MusicReleaseGroup) -> tuple[MusicRelease, dict]:
 	date = random_date()
 	
-	data = {
+	data: dict[str, Any] = {
 		'release-date': '%d-%02d-%02d' % (date.year, date.month, date.day),
 		'release-label': random_str(),
 		'release-catalog_number': random_str(),
