@@ -1,13 +1,14 @@
+from django.http import HttpRequest, HttpResponse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
-from django.http import HttpRequest, HttpResponse
 
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from inbox.models import InboxThread
+
 from .serializers import InboxThreadSerializer, InboxMessageSerializer
 
 

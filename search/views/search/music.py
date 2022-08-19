@@ -1,13 +1,13 @@
 from typing import Any
 
-from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 from django.core.paginator import Paginator
 
 from root import renderers
-from root.utils.get_parameters import fill_typed_get_parameters
 from search.forms.music import MusicAdvancedSearch
 from torrent.models.music import MusicArtist, MusicReleaseGroup
+from root.utils.get_parameters import fill_typed_get_parameters
 
 
 def search(request: HttpRequest) -> HttpResponse:

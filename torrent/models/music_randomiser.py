@@ -1,13 +1,14 @@
 # Functions that create random entries in the database based on the models in `music.py`.
 # This is for using in automated testing and seeding the database with data for development.
 
-from typing import Any
 import random
+from typing import Any
 
 from django_countries import countries
 
 from root.utils.random import random_str, random_date
-from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution, MusicRelease
+from torrent.models.music import (MusicArtist, MusicRelease,
+                                  MusicContribution, MusicReleaseGroup,)
 
 
 def create_random_artist() -> tuple[MusicArtist, dict]:

@@ -1,16 +1,16 @@
 from typing import Any
 
-from django.core import serializers
 from django.db import models
+from django.core import serializers
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
-from root.utils.get_parameters import fill_typed_get_parameters
 from torrent.models.music import MusicArtist, MusicReleaseGroup
-from torrent.forms.music.release_group import MusicReleaseGroupForm
+from root.utils.get_parameters import fill_typed_get_parameters
 from torrent.forms.music.contribution import MusicContributionFormWithArtistFK
+from torrent.forms.music.release_group import MusicReleaseGroupForm
 
 
 def add(request: HttpRequest) -> HttpResponse:

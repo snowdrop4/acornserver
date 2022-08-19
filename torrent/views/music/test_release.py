@@ -1,13 +1,13 @@
-from typing import Any
 import copy
+from typing import Any
 
-from django.urls import reverse
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 
-from torrent.models.music import MusicRelease
-from torrent.models.music_randomiser import random_date, create_random_release_group
-from account.account_randomiser import create_random_user
 import torrent.views.music.release as release_views
+from torrent.models.music import MusicRelease
+from account.account_randomiser import create_random_user
+from torrent.models.music_randomiser import random_date, create_random_release_group
 
 
 class TestRelease(TestCase):

@@ -3,7 +3,7 @@ from typing import Any
 from django import forms
 from django.db.models import QuerySet
 
-from torrent.models.music import MusicContribution, MusicArtist
+from torrent.models.music import MusicArtist, MusicContribution
 from torrent.widgets.music.artist import ArtistRadioSelect
 
 

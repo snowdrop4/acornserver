@@ -1,8 +1,7 @@
 from random import random
 
-from root.utils.random import random_str, random_prose
-
 from root.models import NewsArticle
+from root.utils.random import random_str, random_prose
 
 
 def create_random_news_article() -> tuple[NewsArticle, dict]:

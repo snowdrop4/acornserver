@@ -1,10 +1,11 @@
-import string
 import random
+import string
 
 from django.contrib.auth import get_user_model
 
-from .models import User
 from root.utils.random import random_str
+
+from .models import User
 
 
 def create_random_user() -> User:

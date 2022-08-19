@@ -1,9 +1,7 @@
 from django.urls import path
 
-from .views.music import (
-	artist, release_group, contribution, release, torrent, upload, latest
-)
-
+from .views.music import (artist, latest, upload, release,
+                          torrent, contribution, release_group,)
 
 app_name = 'torrent'
 urlpatterns = [

@@ -1,10 +1,11 @@
-from django.urls import reverse
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 
-from torrent.models.music import MusicContribution
-from torrent.models.music_randomiser import create_random_artist, create_random_release_group
-from account.account_randomiser import create_random_user
 import torrent.views.music.contribution as contribution_views
+from torrent.models.music import MusicContribution
+from account.account_randomiser import create_random_user
+from torrent.models.music_randomiser import (create_random_artist,
+                                             create_random_release_group,)
 
 
 class TestContribution(TestCase):

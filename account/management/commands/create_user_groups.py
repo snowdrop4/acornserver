@@ -1,13 +1,11 @@
 from typing import Any
 
-from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Group, Permission
+from django.core.management.base import BaseCommand, CommandError
 from django.contrib.contenttypes.models import ContentType
 
-from torrent.models.music import (
-	MusicArtist, MusicReleaseGroup, MusicContribution, MusicRelease, MusicTorrent
-)
-
+from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
+                                  MusicContribution, MusicReleaseGroup,)
 
 groups = {
 	'Admin': {

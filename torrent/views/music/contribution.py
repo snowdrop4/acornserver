@@ -1,19 +1,18 @@
 from typing import Any
 
+from django.db import IntegrityError, models
 from django.core import serializers
-from django.core.paginator import Paginator
-from django.db import models, IntegrityError
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
+from torrent.models.music import MusicArtist, MusicContribution, MusicReleaseGroup
 from root.utils.get_parameters import fill_typed_get_parameters
-from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution
-from torrent.forms.music.contribution import (
-	MusicContributionForm, MusicContributionFormAdd,
-	MusicContributionFormArtistSearch
-)
+from torrent.forms.music.contribution import (MusicContributionForm,
+                                              MusicContributionFormAdd,
+                                              MusicContributionFormArtistSearch,)
 
 
 def add(request: HttpRequest) -> HttpResponse:

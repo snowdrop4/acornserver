@@ -92,7 +92,8 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 
 Development dependencies:
 
-* pyre-check
+* mypy
+* isort
 
 # Development
 

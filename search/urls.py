@@ -3,7 +3,6 @@ from django.urls import path
 from .views.search import music
 from .views.autocomplete.music import artist, release_group
 
-
 app_name = 'search'
 urlpatterns = [
 	path('music', music.search, name='music_search'),

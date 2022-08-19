@@ -2,7 +2,6 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from torrent.models.music import MusicTorrent
-
 from torrent.models.music_utilities import group_torrents
 
 

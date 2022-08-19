@@ -1,11 +1,11 @@
-from typing import Any, IO
-
-from bcoding import bdecode
+from typing import IO, Any
 
 from django import forms
 
-from torrent.models.music import MusicRelease, MusicTorrent
+from bcoding import bdecode
+
 from torrent.metainfo import validate_v1_metainfo
+from torrent.models.music import MusicRelease, MusicTorrent
 
 
 def clean_metainfo_file(self: forms.ModelForm) -> IO[bytes]:

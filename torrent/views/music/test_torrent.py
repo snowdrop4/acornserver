@@ -2,13 +2,14 @@ import os
 import copy
 
 from django.conf import settings
-from django.urls import reverse
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 
-from torrent.models.music import MusicTorrent
-from torrent.models.music_randomiser import create_random_release, create_random_release_group
-from account.account_randomiser import create_random_user
 import torrent.views.music.torrent as torrent_views
+from torrent.models.music import MusicTorrent
+from account.account_randomiser import create_random_user
+from torrent.models.music_randomiser import (create_random_release,
+                                             create_random_release_group,)
 
 
 class TestTorrent(TestCase):

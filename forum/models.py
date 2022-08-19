@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib import auth
 
-from markupfield.fields import MarkupField
 from mptt.models import MPTTModel, TreeForeignKey
+from markupfield.fields import MarkupField
 
 
 class ForumCategory(MPTTModel):

@@ -1,26 +1,23 @@
 import random
 from typing import Any
 
-from django.urls import reverse
-from django.test import RequestFactory
-from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
+from django.test import RequestFactory
+from django.urls import reverse
+from django.shortcuts import render
 
 from root import messages
-
-from root.news_article_randomiser import create_random_news_article
-
-from account.account_randomiser import create_random_user
-
-from forum.forum_randomiser import create_random_category, create_random_thread, create_random_post
 from forum.models import ForumCategory
-
+from forum.forum_randomiser import (create_random_post, create_random_thread,
+                                    create_random_category,)
+from account.account_randomiser import create_random_user
 from torrent.views.music.upload import upload
-from torrent.models.music_randomiser import (
-	create_random_artist, create_random_release_group,
-	create_random_contribution, create_random_release
-)
 from torrent.metainfo_randomiser import create_random_metainfo_file
+from root.news_article_randomiser import create_random_news_article
+from torrent.models.music_randomiser import (create_random_artist,
+                                             create_random_release,
+                                             create_random_contribution,
+                                             create_random_release_group,)
 
 
 def index(request: HttpRequest) -> HttpResponse:

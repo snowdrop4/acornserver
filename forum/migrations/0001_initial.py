@@ -1,8 +1,9 @@
-from django.conf import settings
-from django.db import migrations, models
 import django.db.models.deletion
-import markupfield.fields
+from django.db import models, migrations
+from django.conf import settings
+
 import mptt.fields
+import markupfield.fields
 
 
 class Migration(migrations.Migration):

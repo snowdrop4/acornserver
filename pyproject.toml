@@ -21,6 +21,7 @@ markdown = "^3.0"
 [tool.poetry.dev-dependencies]
 mypy = "*"
 django-stubs = "~1.12.0"
+isort = "*"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
@@ -33,6 +34,16 @@ exclude = ["migrations/*"]
 
 [tool.django-stubs]
 django_settings_module = "acorn.settings"
+
+[tool.isort]
+profile = "black"
+indent = "Tab"
+length_sort = true
+balanced_wrapping = true
+multi_line_output = 0
+include_trailing_comma = true
+known_django = ["django"]
+sections = ["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

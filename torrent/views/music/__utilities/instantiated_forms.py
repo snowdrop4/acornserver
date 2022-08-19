@@ -3,13 +3,13 @@
 
 from abc import abstractmethod
 
-from django.http import HttpRequest
-from django.shortcuts import get_object_or_404
 from django import forms
 from django.db import models
+from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 
-from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution
 from torrent.forms.music import upload
+from torrent.models.music import MusicArtist, MusicContribution, MusicReleaseGroup
 
 
 # The value for the HTML ID for each field when rendered in the template.

@@ -1,14 +1,18 @@
-from typing import Any
 import os
+from typing import Any
 
 from django.conf import settings
-from django.urls import reverse
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 
-from torrent.views.music.upload import upload
-from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicContribution, MusicRelease, MusicTorrent
-from torrent.models.music_randomiser import create_random_artist, create_random_release_group, create_random_contribution, create_random_release
+from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
+                                  MusicContribution, MusicReleaseGroup,)
 from account.account_randomiser import create_random_user
+from torrent.views.music.upload import upload
+from torrent.models.music_randomiser import (create_random_artist,
+                                             create_random_release,
+                                             create_random_contribution,
+                                             create_random_release_group,)
 
 
 class TestUpload(TestCase):

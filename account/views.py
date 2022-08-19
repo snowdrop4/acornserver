@@ -1,13 +1,14 @@
 from typing import Any
 
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import redirect, render, get_object_or_404
 
-from .forms import SignUpForm, UserProfileForm, UserUsernameForm, UserEmailForm
 from root import messages
 from torrent.models.music_utilities import group_torrents
+
+from .forms import SignUpForm, UserEmailForm, UserProfileForm, UserUsernameForm
 
 
 def signup(request: HttpRequest) -> HttpResponse:

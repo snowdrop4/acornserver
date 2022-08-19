@@ -1,9 +1,11 @@
-from django.conf import settings
-from django.db import migrations, models
-import django.db.models.deletion
 import django.utils.timezone
-import django_countries.fields
+import django.db.models.deletion
+from django.db import models, migrations
+from django.conf import settings
+
 import picklefield.fields
+import django_countries.fields
+
 import torrent.models.torrent
 
 

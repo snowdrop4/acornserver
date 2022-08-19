@@ -1,14 +1,14 @@
 from typing import Any
 
-from django.core import serializers
 from django.db import models
-from django.db.models import QuerySet
+from django.core import serializers
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.db.models import QuerySet
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import DeleteView
 
 from root import messages
-from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicRelease
+from torrent.models.music import MusicArtist, MusicRelease, MusicReleaseGroup
 from torrent.forms.music.artist import MusicArtistFormAdd, MusicArtistFormEdit
 
 

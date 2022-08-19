@@ -1,4 +1,5 @@
-from django.db import migrations, models
+from django.db import models, migrations
+
 import markupfield.fields
 
 

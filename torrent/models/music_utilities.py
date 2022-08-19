@@ -1,6 +1,6 @@
 from django.db.models import QuerySet
-from torrent.models.music import MusicReleaseGroup, MusicRelease, MusicTorrent
 
+from torrent.models.music import MusicRelease, MusicTorrent, MusicReleaseGroup
 
 Torrents = list[MusicTorrent]
 ReleaseDictionary = dict[MusicRelease, Torrents]

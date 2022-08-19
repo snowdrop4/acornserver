@@ -1,10 +1,8 @@
+import bisect
+import hashlib
 from typing import no_type_check
 
-import hashlib
-import bisect
-
 from bcoding import bencode
-
 
 # ---------------------------------------- #
 # http://bittorrent.org/beps/bep_0003.html #

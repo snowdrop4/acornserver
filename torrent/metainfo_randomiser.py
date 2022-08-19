@@ -1,11 +1,10 @@
-from typing import IO
-import tempfile
-import hashlib
 import random
 import string
+import hashlib
+import tempfile
+from typing import IO
 
 from bcoding import bencode
-
 
 metainfo_template: dict = {
 	'announce': 'https://example.com/1234567890/announce',

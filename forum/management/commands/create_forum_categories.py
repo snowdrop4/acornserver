@@ -4,7 +4,6 @@ from django.core.management.base import BaseCommand, CommandError
 
 from forum.models import ForumCategory
 
-
 categories = {
 	'Tracker': {
 		'News':        None,

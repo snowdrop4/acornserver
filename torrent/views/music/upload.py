@@ -1,17 +1,20 @@
+from django.db import Error, transaction
+from django.http import Http404, HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
+
 from bcoding import bdecode
 
-from django.db import Error, transaction
-from django.shortcuts import redirect, render
-from django.http import HttpRequest, HttpResponse, Http404
-
 from root import messages, renderers
-from torrent.metainfo import get_infohash_sha1_hexdigest, get_torrent_size, get_torrent_file_listing
-from torrent.models.music import MusicArtist, MusicReleaseGroup, MusicRelease, MusicContribution, MusicTorrent
-from torrent.forms.music.artist        import MusicArtistForm
+from torrent.metainfo import (get_torrent_size, get_torrent_file_listing,
+                              get_infohash_sha1_hexdigest,)
+from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
+                                  MusicContribution, MusicReleaseGroup,)
+from torrent.forms.music.artist import MusicArtistForm
+from torrent.forms.music.release import MusicReleaseForm
+from torrent.forms.music.torrent import MusicTorrentForm
+from torrent.forms.music.contribution import MusicContributionForm
 from torrent.forms.music.release_group import MusicReleaseGroupForm
-from torrent.forms.music.release       import MusicReleaseForm
-from torrent.forms.music.contribution  import MusicContributionForm
-from torrent.forms.music.torrent       import MusicTorrentForm
+
 from .__utilities import instantiated_forms
 
 

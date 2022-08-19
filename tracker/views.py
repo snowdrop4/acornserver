@@ -1,17 +1,17 @@
-from typing import Any
 import datetime
 import ipaddress
 import urllib.parse
+from typing import Any
+
+from django.http import HttpRequest, HttpResponse
+from django.utils import timezone
+from django.db.models import QuerySet
 
 from bcoding import bencode
 
-from django.db.models import QuerySet
-from django.utils import timezone
-from django.http import HttpRequest, HttpResponse
-
-from torrent.models.torrent import Peer
 from torrent.models.music import MusicTorrent, MusicTorrentPeer
-from root.utils.get_parameters import fill_typed_get_parameters, identity
+from torrent.models.torrent import Peer
+from root.utils.get_parameters import identity, fill_typed_get_parameters
 
 
 def peer_id(x: str) -> str:

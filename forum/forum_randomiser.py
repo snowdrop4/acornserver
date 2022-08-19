@@ -1,8 +1,8 @@
 from django.utils import timezone
 
+from forum.models import ForumPost, ForumThread, ForumCategory
 from account.models import User
 from root.utils.random import random_str, random_prose
-from forum.models import ForumCategory, ForumThread, ForumPost
 
 
 def create_random_category(parent: ForumCategory) -> tuple[ForumCategory, dict]:

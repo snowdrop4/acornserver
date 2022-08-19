@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import index, populate_music_database, populate_forum_database, populate_news_database, test_messages
-
+from .views import (index, test_messages, populate_news_database,
+                    populate_forum_database, populate_music_database,)
 
 app_name = 'debug'
 urlpatterns = [

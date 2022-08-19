@@ -1,13 +1,12 @@
 from django.db import Error, transaction
-from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.utils import timezone
-
-from forum.models import ForumCategory, ForumThread
-from forum.forms.thread import ThreadFormAdd
-from forum.forms.post import PostFormAdd
+from django.shortcuts import render, redirect, get_object_or_404
 
 from root import messages, renderers
+from forum.models import ForumThread, ForumCategory
+from forum.forms.post import PostFormAdd
+from forum.forms.thread import ThreadFormAdd
 from root.utils.get_parameters import fill_typed_get_parameters
 
 

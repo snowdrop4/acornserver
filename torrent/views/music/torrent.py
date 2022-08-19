@@ -1,16 +1,18 @@
 from typing import Any
 
+from django.http import HttpRequest, FileResponse, HttpResponse
+from django.utils import timezone
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.edit import DeleteView
+
 from bcoding import bdecode
 
-from django.views.generic.edit import DeleteView
-from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpRequest, HttpResponse, FileResponse
-from django.utils import timezone
-
 from root import messages, renderers
+from torrent.metainfo import (get_torrent_size, get_torrent_file_listing,
+                              get_infohash_sha1_hexdigest,)
+from torrent.models.music import (MusicArtist, MusicRelease,
+                                  MusicTorrent, MusicTorrentDownload,)
 from root.utils.get_parameters import fill_typed_get_parameters
-from torrent.metainfo import get_infohash_sha1_hexdigest, get_torrent_size, get_torrent_file_listing
-from torrent.models.music import MusicArtist, MusicTorrent, MusicTorrentDownload, MusicRelease
 from torrent.forms.music.torrent import MusicTorrentFormAdd, MusicTorrentFormEdit
 
 

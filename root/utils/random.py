@@ -1,6 +1,6 @@
-from random import randint, choice, choices
-import datetime
 import string
+import datetime
+from random import choice, choices, randint
 
 
 def random_bool() -> bool:

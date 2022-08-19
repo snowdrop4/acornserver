@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import index, category, thread
-
+from .views import index, thread, category
 
 app_name = 'forum'
 urlpatterns = [

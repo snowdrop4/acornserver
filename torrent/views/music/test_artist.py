@@ -1,11 +1,11 @@
 import copy
 
-from django.urls import reverse
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 
+import torrent.views.music.artist as artist_views
 from torrent.models.music import MusicArtist
 from account.account_randomiser import create_random_user
-import torrent.views.music.artist as artist_views
 
 
 class TestArtist(TestCase):

@@ -1,9 +1,9 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+
 from global_login_required import login_not_required
 
 from . import views as account_views
-
 
 app_name = 'account'
 urlpatterns = [
