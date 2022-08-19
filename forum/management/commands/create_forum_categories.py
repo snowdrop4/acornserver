@@ -54,7 +54,7 @@ class Command(BaseCommand):
 	
 	def create_categories(self, parent: dict, parent_obj: ForumCategory) -> None:
 		for (k, v) in parent.items():
-			if v == None:
+			if v is None:
 				ForumCategory(parent=parent_obj, title=k, folder=False).save()
 			else:
 				child_obj = ForumCategory(parent=parent_obj, title=k, folder=True)

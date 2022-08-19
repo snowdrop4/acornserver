@@ -62,7 +62,7 @@ def view(request: HttpRequest, pk: int) -> HttpResponse:
 		pk=pk
 	)
 	
-	template_args = { 'release_group': release_group }
+	template_args: dict[str, Any] = { 'release_group': release_group }
 	
 	if 'artist' in get_params:
 		template_args['artist'] = get_object_or_404(MusicArtist, pk=get_params['artist'])

@@ -114,7 +114,7 @@ class Delete(DeleteView):
 
 def view_json(request: HttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
-	to_serialize = [contribution]
+	to_serialize: list[Any] = [contribution]
 	
 	if request.GET.get('release_group', '') == 'expand':
 		to_serialize.append(get_object_or_404(MusicReleaseGroup, pk=contribution.release_group.pk))

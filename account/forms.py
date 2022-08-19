@@ -17,7 +17,7 @@ class SignUpForm(UserCreationForm):
 		#   username and email fields), we cannot just specify the help text by
 		#   setting `help_texts` in the `Meta` class. The password fields have
 		#   already been created at this point.
-		self.fields['password2'].help_text = None
+		self.fields['password2'].help_text = ''
 	
 	class Meta:
 		model = get_user_model()

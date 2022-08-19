@@ -1,3 +1,4 @@
+from typing import Any
 import copy
 
 from django.urls import reverse
@@ -40,7 +41,7 @@ class TestRelease(TestCase):
 		self.assertEquals(release.release_format, self.data['release-release_format'])
 	
 	def test_edit(self) -> None:
-		args = { a.removeprefix('release-'): b for (a, b) in self.data.items() }
+		args: dict[str, Any] = { a.removeprefix('release-'): b for (a, b) in self.data.items() }
 		args['date'] = self.date
 		args['release_group'] = self.release_group
 		release = MusicRelease.objects.create(**args)
