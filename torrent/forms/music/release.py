@@ -2,7 +2,7 @@ from typing import Any
 
 from django import forms
 
-from torrent.models.music import MusicRelease
+from torrent.models.music import MusicRelease, MusicReleaseGroup
 
 
 class MusicReleaseForm(forms.ModelForm):
@@ -20,10 +20,10 @@ class MusicReleaseFormAdd(forms.ModelForm):
 		model = MusicRelease
 		fields = ('release_group', 'date', 'label', 'catalog_number', 'release_format')
 	
-	def __init__(self, fk: int, *args: Any, **kwargs: Any):
+	def __init__(self, fk: MusicReleaseGroup, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 		
-		self.fk = fk
+		self.release_group_fk = fk
 		
 		# Show the release group specified by `fk` (supplied by the query string) as the default value.
 		self.fields['release_group'].choices = [('', fk)]
@@ -33,8 +33,8 @@ class MusicReleaseFormAdd(forms.ModelForm):
 		self.fields['release_group'].required = False
 	
 	# Always return the release group as specified by `fk` for the value for the field.
-	def clean_release_group(self) -> int:
-		return self.fk
+	def clean_release_group(self) -> MusicReleaseGroup:
+		return self.release_group_fk
 
 
 class MusicReleaseFormEdit(forms.ModelForm):

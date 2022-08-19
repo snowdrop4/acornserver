@@ -23,14 +23,14 @@ def add(request: HttpRequest) -> HttpResponse:
 	fk = get_object_or_404(MusicReleaseGroup, pk=get_params['release_group'])
 	
 	if request.method == 'POST':
-		form = MusicReleaseFormAdd(fk.pk, request.POST)
+		form = MusicReleaseFormAdd(fk, request.POST)
 		
 		if form.is_valid():
 			release = form.save()
 			messages.creation(request, 'Created release.')
 			return redirect('torrent:music_release_view', pk=release.pk)
 	else:
-		form = MusicReleaseFormAdd(fk.pk)
+		form = MusicReleaseFormAdd(fk)
 	
 	return render(request, 'torrent/music/release/add.html', { 'form': form })
 
