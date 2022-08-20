@@ -1,6 +1,6 @@
 # About
 
-Torrent tracker. Fixes some of the annoyances with [Gazelle](https://whatcd.github.io/Gazelle/).
+Torrent tracker. Fixes some of the annoyances with [Gazelle](https://whatcd.github.io/Gazelle/). Under heavy development.
 
 Multiple artists with the same name all get different pages, owing to a well-typed separation between:
 
@@ -102,6 +102,7 @@ Development dependencies:
 1. If not running python 3.11, install [pyenv](https://github.com/pyenv/pyenv).
 2. Install [poetry](https://python-poetry.org/docs/).
 3. Run `poetry install` from the repository directory to set up a virtual environment with the necessary python version and packages
+4. Run `fish scripts/installgithooks.fish` to install the appropriate git hooks.
 
 ## Running
 

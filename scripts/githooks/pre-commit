@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+set root (dirname (status --current-filename))
+
+echo "Running isort..."
+
+poetry run python3 $root/isort_hook.py
