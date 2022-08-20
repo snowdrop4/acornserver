@@ -1,7 +1,20 @@
 #!/usr/bin/env fish
 
-set root (dirname (status --current-filename))
+set hook_root (dirname (status --current-filename))
+set project_root (dirname (status --current-filename))/../..
 
 echo "Running isort..."
+poetry run python3 $hook_root/isort_hook.py
+set -a results $status
 
-poetry run python3 $root/isort_hook.py
+echo "Running Django tests..."
+poetry run python3 $project_root/manage.py test
+set -a results $status
+
+for i in $results
+    if test $i -ne 0
+        exit $i
+    end
+end
+
+exit 0
