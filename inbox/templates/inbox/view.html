@@ -9,7 +9,10 @@
 {% endblock %}
 
 {% block content %}
-	<h2>Inbox</h2>
+	<h2 class="with-nav">Inbox</h2>
+	<nav class="subheader-nav">
+		<a href="{% url 'inbox:thread_create' %}">Compose New Thread</a>
+	</nav>
 	
 	<div class="grid-table">
 		<div class="row header">

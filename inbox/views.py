@@ -3,10 +3,10 @@ from django.http import HttpRequest, HttpResponse
 from django.utils import timezone
 from django.views import View
 from django.db.models import Q, QuerySet
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from root import renderers
-from inbox.forms import MessageFormAdd
+from inbox.forms import ThreadFormAdd, MessageFormAdd
 from inbox.models import InboxThread, InboxMessage
 
 
@@ -24,8 +24,47 @@ class InboxView(View):
 		)
 
 
+class ThreadCreateView(View):
+	def get(self, request: HttpRequest) -> HttpResponse:
+		form = ThreadFormAdd()
+		
+		return render(request, 'inbox/thread/add.html', { 'form': form })
+	
+	def post(self, request: HttpRequest) -> HttpResponse:
+		form = ThreadFormAdd(request.POST)
+		
+		if form.is_valid():
+			now = timezone.now()
+			
+			thread = InboxThread(
+				title=form.cleaned_data['title'],
+				sender=request.user,
+				receiver=form.cleaned_data['receiver'],
+				latest_message_datetime=now,
+			)
+			
+			message = InboxMessage(
+				content=form.cleaned_data['content'],
+				pub_date=now,
+				mod_date=now,
+				sender=request.user
+			)
+			
+			try:
+				with transaction.atomic():
+					thread.save()
+					message.thread = thread
+					message.save()
+			except Error as e:
+				return renderers.render_http_server_error(request, f"Could not create thread. Error: {e}")
+			
+			return redirect('inbox:thread_view', pk=thread.pk)
+		
+		return render(request, 'inbox/thread/add.html', { 'form': form })
+
+
 # TODO: add pagination
-class ThreadView(View):
+class ThreadReplyView(View):
 	def get_thread_and_messages(self, pk: int) -> tuple[InboxThread, QuerySet[InboxMessage]]:
 		thread = get_object_or_404(InboxThread, pk=pk)
 		messages = thread.messages.order_by('-pub_date')
@@ -36,10 +75,11 @@ class ThreadView(View):
 		form = MessageFormAdd()
 		(thread, messages) = self.get_thread_and_messages(pk)
 		
-		if thread.sender == request.user:
+		if thread.sender == request.user and thread.sender_unread_messages > 0:
 			thread.sender_unread_messages = 0
 			thread.save()
-		elif thread.receiver == request.user:
+		
+		if thread.receiver == request.user and thread.receiver_unread_messages > 0:
 			thread.receiver_unread_messages = 0
 			thread.save()
 		
