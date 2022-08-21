@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	
 	join_datetime = models.DateTimeField(default=timezone.now)
 	
-	user_bio = MarkupField(markup_type='markdown', escape_html=True, default='')
+	user_bio = MarkupField(markup_type='markdown', escape_html=True, default='', max_length=4096)
 	
 	# Number of bytes uploaded/downloaded
 	uploaded   = models.PositiveBigIntegerField(default=0)

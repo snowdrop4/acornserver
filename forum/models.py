@@ -28,7 +28,7 @@ class ForumCategory(MPTTModel):
 
 
 class ForumContent(models.Model):
-	body = MarkupField(markup_type='markdown', escape_html=True)
+	body = MarkupField(markup_type='markdown', escape_html=True, max_length=4096)
 	
 	datetime = models.DateTimeField()
 	post_number = models.IntegerField()
