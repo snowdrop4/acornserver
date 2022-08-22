@@ -1,11 +1,13 @@
 from typing import Any
 
 from django.http import HttpRequest, FileResponse, HttpResponse
+from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.text import slugify
 from django.views.generic.edit import DeleteView
 
-from bcoding import bdecode
+from bcoding import bdecode, bencode
 
 from root import messages, renderers
 from torrent.metainfo import (get_torrent_size, get_torrent_file_listing,
@@ -119,16 +121,51 @@ class Delete(DeleteView):
 		return redirect('torrent:music_torrent_view', pk=torrent.pk)
 
 
+EXTERNAL_URL = "http://127.0.0.1"
+TRACKER_NAME = "[AcornTorrent]"
+
 # Register the torrent in the user's downloads if the user has not downloaded the torrent before.
 # If the user has already downloaded the torrent before, update the download date.
 # Finally, send the torrent metainfo file as a response.
-def download(request: HttpRequest, pk: int) -> FileResponse:
+def download(request: HttpRequest, pk: int) -> HttpResponse:
+	# Get the torrent file
 	torrent = get_object_or_404(MusicTorrent, pk=pk)
 	
-	(torrent_download, created) = MusicTorrentDownload.objects.get_or_create(torrent=torrent, user=request.user)
+	# Get the object representing the user downloading the torrent
+	(torrent_download, created) = MusicTorrentDownload.objects.get_or_create(
+		torrent=torrent,
+		user=request.user
+	)
 	
+	# Update the timestamp of the last download, if necessary
 	if not created:
 		torrent_download.download_datetime = timezone.now()
 		torrent_download.save()
 	
-	return FileResponse(torrent.metainfo_file, as_attachment=True)
+	# Build the announce URL specific to the user downloading the torrent,
+	# containing the user's passkey
+	announce_url = EXTERNAL_URL + reverse('tracker:bittorrent_announce',
+		kwargs={
+			'passkey': request.user.passkey.key,
+			'torrent_type': 'music',
+		}
+	)
+	
+	# Build the torrent filename
+	release = torrent.release
+	release_group = release.release_group
+	
+	encode_format = torrent.get_encode_format_display().replace(' /', '', 1)
+	release_format = release.get_release_format_display()
+	
+	filename = f'{TRACKER_NAME} {release.date} - {release_group.name} ({release.label}, {release.catalog_number}) [{encode_format}, {release_format}]'
+	
+	# Update the announce URL in the torrent, then serve it
+	with torrent.metainfo_file.open('br') as f:
+		metainfo_decoded = bdecode(f)
+		metainfo_decoded['announce'] = announce_url
+		
+		return HttpResponse(bencode(metainfo_decoded), headers={
+			'Content-Type': 'application/x-bittorrent',
+			'Content-Disposition': f'attachment; filename="{filename}"',
+		})
