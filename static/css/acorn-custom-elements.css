@@ -257,3 +257,18 @@ ul.file-list .size {
 .tooltip:hover:before {
 	display: block;
 }
+
+/******************************************************************************/
+/* Spoilers *******************************************************************/
+/******************************************************************************/
+.spoiler {
+	background: #000;
+	border-radius: 0.2em;
+	color: transparent;
+}
+
+.spoiler:hover,
+.spoiler:focus {
+	background: transparent;
+	color: inherit;
+}

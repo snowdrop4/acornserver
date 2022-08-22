@@ -1,7 +1,7 @@
 import random
 import string
 
-from django.db import models
+from django.db import Error, models, transaction
 from django.utils import timezone
 from django.contrib import auth
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
@@ -15,10 +15,11 @@ class UserManager(BaseUserManager):
 		user = self.model(username=username, email=self.normalize_email(email))
 		user.set_password(password)
 		
-		user.save(using=self._db)
-		
-		passkey = TorrentPasskey(user=user, key=''.join(random.choices(string.ascii_letters, k=20)))
-		passkey.save()
+		with transaction.atomic():
+			user.save()
+			
+			passkey = TorrentPasskey(user=user)
+			passkey.save()
 		
 		return user
 	
@@ -28,7 +29,7 @@ class UserManager(BaseUserManager):
 		user.is_superuser = True
 		user.is_staff = True
 		
-		user.save(using=self._db)
+		user.save()
 		return user
 
 
@@ -70,9 +71,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 		return self.username
 
 
+KEY_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+def gen_passkey() -> str:
+	return ''.join(random.choices(KEY_CHARACTERS, k=40))
+
+
 class TorrentPasskey(models.Model):
-	user = models.OneToOneField(auth.get_user_model(), on_delete=models.CASCADE)
-	key  = models.CharField(max_length=20, unique=True)
+	user = models.OneToOneField(auth.get_user_model(), on_delete=models.CASCADE, related_name='passkey')
+	key  = models.CharField(max_length=40, unique=True, default=gen_passkey)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
 	
 	def __str__(self) -> str:
 		return self.key

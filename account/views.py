@@ -1,11 +1,13 @@
 from typing import Any
 
 from django.http import HttpRequest, HttpResponse
+from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 from root import messages
+from account.models import TorrentPasskey, gen_passkey
 from torrent.models.music_utilities import group_torrents
 
 from .forms import SignUpForm, UserEmailForm, UserProfileForm, UserUsernameForm
@@ -41,7 +43,7 @@ def profile_view(request: HttpRequest, pk: int) -> HttpResponse:
 	latest_uploads   = group_torrents(uploads)
 	latest_downloads = group_torrents([ i.torrent for i in downloads ])
 	
-	return render(request, 'account/profile/view.html',
+	return render(request, 'account/user/view.html',
 		{
 			'target_user': user,
 			'latest_uploads': latest_uploads,
@@ -63,7 +65,7 @@ def profile_edit(request: HttpRequest) -> HttpResponse:
 	else:
 		form = UserProfileForm(instance=user)
 	
-	return render(request, 'account/profile/edit_profile.html',
+	return render(request, 'account/user/edit_profile.html',
 		{ 'form': form, 'target_user': user }
 	)
 
@@ -119,9 +121,23 @@ def account_edit(request: HttpRequest) -> HttpResponse:
 		if k != form_type:
 			forms[k] = forms[k](**forms_kwargs[k])
 	
-	return render(request, 'account/profile/edit_account.html',
+	return render(request, 'account/user/edit_account.html',
 		{
 			'target_user': user,
 			**forms
 		}
 	)
+
+
+class PassKeyReset(View):
+	def get(self, request: HttpRequest) -> HttpResponse:
+		return render(request, 'account/passkey/reset.html')
+	
+	def post(self, request: HttpRequest) -> HttpResponse:
+		if request.POST.get('confirm', 'no') == 'yes':
+			passkey = request.user.passkey
+			passkey.key = gen_passkey()
+			passkey.save()
+			messages.success(self.request, 'Torrent passkey reset.')
+		
+		return redirect('account:account_edit')

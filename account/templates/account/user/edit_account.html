@@ -68,4 +68,7 @@
 	{% endwith %}
 	
 	<h3>Torrent Passkey</h3>
+	
+	<p>Current passkey: <span class="spoiler">{{ user.passkey }}</span></p>
+	<p><a href="{% url 'account:passkey_reset' %}">Reset Passkey</a></p>
 {% endblock %}
