@@ -8,10 +8,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from root import renderers
 from inbox.forms import ThreadFormAdd, MessageFormAdd
 from inbox.models import InboxThread, InboxMessage
+from root.type_annotations import AuthedHttpRequest
 
 
 class InboxView(View):
-	def get(self, request: HttpRequest) -> HttpResponse:
+	def get(self, request: AuthedHttpRequest) -> HttpResponse:
 		threads = InboxThread.objects\
 			.filter(Q(sender=request.user) | Q(receiver=request.user))\
 			.order_by('-latest_message_datetime')\
@@ -25,12 +26,12 @@ class InboxView(View):
 
 
 class ThreadCreateView(View):
-	def get(self, request: HttpRequest) -> HttpResponse:
+	def get(self, request: AuthedHttpRequest) -> HttpResponse:
 		form = ThreadFormAdd()
 		
 		return render(request, 'inbox/thread/add.html', { 'form': form })
 	
-	def post(self, request: HttpRequest) -> HttpResponse:
+	def post(self, request: AuthedHttpRequest) -> HttpResponse:
 		form = ThreadFormAdd(request.POST)
 		
 		if form.is_valid():
@@ -71,7 +72,7 @@ class ThreadReplyView(View):
 		
 		return (thread, messages)
 	
-	def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+	def get(self, request: AuthedHttpRequest, pk: int) -> HttpResponse:
 		form = MessageFormAdd()
 		(thread, messages) = self.get_thread_and_messages(pk)
 		
@@ -91,7 +92,7 @@ class ThreadReplyView(View):
 			}
 		)
 	
-	def post(self, request: HttpRequest, pk: int) -> HttpResponse:
+	def post(self, request: AuthedHttpRequest, pk: int) -> HttpResponse:
 		form = MessageFormAdd(request.POST)
 		(thread, messages) = self.get_thread_and_messages(pk)
 		

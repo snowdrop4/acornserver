@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
@@ -26,7 +28,7 @@ class TestContribution(TestCase):
 		url = reverse('torrent:music_contribution_edit', kwargs={ 'pk': contribution.pk })
 		data = { 'contribution-contribution_type': MusicContribution.ContributionType.GUEST }
 		
-		request = self.requestFactory.post(url, data)
+		request: Any = self.requestFactory.post(url, data)
 		request.user = self.user
 		
 		contribution_views.edit(request, contribution.pk)

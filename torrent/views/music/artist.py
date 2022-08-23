@@ -9,10 +9,11 @@ from django.views.generic.edit import DeleteView
 
 from root import messages
 from torrent.models.music import MusicArtist, MusicRelease, MusicReleaseGroup
+from root.type_annotations import AuthedHttpRequest
 from torrent.forms.music.artist import MusicArtistFormAdd, MusicArtistFormEdit
 
 
-def add(request: HttpRequest) -> HttpResponse:
+def add(request: AuthedHttpRequest) -> HttpResponse:
 	if request.method == 'POST':
 		form = MusicArtistFormAdd(request.POST)
 		
@@ -26,7 +27,7 @@ def add(request: HttpRequest) -> HttpResponse:
 	return render(request, 'torrent/music/artist/add.html', { 'form': form })
 
 
-def view(request: HttpRequest, pk: int) -> HttpResponse:
+def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
 	# `torrents` and `peers` both used in template, so prefetch them now to save database time
@@ -56,7 +57,7 @@ def view(request: HttpRequest, pk: int) -> HttpResponse:
 	return render(request, 'torrent/music/artist/view.html', template_args)
 
 
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
+def edit(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
 	if request.method == 'POST':
@@ -99,13 +100,13 @@ class Delete(DeleteView):
 		return redirect('torrent:music_artist_view', pk=artist.pk)
 
 
-def view_json(request: HttpRequest, pk: int) -> HttpResponse:
+def view_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	data = serializers.serialize('json', [artist])
 	return HttpResponse(data, content_type='application/json')
 
 
-def view_contributions_json(request: HttpRequest, pk: int) -> HttpResponse:
+def view_contributions_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	artist = get_object_or_404(MusicArtist, pk=pk)
 	
 	data = { }

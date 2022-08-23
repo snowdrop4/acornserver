@@ -1,4 +1,5 @@
 import copy
+from typing import Any
 
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
@@ -28,7 +29,7 @@ class TestReleaseGroup(TestCase):
 	def test_add(self) -> None:
 		url = reverse('torrent:music_release_group_add') + '?artist=' + str(self.artist.pk)
 		
-		request = self.requestFactory.post(url, { **self.data, **self.contribution_data })
+		request: Any = self.requestFactory.post(url, { **self.data, **self.contribution_data })
 		request.user = self.user
 		
 		release_group_views.add(request)
@@ -47,7 +48,7 @@ class TestReleaseGroup(TestCase):
 		modified_data['release_group-name'] = 'blueberry'
 		modified_data['release_group-group_type'] = MusicReleaseGroup.GroupType.EP
 		
-		request = self.requestFactory.post(url, modified_data)
+		request: Any = self.requestFactory.post(url, modified_data)
 		request.user = self.user
 		
 		release_group_views.edit(request, release_group.pk)

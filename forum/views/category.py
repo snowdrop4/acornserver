@@ -3,9 +3,10 @@ from django.shortcuts import render
 
 from root import renderers
 from forum.models import ForumCategory
+from root.type_annotations import AuthedHttpRequest
 
 
-def view(request: HttpRequest, pk: int) -> HttpResponse:
+def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	try:
 		category = ForumCategory.objects\
 			.prefetch_related('children__latest_post_thread__latest_post_author')\

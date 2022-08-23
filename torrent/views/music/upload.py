@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db import Error, transaction
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
@@ -9,6 +11,7 @@ from torrent.metainfo import (get_torrent_size, get_torrent_file_listing,
                               get_infohash_sha1_hexdigest,)
 from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
                                   MusicContribution, MusicReleaseGroup,)
+from root.type_annotations import AuthedHttpRequest
 from torrent.forms.music.artist import MusicArtistForm
 from torrent.forms.music.release import MusicReleaseForm
 from torrent.forms.music.torrent import MusicTorrentForm
@@ -21,14 +24,14 @@ from .__utilities import instantiated_forms
 # Wrapper around the basic python dictionary object that accepts values of type string and converts them to type int.
 # If the conversion from string to integer fails, it throws a 404.
 class PkProvider:
-	def __init__(self, get_parameters):
-		self.pks = { }
+	def __init__(self, get_parameters: dict[str, str]):
+		self.pks: dict[str, int] = { }
 		
 		for k, vs in get_parameters.items():
 			for v in vs:
 				self.__setitem__(k, v)
 	
-	def __setitem__(self, pk_name, pk_value):
+	def __setitem__(self, pk_name: str, pk_value: str) -> None:
 		try:
 			self.pks[pk_name] = int(pk_value)
 		except ValueError:
@@ -38,14 +41,14 @@ class PkProvider:
 			# return HttpResponseBadRequest('The GET parameter \'' + pk_name + '\' must be an integer')
 			raise Http404('The GET parameter \'' + pk_name + '\' must be an integer')
 	
-	def __getitem__(self, pk_name):
+	def __getitem__(self, pk_name: str) -> int:
 		return self.pks[pk_name]
 	
-	def __contains__(self, pk_name):
+	def __contains__(self, pk_name: str) -> bool:
 		return pk_name in self.pks
 
 
-def upload(request: HttpRequest) -> HttpResponse:
+def upload(request: AuthedHttpRequest) -> HttpResponse:
 	# Sets of valid GET parameters and the corresponding forms that will be used for the given parameters.
 	# The order of the forms is important here, as they are instantiated in this order. 'model_pk', 'contribution_select',
 	#   and 'release_select' provide PKs to the other forms through PkProvider, so they must come first.

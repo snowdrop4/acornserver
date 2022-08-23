@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 
 from torrent.forms.music import upload
 from torrent.models.music import MusicArtist, MusicContribution, MusicReleaseGroup
+from root.type_annotations import AuthedHttpRequest
 
 
 # The value for the HTML ID for each field when rendered in the template.
@@ -27,7 +28,7 @@ class BaseForm:
 		
 		self.is_valid_override = False
 	
-	def instantiate(self, request: HttpRequest) -> None:
+	def instantiate(self, request: AuthedHttpRequest) -> None:
 		# If the request method is a POST, construct a form and object based on the POSTed values.
 		if request.method == 'POST':
 			self.instantiate_post(request)
@@ -35,7 +36,7 @@ class BaseForm:
 		else:
 			self.instantiate_empty()
 	
-	def instantiate_post(self, request: HttpRequest) -> None:
+	def instantiate_post(self, request: AuthedHttpRequest) -> None:
 		self.form = self.form_class(request.POST, auto_id=auto_id())
 	
 	def instantiate_empty(self) -> None:
@@ -64,7 +65,7 @@ class MusicModelPkForm(BaseForm):
 	def __init__(self, pk_provider: dict):
 		super().__init__(pk_provider, 'model_pk', upload.MusicModelPkForm)
 	
-	def instantiate_post(self, request: HttpRequest) -> None:
+	def instantiate_post(self, request: AuthedHttpRequest) -> None:
 		super().instantiate_post(request)
 		
 		if self.form.is_valid():
@@ -83,7 +84,7 @@ class MusicPkForm(BaseForm):
 	def instantiate_pk(self, pk: int) -> None:
 		raise NotImplementedError
 	
-	def instantiate(self, request: HttpRequest) -> None:
+	def instantiate(self, request: AuthedHttpRequest) -> None:
 		if self.pk_name in self.pk_provider:
 			self.instantiate_pk(self.pk_provider[self.pk_name])
 			self.is_valid_override = True
@@ -113,7 +114,7 @@ class MusicObjectForm(MusicPkForm):
 		self.disable_all_fields()
 		self.from_pk = True
 	
-	def instantiate_post(self, request: HttpRequest) -> None:
+	def instantiate_post(self, request: AuthedHttpRequest) -> None:
 		super().instantiate_post(request)
 		
 		if self.form.is_valid():
@@ -152,7 +153,7 @@ class MusicContributionSelectForm(MusicPkForm):
 		
 		self.populate_choices()
 	
-	def instantiate_post(self, request: HttpRequest) -> None:
+	def instantiate_post(self, request: AuthedHttpRequest) -> None:
 		super().instantiate_post(request)
 		self.populate_choices()
 		
@@ -200,7 +201,7 @@ class MusicReleaseSelectForm(MusicPkForm):
 		super().instantiate_empty()
 		self.populate_choices()
 	
-	def instantiate_post(self, request: HttpRequest) -> None:
+	def instantiate_post(self, request: AuthedHttpRequest) -> None:
 		super().instantiate_post(request)
 		self.populate_choices()
 		

@@ -8,6 +8,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from root import messages
 from account.models import TorrentPasskey, gen_passkey
+from root.type_annotations import AuthedHttpRequest
 from torrent.models.music_utilities import group_torrents
 
 from .forms import SignUpForm, UserEmailForm, UserProfileForm, UserUsernameForm
@@ -27,7 +28,7 @@ def signup(request: HttpRequest) -> HttpResponse:
 	return render(request, 'account/authentication/signup.html', { 'form': form })
 
 
-def profile_view(request: HttpRequest, pk: int) -> HttpResponse:
+def profile_view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	user = get_object_or_404(get_user_model(), pk=pk)
 	
 	uploads = user.music_uploads\
@@ -52,7 +53,7 @@ def profile_view(request: HttpRequest, pk: int) -> HttpResponse:
 	)
 
 # For editing things like biography/avatar/etc.
-def profile_edit(request: HttpRequest) -> HttpResponse:
+def profile_edit(request: AuthedHttpRequest) -> HttpResponse:
 	user = request.user
 	
 	if request.method == 'POST':
@@ -73,7 +74,7 @@ def profile_edit(request: HttpRequest) -> HttpResponse:
 # 
 # This view contains three forms, and the template contains a hidden
 # field identifying which form was submitted.
-def account_edit(request: HttpRequest) -> HttpResponse:
+def account_edit(request: AuthedHttpRequest) -> HttpResponse:
 	user = request.user
 	
 	forms: dict[str, Any] = {
@@ -130,10 +131,10 @@ def account_edit(request: HttpRequest) -> HttpResponse:
 
 
 class PassKeyReset(View):
-	def get(self, request: HttpRequest) -> HttpResponse:
+	def get(self, request: AuthedHttpRequest) -> HttpResponse:
 		return render(request, 'account/passkey/reset.html')
 	
-	def post(self, request: HttpRequest) -> HttpResponse:
+	def post(self, request: AuthedHttpRequest) -> HttpResponse:
 		if request.POST.get('confirm', 'no') == 'yes':
 			passkey = request.user.passkey
 			passkey.key = gen_passkey()

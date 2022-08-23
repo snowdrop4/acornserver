@@ -117,7 +117,7 @@ class TestUpload(TestCase):
 			, **self.release_data
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url, data, format='multipart')
+		request: Any = self.requestFactory.post(self.url, data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -149,7 +149,7 @@ class TestUpload(TestCase):
 			, **self.release_data
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url, data, format='multipart')
+		request: Any = self.requestFactory.post(self.url, data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -186,7 +186,7 @@ class TestUpload(TestCase):
 			, **self.release_data
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url, data, format='multipart')
+		request: Any = self.requestFactory.post(self.url, data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -227,7 +227,7 @@ class TestUpload(TestCase):
 			, **{ 'release_select-release': '4', }
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url, data, format='multipart')
+		request: Any = self.requestFactory.post(self.url, data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -253,7 +253,7 @@ class TestUpload(TestCase):
 			, **self.release_data
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url + '?artist=2', data, format='multipart')
+		request: Any = self.requestFactory.post(self.url + '?artist=2', data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -288,7 +288,7 @@ class TestUpload(TestCase):
 			{ **self.release_data
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url + '?contribution=1', data, format='multipart')
+		request: Any = self.requestFactory.post(self.url + '?contribution=1', data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -321,7 +321,7 @@ class TestUpload(TestCase):
 			{ **self.release_data
 			, **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url + '?release_group=3', data, format='multipart')
+		request: Any = self.requestFactory.post(self.url + '?release_group=3', data, format='multipart')
 		request.user = self.user
 		
 		upload(request)
@@ -358,7 +358,7 @@ class TestUpload(TestCase):
 		
 		data = { **self.torrent_data }
 		
-		request = self.requestFactory.post(self.url + '?release=4', data, format='multipart')
+		request: Any = self.requestFactory.post(self.url + '?release=4', data, format='multipart')
 		request.user = self.user
 		
 		upload(request)

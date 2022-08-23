@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from inbox.models import InboxThread
+from root.type_annotations import AuthedHttpRequest
 
 from .serializers import InboxThreadSerializer, InboxMessageSerializer
 
@@ -18,7 +19,7 @@ class InboxThreadView(APIView):
 	"""
 	permission_classes = [permissions.IsAuthenticated]
 	
-	def get(self, request: HttpRequest) -> HttpResponse:
+	def get(self, request: AuthedHttpRequest) -> HttpResponse:
 		user = request.user.pk
 		threads = InboxThread.objects\
 			.filter(Q(sender=user) | Q(receiver=user))\
@@ -36,7 +37,7 @@ class InboxMessagesView(APIView):
 	
 	permission_classes = [permissions.IsAuthenticated]
 	
-	def get(self, request: HttpRequest, thread_pk: int) -> HttpResponse:
+	def get(self, request: AuthedHttpRequest, thread_pk: int) -> HttpResponse:
 		user = request.user.pk
 		thread = get_object_or_404(InboxThread, pk=thread_pk)
 		

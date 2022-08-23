@@ -8,12 +8,13 @@ from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
 from torrent.models.music import MusicArtist, MusicReleaseGroup
+from root.type_annotations import AuthedHttpRequest
 from root.utils.get_parameters import fill_typed_get_parameters
 from torrent.forms.music.contribution import MusicContributionFormWithArtistFK
 from torrent.forms.music.release_group import MusicReleaseGroupForm
 
 
-def add(request: HttpRequest) -> HttpResponse:
+def add(request: AuthedHttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'artist': (True, int, "must be an integer") }
@@ -49,7 +50,7 @@ def add(request: HttpRequest) -> HttpResponse:
 	return render(request, 'torrent/music/release_group/add.html', template_args)
 
 
-def view(request: HttpRequest, pk: int) -> HttpResponse:
+def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'artist': (False, int, "must be an integer") })
@@ -70,7 +71,7 @@ def view(request: HttpRequest, pk: int) -> HttpResponse:
 	return render(request, 'torrent/music/release_group/view.html', template_args )
 
 
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
+def edit(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	release_group = get_object_or_404(MusicReleaseGroup, pk=pk)
 	
 	if request.method == 'POST':
@@ -115,7 +116,7 @@ class Delete(DeleteView):
 		return redirect('torrent:music_release_group_view', pk=release_group.pk)
 
 
-def view_json(request: HttpRequest, pk: int) -> HttpResponse:
+def view_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	release_group = get_object_or_404(MusicReleaseGroup, pk=pk)
 	data = serializers.serialize('json', [release_group])
 	return HttpResponse(data, content_type='application/json')

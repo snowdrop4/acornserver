@@ -7,10 +7,11 @@ from root import messages, renderers
 from forum.models import ForumThread, ForumCategory
 from forum.forms.post import PostFormAdd
 from forum.forms.thread import ThreadFormAdd
+from root.type_annotations import AuthedHttpRequest
 from root.utils.get_parameters import fill_typed_get_parameters
 
 
-def view(request: HttpRequest, pk: int) -> HttpResponse:
+def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	try:
 		thread = ForumThread.objects\
 			.select_related('category')\
@@ -66,7 +67,7 @@ def view(request: HttpRequest, pk: int) -> HttpResponse:
 	return render(request, 'forum/thread/view.html', template_args)
 
 
-def add(request: HttpRequest) -> HttpResponse:
+def add(request: AuthedHttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'category': (True, int, "must be an integer") })

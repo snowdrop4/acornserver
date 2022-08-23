@@ -1,5 +1,6 @@
 import random
 import string
+from typing import Any
 
 from django.db import Error, models, transaction
 from django.utils import timezone
@@ -80,7 +81,7 @@ class TorrentPasskey(models.Model):
 	user = models.OneToOneField(auth.get_user_model(), on_delete=models.CASCADE, related_name='passkey')
 	key  = models.CharField(max_length=40, unique=True, default=gen_passkey)
 	
-	def __init__(self, *args, **kwargs):
+	def __init__(self, *args: Any, **kwargs: Any):
 		super().__init__(*args, **kwargs)
 	
 	def __str__(self) -> str:

@@ -9,13 +9,14 @@ from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
 from torrent.models.music import MusicArtist, MusicContribution, MusicReleaseGroup
+from root.type_annotations import AuthedHttpRequest
 from root.utils.get_parameters import fill_typed_get_parameters
 from torrent.forms.music.contribution import (MusicContributionForm,
                                               MusicContributionFormAdd,
                                               MusicContributionFormArtistSearch,)
 
 
-def add(request: HttpRequest) -> HttpResponse:
+def add(request: AuthedHttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request, {
 				'release_group': (True,  int, 'must be an integer'),
@@ -66,7 +67,7 @@ def add(request: HttpRequest) -> HttpResponse:
 	return render(request, 'torrent/music/contribution/add.html', template_args)
 
 
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
+def edit(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
 	
 	if request.method == 'POST':
@@ -111,7 +112,7 @@ class Delete(DeleteView):
 		return redirect('torrent:music_release_group_view', pk=contribution.release_group.pk)
 
 
-def view_json(request: HttpRequest, pk: int) -> HttpResponse:
+def view_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
 	to_serialize: list[Any] = [contribution]
 	
@@ -122,7 +123,7 @@ def view_json(request: HttpRequest, pk: int) -> HttpResponse:
 	return HttpResponse(data, content_type='application/json')
 
 
-def view_releases_json(request: HttpRequest, pk: int) -> HttpResponse:
+def view_releases_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	contribution = get_object_or_404(MusicContribution, pk=pk)
 	
 	data = { }

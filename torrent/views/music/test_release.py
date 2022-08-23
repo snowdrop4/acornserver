@@ -29,7 +29,7 @@ class TestRelease(TestCase):
 	def test_add(self) -> None:
 		url = reverse('torrent:music_release_add') + '?release_group=' + str(self.release_group.pk)
 		
-		request = self.requestFactory.post(url, self.data)
+		request: Any = self.requestFactory.post(url, self.data)
 		request.user = self.user
 		
 		release_views.add(request)
@@ -51,7 +51,7 @@ class TestRelease(TestCase):
 		modified_data = copy.deepcopy(self.data)
 		modified_data['release-label'] = 'strawberry'
 		
-		request = self.requestFactory.post(url, modified_data)
+		request: Any = self.requestFactory.post(url, modified_data)
 		request.user = self.user
 		
 		release_views.edit(request, release.pk)

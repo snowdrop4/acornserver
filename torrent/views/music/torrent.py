@@ -14,11 +14,12 @@ from torrent.metainfo import (get_torrent_size, get_torrent_file_listing,
                               get_infohash_sha1_hexdigest,)
 from torrent.models.music import (MusicArtist, MusicRelease,
                                   MusicTorrent, MusicTorrentDownload,)
+from root.type_annotations import AuthedHttpRequest
 from root.utils.get_parameters import fill_typed_get_parameters
 from torrent.forms.music.torrent import MusicTorrentFormAdd, MusicTorrentFormEdit
 
 
-def add(request: HttpRequest) -> HttpResponse:
+def add(request: AuthedHttpRequest) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'release': (True, int, 'must be an integer') }
@@ -56,7 +57,7 @@ def add(request: HttpRequest) -> HttpResponse:
 	return render(request, 'torrent/music/torrent/add.html', { 'form': form })
 
 
-def view(request: HttpRequest, pk: int) -> HttpResponse:
+def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	try:
 		get_params = fill_typed_get_parameters(request,
 			{ 'artist': (False, int, 'must be an integer') }
@@ -83,7 +84,7 @@ def view(request: HttpRequest, pk: int) -> HttpResponse:
 	return render(request, 'torrent/music/torrent/view.html', template_args)
 
 
-def edit(request: HttpRequest, pk: int) -> HttpResponse:
+def edit(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	torrent = get_object_or_404(MusicTorrent, pk=pk)
 	
 	if request.method == 'POST':
@@ -127,7 +128,7 @@ TRACKER_NAME = "[AcornTorrent]"
 # Register the torrent in the user's downloads if the user has not downloaded the torrent before.
 # If the user has already downloaded the torrent before, update the download date.
 # Finally, send the torrent metainfo file as a response.
-def download(request: HttpRequest, pk: int) -> HttpResponse:
+def download(request: AuthedHttpRequest, pk: int) -> HttpResponse:
 	# Get the torrent file
 	torrent = get_object_or_404(MusicTorrent, pk=pk)
 	

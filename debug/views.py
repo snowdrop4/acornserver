@@ -8,6 +8,7 @@ from django.shortcuts import render
 
 from root import messages
 from forum.models import ForumCategory
+from root.type_annotations import AuthedHttpRequest
 from forum.forum_randomiser import (create_random_post, create_random_thread,
                                     create_random_category,)
 from account.account_randomiser import create_random_user
@@ -20,11 +21,11 @@ from torrent.models.music_randomiser import (create_random_artist,
                                              create_random_release_group,)
 
 
-def index(request: HttpRequest) -> HttpResponse:
+def index(request: AuthedHttpRequest) -> HttpResponse:
 	return render(request, 'debug/index.html')
 
 
-def populate_music_database(request: HttpRequest) -> HttpResponse:
+def populate_music_database(request: AuthedHttpRequest) -> HttpResponse:
 	user = create_random_user()
 	
 	# create 1 artist
@@ -53,7 +54,7 @@ def populate_music_database(request: HttpRequest) -> HttpResponse:
 					, **torrent_data }
 				
 				request_factory = RequestFactory()
-				request = request_factory.post(reverse('torrent:music_upload'), data, format='multipart')
+				request = request_factory.post(reverse('torrent:music_upload'), data, format='multipart')  # type: ignore
 				request.user = user
 				
 				upload(request)
@@ -61,7 +62,7 @@ def populate_music_database(request: HttpRequest) -> HttpResponse:
 	return render(request, 'debug/populate_database.html', { 'database_type': 'Music' })
 
 
-def populate_forum_database(request: HttpRequest) -> HttpResponse:
+def populate_forum_database(request: AuthedHttpRequest) -> HttpResponse:
 	root = ForumCategory.objects.get(pk=1) # get the root category
 	
 	# create one category
@@ -80,13 +81,13 @@ def populate_forum_database(request: HttpRequest) -> HttpResponse:
 	return render(request, 'debug/populate_database.html', { 'database_type': 'Forum' })
 
 
-def populate_news_database(request: HttpRequest) -> HttpResponse:
+def populate_news_database(request: AuthedHttpRequest) -> HttpResponse:
 	(news_article, _) = create_random_news_article()
 	
 	return render(request, 'debug/populate_database.html', { 'database_type': 'News' })
 
 
-def test_messages(request: HttpRequest) -> HttpResponse:
+def test_messages(request: AuthedHttpRequest) -> HttpResponse:
 	messages.success(request,      'Something succeeded.')
 	messages.failure(request,      'Something failed.')
 	messages.creation(request,     'Something created.')

@@ -1,4 +1,5 @@
 import copy
+from typing import Any
 
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
@@ -21,7 +22,7 @@ class TestArtist(TestCase):
 	def test_add(self) -> None:
 		url = reverse('torrent:music_artist_add')
 		
-		request = self.requestFactory.post(url, self.data)
+		request: Any = self.requestFactory.post(url, self.data)
 		request.user = self.user
 		
 		artist_views.add(request)
@@ -40,7 +41,7 @@ class TestArtist(TestCase):
 		modified_data['artist-name'] = 'ooooooooooooooo'
 		modified_data['artist-artist_type'] = MusicArtist.ArtistType.PERSON
 		
-		request = self.requestFactory.post(url, modified_data)
+		request: Any = self.requestFactory.post(url, modified_data)
 		request.user = self.user
 		
 		artist_views.edit(request, artist.pk)

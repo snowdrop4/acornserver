@@ -1,5 +1,6 @@
 import os
 import copy
+from typing import Any
 
 from django.conf import settings
 from django.test import TestCase, RequestFactory
@@ -35,7 +36,7 @@ class TestTorrent(TestCase):
 	def test_add(self) -> None:
 		url = reverse('torrent:music_torrent_add') + '?release=' + str(self.release.pk)
 		
-		request = self.requestFactory.post(url, self.torrent_data, format='multipart')
+		request: Any = self.requestFactory.post(url, self.torrent_data, format='multipart')
 		request.user = self.user
 		
 		torrent_views.add(request)
@@ -49,7 +50,7 @@ class TestTorrent(TestCase):
 		# First, create a new torrent.
 		url = reverse('torrent:music_torrent_add') + '?release=' + str(self.release.pk)
 		
-		request = self.requestFactory.post(url, self.torrent_data, format='multipart')
+		request: Any = self.requestFactory.post(url, self.torrent_data, format='multipart')
 		request.user = self.user
 		
 		torrent_views.add(request)
