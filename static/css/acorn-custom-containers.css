@@ -134,20 +134,36 @@ main.center-max-width {
 }
 
 /******************************************************************************/
-/* Main site body centering/container class ***********************************/
+/* Table using CSS grid *******************************************************/
 /******************************************************************************/
+
+/* To use this, you need to set `grid-template-columns` in `.grid-table` to an
+ * appropriate value, like:
+ *
+ * .grid-table {
+ *     grid-template-columns: 1fr max-content max-content max-content;
+ * }
+ * 
+ * And then set `grid-column` in `.grid-table .row` to an appropriate value,
+ * like:
+ * 
+ * .grid-table .row {
+ *     grid-column: 1 / 5;
+ * }
+ * 
+ */
 
 .grid-table {
 	display: grid;
-	grid-template-columns: 1fr max-content max-content;
 	gap: 1px;
 	margin: 1rem 0rem;
 }
 
 .grid-table .row {
 	display: grid;
-	grid-column: 1 / 4;
 	grid-template-columns: subgrid;
+	
+	background-color: var(--element-background);
 }
 
 .grid-table .row.header {

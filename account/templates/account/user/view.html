@@ -9,13 +9,11 @@
 	
 	<nav class="subheader-nav">
 		{% if target_user.pk == user.pk %}
-			Messages
-			 | 
-			 <a href="{% url 'account:account_edit' %}">Edit Account</a>
+			<a href="{% url 'account:account_edit' %}">Edit Account</a>
 			 | 
 			<a href="{% url 'account:profile_edit' %}">Edit Profile</a>
 		{% else %}
-			Message User
+			<a href="{% url 'inbox:thread_create' %}?to={{ target_user.pk }}">Message User</a>
 			 | 
 			Report User
 		{% endif %}

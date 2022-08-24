@@ -4,11 +4,13 @@ from django.utils import timezone
 from django.views import View
 from django.db.models import Q, QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
 
 from root import renderers
 from inbox.forms import ThreadFormAdd, MessageFormAdd
 from inbox.models import InboxThread, InboxMessage
 from root.type_annotations import AuthedHttpRequest
+from root.utils.get_parameters import fill_typed_get_parameters
 
 
 class InboxView(View):
@@ -27,7 +29,17 @@ class InboxView(View):
 
 class ThreadCreateView(View):
 	def get(self, request: AuthedHttpRequest) -> HttpResponse:
-		form = ThreadFormAdd()
+		try:
+			get_params = fill_typed_get_parameters(request,
+				{ 'to': (False, int, "must be an integer") })
+		except ValueError as e:
+			return renderers.render_http_bad_request(request, str(e))
+		
+		if 'to' in get_params:
+			receiver = get_object_or_404(get_user_model(), pk=get_params['to'])
+			form = ThreadFormAdd(initial={ 'receiver': receiver.username })
+		else:
+			form = ThreadFormAdd()
 		
 		return render(request, 'inbox/thread/add.html', { 'form': form })
 	

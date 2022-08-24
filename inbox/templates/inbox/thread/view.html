@@ -35,7 +35,7 @@
 			{% for message in thread_messages %}
 				<div class="item markdown {% if message.sender == request.user %}sent{% else %}received{% endif %}">
 					<div class="message-author">
-						<div>{{ message.sender }}</div>
+						<div><a href="{% url 'account:profile_view' pk=message.sender.pk %}">{{ message.sender }}</a></div>
 					</div>
 					
 					<div class="message-body">

@@ -14,11 +14,12 @@
 		<a href="{% url 'inbox:thread_create' %}">Compose New Thread</a>
 	</nav>
 	
-	<div class="grid-table">
-		<div class="row header">
-			<div class="dynamic">Title</div>
-			<div class="fixed">Author</div>
-			<div class="fixed">Last Message</div>
+	<div class="grid-table" style="grid-template-columns: 1fr max-content max-content max-content;">
+		<div class="row header" style="grid-column: 1 / 5">
+			<div>Title</div>
+			<div>To</div>
+			<div>From</div>
+			<div>Last Message</div>
 		</div>
 		
 		{% for thread in threads %}
@@ -28,16 +29,28 @@
 				{% define "highlight" as highlight %}
 			{% endif %}
 			
-			<div class="row {{ highlight }}">
-				<div class="dynamic">
+			<div class="row {{ highlight }}" style="grid-column: 1 / 5">
+				<div>
 					<a href="{% url 'inbox:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
 				</div>
 				
-				<div class="fixed">
-					{{ thread.sender }}
+				<div>
+					{% if thread.receiver == request.user %}
+						You
+					{% else %}
+						<a href="{% url 'account:profile_view' pk=thread.receiver.pk %}">{{ thread.receiver }}</a>
+					{% endif %}
 				</div>
 				
-				<div class="fixed">
+				<div>
+					{% if thread.sender == request.user %}
+						You
+					{% else %}
+						<a href="{% url 'account:profile_view' pk=thread.sender.pk %}">{{ thread.sender }}</a>
+					{% endif %}
+				</div>
+				
+				<div>
 					{{ thread.latest_message_datetime }}
 				</div>
 			</div>
