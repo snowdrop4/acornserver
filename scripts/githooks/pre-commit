@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
-set hook_root (dirname (status --current-filename))
-set project_root (dirname (status --current-filename))/../..
+set hook_root (realpath (dirname (status -f)))
+set project_root (realpath (dirname (status -f)))/../..
 
 echo "Running isort..."
 poetry run python3 $hook_root/isort_hook.py
