@@ -1,5 +1,5 @@
 from django.db import Error, transaction
-from django.http import HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.utils import timezone
 from django.views import View
 from django.db.models import Q, QuerySet
@@ -18,6 +18,8 @@ class InboxView(View):
 		threads = InboxThread.objects\
 			.filter(Q(sender=request.user) | Q(receiver=request.user))\
 			.order_by('-latest_message_datetime')\
+			.select_related('receiver')\
+			.select_related('sender')\
 			[:10]
 		
 		return render(request, 'inbox/view.html',
@@ -79,14 +81,24 @@ class ThreadCreateView(View):
 # TODO: add pagination
 class ThreadReplyView(View):
 	def get_thread_and_messages(self, pk: int) -> tuple[InboxThread, QuerySet[InboxMessage]]:
-		thread = get_object_or_404(InboxThread, pk=pk)
-		messages = thread.messages.order_by('-pub_date')
+		try:
+			thread = InboxThread.objects.select_related('sender')\
+				.select_related('receiver')\
+				.get(pk=pk)
+		except InboxThread.DoesNotExist:
+			raise Http404
+		
+		messages = thread.messages.order_by('-pub_date')\
+			.select_related('sender')
 		
 		return (thread, messages)
 	
 	def get(self, request: AuthedHttpRequest, pk: int) -> HttpResponse:
 		form = MessageFormAdd()
 		(thread, messages) = self.get_thread_and_messages(pk)
+		
+		if thread.sender != request.user and thread.receiver != request.user:
+			return renderers.render_http_forbidden(request, 'Not authorised to view thread')
 		
 		if thread.sender == request.user and thread.sender_unread_messages > 0:
 			thread.sender_unread_messages = 0
@@ -133,7 +145,7 @@ class ThreadReplyView(View):
 		
 		return render(request, 'inbox/thread/view.html',
 			{
-				'form': form,
+				'form': MessageFormAdd(), # reconstruct the form, so that it's blank again
 				'thread': thread,
 				'thread_messages': messages,
 			}

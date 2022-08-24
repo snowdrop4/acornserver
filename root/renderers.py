@@ -13,6 +13,17 @@ def render_http_bad_request(request: HttpRequest, message: str) -> HttpResponse:
 	return render(request, 'root/error_pages/base.html', template_args, status=status_code_number)
 
 
+def render_http_forbidden(request: HttpRequest, message: str) -> HttpResponse:
+	status_code_number = 403
+	
+	template_args = \
+		{ 'message': message
+		, 'status_code_number': status_code_number
+		, 'status_code_text': 'Forbidden' }
+	
+	return render(request, 'root/error_pages/base.html', template_args, status=status_code_number)
+
+
 def render_http_not_found(request: HttpRequest, message: str) -> HttpResponse:
 	status_code_number = 404
 	
