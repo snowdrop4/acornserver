@@ -4,29 +4,29 @@
 {% load humanize %}
 
 {% block title %}
-	Compose New Thread
+    Compose New Thread
 {% endblock %}
 
 {% block content %}
-	<nav class="breadcrumb">
-		<a href="{% url 'inbox:inbox_view' %}">Inbox</a>
-		→ 
-		<a href="{% url 'inbox:thread_create'">Compose New Thread</a>
-	</nav>
-	
-	<h2>Compose New Thread</h2>
-	
-	{% if form.errors %}
-		<p class="error">Error processing the thread. The invalid fields are marked below.</p>
-	{% endif %}
-	
-	<form method="post">
-		{% csrf_token %}
-		
-		{% include 'form-as-table.html' %}
-		
-		<div class="button-container">
-			<button type="submit">Send</button>
-		</div>
-	</form>
+    <nav class="breadcrumb">
+        <a href="{% url 'inbox:inbox_view' %}">Inbox</a>
+        → 
+        <a href="{% url 'inbox:thread_create'">Compose New Thread</a>
+    </nav>
+    
+    <h2>Compose New Thread</h2>
+    
+    {% if form.errors %}
+        <p class="error">Error processing the thread. The invalid fields are marked below.</p>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% include 'form-as-table.html' %}
+        
+        <div class="button-container">
+            <button type="submit">Send</button>
+        </div>
+    </form>
 {% endblock %}

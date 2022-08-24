@@ -4,52 +4,52 @@
 {% load humanize %}
 
 {% block title %}
-	{{ thread.title }}
+    {{ thread.title }}
 {% endblock %}
 
 {% block content %}
-	<nav class="breadcrumb">
-		<a href="{% url 'inbox:inbox_view' %}">Inbox</a>
-		→ 
-		<a href="{% url 'inbox:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
-	</nav>
-	
-	<h2>Inbox</h2>
-	
-	<h3>{{ thread.title }}</h3>
-	
-	<div id="inbox">
-		<div id="inbox-messages">
-			<form class="item sent" method="post">
-				{% csrf_token %}
-				
-				<div class="message-body">
-					{% include 'form-as-divs.html' %}
-				</div>
-				
-				<div class="message-author">
-					<button type="submit">Reply</button>
-				</div>
-			</form>
-			
-			{% for message in thread_messages %}
-				<div class="item markdown {% if message.sender == request.user %}sent{% else %}received{% endif %}">
-					<div class="message-author">
-						<div><a href="{% url 'account:profile_view' pk=message.sender.pk %}">{{ message.sender }}</a></div>
-					</div>
-					
-					<div class="message-body">
-						{{ message.content }}
-						
-						<p class="message-datetime">
-							<small>
-								Sent: <span class="tooltip" data-text="{{ message.pub_date }}">{{ message.pub_date|naturaltime }}</span><!--
-								-->{% if message.mod_date != message.pub_date %}, Modified: <span class="tooltip" data-text="{{ message.mod_date }}">{{ message.mod_date|naturaltime }}</span>{% endif %}
-							</small>
-						</p>
-					</div>
-				</div>
-			{% endfor %}
-		</div>
-	</div>
+    <nav class="breadcrumb">
+        <a href="{% url 'inbox:inbox_view' %}">Inbox</a>
+        → 
+        <a href="{% url 'inbox:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
+    </nav>
+    
+    <h2>Inbox</h2>
+    
+    <h3>{{ thread.title }}</h3>
+    
+    <div id="inbox">
+        <div id="inbox-messages">
+            <form class="item sent" method="post">
+                {% csrf_token %}
+                
+                <div class="message-body">
+                    {% include 'form-as-divs.html' %}
+                </div>
+                
+                <div class="message-author">
+                    <button type="submit">Reply</button>
+                </div>
+            </form>
+            
+            {% for message in thread_messages %}
+                <div class="item markdown {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+                    <div class="message-author">
+                        <div><a href="{% url 'account:profile_view' pk=message.sender.pk %}">{{ message.sender }}</a></div>
+                    </div>
+                    
+                    <div class="message-body">
+                        {{ message.content }}
+                        
+                        <p class="message-datetime">
+                            <small>
+                                Sent: <span class="tooltip" data-text="{{ message.pub_date }}">{{ message.pub_date|naturaltime }}</span><!--
+                                -->{% if message.mod_date != message.pub_date %}, Modified: <span class="tooltip" data-text="{{ message.mod_date }}">{{ message.mod_date|naturaltime }}</span>{% endif %}
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

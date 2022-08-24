@@ -3,18 +3,18 @@
 /******************************************************************************/
 
 .center-max-width {
-	max-width: var(--site-width);
-	
-	margin-left:  auto;
-	margin-right: auto;
-	
-	padding: 1rem;
-	box-sizing: border-box;
+    max-width: var(--site-width);
+    
+    margin-left:  auto;
+    margin-right: auto;
+    
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 main.center-max-width {
-	padding-top:    0rem;
-	padding-bottom: 0rem;
+    padding-top:    0rem;
+    padding-bottom: 0rem;
 }
 
 /******************************************************************************/
@@ -24,9 +24,9 @@ main.center-max-width {
 /* Usage: must specify `.split .two-col` or `.split .three-col` */
 
 .split {
-	display: grid;
-	width: 100%;
-	margin: 1rem 0rem;
+    display: grid;
+    width: 100%;
+    margin: 1rem 0rem;
 }
 
 .split > .item1 { grid-area: item1; }
@@ -36,15 +36,15 @@ main.center-max-width {
 .split > .line2 { grid-area: line2; }
 
 .split.two-col {
-	grid-template-rows: max-content;
-	grid-template-columns: 1fr 2.5rem 1fr;
-	grid-template-areas: "item1 line1 item2";
+    grid-template-rows: max-content;
+    grid-template-columns: 1fr 2.5rem 1fr;
+    grid-template-areas: "item1 line1 item2";
 }
 
 .split.three-col {
-	grid-template-rows: max-content;
-	grid-template-columns: 1fr 2.5rem 1fr 2.5rem 1fr;
-	grid-template-areas: "item1 line1 item2 line2 item3";
+    grid-template-rows: max-content;
+    grid-template-columns: 1fr 2.5rem 1fr 2.5rem 1fr;
+    grid-template-areas: "item1 line1 item2 line2 item3";
 }
 
 /*----------------------------------------------------------------------------*/
@@ -53,19 +53,19 @@ main.center-max-width {
 
 .split > .line1,
 .split > .line2 {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-direction: column;
-	
-	opacity: 0.5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    
+    opacity: 0.5;
 }
 
 .line1 > .line,
 .line2 > .line {
-	background-color: var(--dark-background);
-	width: 1px;
-	height: 100%;
+    background-color: var(--dark-background);
+    width: 1px;
+    height: 100%;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -74,22 +74,22 @@ main.center-max-width {
 
 .line1 > .text,
 .line2 > .text {
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	    -ms-user-select: none;
-	        user-select: none;
-	
-	color: var(--dark-background);
-	
-	line-height: 3rem;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    
+    color: var(--dark-background);
+    
+    line-height: 3rem;
 }
 
 @media (max-width: 66rem) {
-	.line1 > .text,
-	.line2 > .text {
-		width: 8rem;
-		text-align: center;
-	}
+    .line1 > .text,
+    .line2 > .text {
+        width: 8rem;
+        text-align: center;
+    }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -97,40 +97,40 @@ main.center-max-width {
 /*----------------------------------------------------------------------------*/
 
 @media (max-width: 66rem) {
-	.split.two-col {
-		grid-template-rows: min-content 2.5rem min-content ;
-		grid-template-columns: 1fr;
-		grid-template-areas: "item1" "line1" "item2";
-	}
-	
-	.split.three-col {
-		grid-template-rows: min-content 2.5rem min-content 2.5rem min-content;
-		grid-template-columns: 1fr;
-		grid-template-areas: "item1" "line1" "item2" "line2" "item3";
-	}
-	
-	.split > .line1,
-	.split > .line2 {
-		flex-direction: row;
-	}
-	
-	.split > .line1 > .line,
-	.split > .line2 > .line {
-		height: 1px;
-		width: 100%;
-	}
-	
-	/* Mix-in to disable the display of lines when in horizontal flow mode for small screens */
-	.split.two-col.no-horizontal-lines {
-		grid-template-rows: min-content 1.5rem min-content;
-		grid-template-columns: 1fr;
-		grid-template-areas: "item1" "." "item2" ".";
-	}
-	.split.three-col.no-horizontal-lines {
-		grid-template-rows: min-content 1.5rem min-content 1.5rem min-content;
-		grid-template-columns: 1fr;
-		grid-template-areas: "item1" "." "item2" "." "item3";
-	}
+    .split.two-col {
+        grid-template-rows: min-content 2.5rem min-content ;
+        grid-template-columns: 1fr;
+        grid-template-areas: "item1" "line1" "item2";
+    }
+    
+    .split.three-col {
+        grid-template-rows: min-content 2.5rem min-content 2.5rem min-content;
+        grid-template-columns: 1fr;
+        grid-template-areas: "item1" "line1" "item2" "line2" "item3";
+    }
+    
+    .split > .line1,
+    .split > .line2 {
+        flex-direction: row;
+    }
+    
+    .split > .line1 > .line,
+    .split > .line2 > .line {
+        height: 1px;
+        width: 100%;
+    }
+    
+    /* Mix-in to disable the display of lines when in horizontal flow mode for small screens */
+    .split.two-col.no-horizontal-lines {
+        grid-template-rows: min-content 1.5rem min-content;
+        grid-template-columns: 1fr;
+        grid-template-areas: "item1" "." "item2" ".";
+    }
+    .split.three-col.no-horizontal-lines {
+        grid-template-rows: min-content 1.5rem min-content 1.5rem min-content;
+        grid-template-columns: 1fr;
+        grid-template-areas: "item1" "." "item2" "." "item3";
+    }
 }
 
 /******************************************************************************/
@@ -154,28 +154,28 @@ main.center-max-width {
  */
 
 .grid-table {
-	display: grid;
-	gap: 1px;
-	margin: 1rem 0rem;
+    display: grid;
+    gap: 1px;
+    margin: 1rem 0rem;
 }
 
 .grid-table .row {
-	display: grid;
-	grid-template-columns: subgrid;
-	
-	background-color: var(--element-background);
+    display: grid;
+    grid-template-columns: subgrid;
+    
+    background-color: var(--element-background);
 }
 
 .grid-table .row.header {
-	background-color: var(--medium-background);
-	font-weight: bold;
+    background-color: var(--medium-background);
+    font-weight: bold;
 }
 
 .grid-table .row.highlight {
-	background-color: var(--highlight);
+    background-color: var(--highlight);
 }
 
 .grid-table .row > * {
-	padding: 0.5rem;
-	box-shadow: 0 0 0 1px #000;
+    padding: 0.5rem;
+    box-shadow: 0 0 0 1px #000;
 }

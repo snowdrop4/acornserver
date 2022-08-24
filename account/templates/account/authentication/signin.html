@@ -1,23 +1,23 @@
 {% extends 'account/authentication/base.html' %}
 
 {% block title %}
-	Sign In
+    Sign In
 {% endblock %}
 
 {% block content %}
-	<h2>Sign In</h2>
-	
-	{% if form.errors %}
-		<p class="error">Your username and password didn't match.</p>
-	{% endif %}
-	
-	<form method="post">
-		{% csrf_token %}
-		
-		{% include 'form-as-table.html' %}
-		
-		<div style="text-align: right; margin-top: 0.5rem">
-			<button style="display: inline-block;" type="submit">Sign In</button>
-		</div>
-	</form>
+    <h2>Sign In</h2>
+    
+    {% if form.errors %}
+        <p class="error">Your username and password didn't match.</p>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% include 'form-as-table.html' %}
+        
+        <div style="text-align: right; margin-top: 0.5rem">
+            <button style="display: inline-block;" type="submit">Sign In</button>
+        </div>
+    </form>
 {% endblock %}

@@ -7,5 +7,5 @@ register = template.Library()
 
 @register.simple_tag
 def print(value: Any) -> Any:
-	print(str(value))
-	return value
+    print(str(value))
+    return value

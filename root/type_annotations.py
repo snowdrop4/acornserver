@@ -9,4 +9,4 @@ from account.models import User
 # error if we try to use the user object as if it was always of type User
 # (i.e., as if it was a real, logged in, user).
 class AuthedHttpRequest(HttpRequest):
-	user: User
+    user: User

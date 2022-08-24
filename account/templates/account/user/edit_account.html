@@ -1,74 +1,74 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Edit Account
+    Edit Account
 {% endblock %}
 
 {% block content %}
-	<h2>Edit Account</h2>
-	
-	<h3>Username</h3>
-	
-	{% with form=username_form %}
-		{% if form.errors %}
-			<p class="error">Error processing the username. The invalid fields are marked below.</p>
-		{% endif %}
-		
-		<form method="post">
-			{% csrf_token %}
-			
-			<input type="hidden" name="form_type" value="username_form">
-			
-			{% include 'form-as-table.html' %}
-			
-			<div class="button-container">
-				<button type="submit">Change Username</button>
-			</div>
-		</form>
-	{% endwith %}
-	
-	<h3>Email</h3>
-	
-	{% with form=email_form %}
-		{% if form.errors %}
-			<p class="error">Error processing the email. The invalid fields are marked below.</p>
-		{% endif %}
-		
-		<form method="post">
-			{% csrf_token %}
-			
-			<input type="hidden" name="form_type" value="email_form">
-			
-			{% include 'form-as-table.html' %}
-			
-			<div class="button-container">
-				<button type="submit">Change Email</button>
-			</div>
-		</form>
-	{% endwith %}
-	
-	<h3>Password</h3>
-	
-	{% with form=password_form %}
-		{% if form.errors %}
-			<p class="error">Error processing the password. The invalid fields are marked below.</p>
-		{% endif %}
-		
-		<form method="post">
-			{% csrf_token %}
-			
-			<input type="hidden" name="form_type" value="password_form">
-			
-			{% include 'form-as-table.html' %}
-			
-			<div class="button-container">
-				<button type="submit">Change Password</button>
-			</div>
-		</form>
-	{% endwith %}
-	
-	<h3>Torrent Passkey</h3>
-	
-	<p>Current passkey: <span class="spoiler">{{ user.passkey }}</span></p>
-	<p><a href="{% url 'account:passkey_reset' %}">Reset Passkey</a></p>
+    <h2>Edit Account</h2>
+    
+    <h3>Username</h3>
+    
+    {% with form=username_form %}
+        {% if form.errors %}
+            <p class="error">Error processing the username. The invalid fields are marked below.</p>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <input type="hidden" name="form_type" value="username_form">
+            
+            {% include 'form-as-table.html' %}
+            
+            <div class="button-container">
+                <button type="submit">Change Username</button>
+            </div>
+        </form>
+    {% endwith %}
+    
+    <h3>Email</h3>
+    
+    {% with form=email_form %}
+        {% if form.errors %}
+            <p class="error">Error processing the email. The invalid fields are marked below.</p>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <input type="hidden" name="form_type" value="email_form">
+            
+            {% include 'form-as-table.html' %}
+            
+            <div class="button-container">
+                <button type="submit">Change Email</button>
+            </div>
+        </form>
+    {% endwith %}
+    
+    <h3>Password</h3>
+    
+    {% with form=password_form %}
+        {% if form.errors %}
+            <p class="error">Error processing the password. The invalid fields are marked below.</p>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <input type="hidden" name="form_type" value="password_form">
+            
+            {% include 'form-as-table.html' %}
+            
+            <div class="button-container">
+                <button type="submit">Change Password</button>
+            </div>
+        </form>
+    {% endwith %}
+    
+    <h3>Torrent Passkey</h3>
+    
+    <p>Current passkey: <span class="spoiler">{{ user.passkey }}</span></p>
+    <p><a href="{% url 'account:passkey_reset' %}">Reset Passkey</a></p>
 {% endblock %}

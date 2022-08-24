@@ -3,97 +3,97 @@
 {% load static %}
 
 {% block title %}
-	Release Group '{{ release_group.name }}'
+    Release Group '{{ release_group.name }}'
 {% endblock %}
 
 {% block content %}
-	{% include 'torrent/music/breadcrumb.html' %}
-	
-	<h2>Release Group '{{ release_group.name }}'</h2>
-	
-	<div class="split three-col no-horizontal-lines">
-		<div class="item1">
-			<table id="torrent-info-table">
-				<thead>
-					<tr><th colspan="2">Info</th></tr>
-				</thead>
-				
-				<tbody>
-					<tr><td>First Release:</td> <td class="tr"></td></tr>
-					<tr><td>Type:</td>          <td class="tr">{{ release_group.get_group_type_display }}</td></tr>
-				</tbody>
-			</table>
-		</div>
-		
-		<div class="line1">
-			<div class="line"></div>
-		</div>
-		
-		<div class="item2">
-			<table id="torrent-operations-table">
-				<thead>
-					<tr><th>Operations</th></tr>
-				</thead>
-				
-				<tbody>
-					<tr><td>Subscribe to Release Group</td></tr>
-					<tr><td><a href="{% url 'torrent:music_release_group_edit' release_group.pk %}">Edit Release Group</a></td></tr>
-					<tr><td><a href="{% url 'torrent:music_release_group_delete' release_group.pk %}">Delete Release Group</a></td></tr>
-					<tr><td><a href="{% url 'torrent:music_release_add' %}?release_group={{ release_group.pk }}">Add Release</a></td></tr>
-					<tr><td><a href="{% url 'torrent:music_upload' %}?release_group={{ release_group.pk }}">Upload Release</a></td></tr>
-				</tbody>
-			</table>
-		</div>
-		
-		<div class="line2">
-			<div class="line"></div>
-		</div>
-		
-		<div class="item3">
-			<table id="torrent-album-art-table">
-				<thead>
-					<tr><th>Album Art</th></tr>
-				</thead>
-				
-				<tbody>
-					<tr><td><img src="{% static 'img/blank-album-cover.svg' %}"></td></tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	
-	<h3>Releases</h3>
-	
-	{% include 'torrent/music/release_group/as_table_without_album_header.html' %}
-	
-	<h3 class="with-nav">Contributing artists</h3>
-	
-	<nav class="subheader-nav">
-		<a href="{% url 'torrent:music_contribution_add' %}?release_group={{ release_group.pk }}">Add Contributor</a>
-	</nav>
-	
-	<div class="table-container">
-		<table>
-			<thead>
-				<tr>
-					<th>Artist</th>
-					<th>Role</th>
-					<th>Operations</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				{% for contribution in release_group.contributions.all %}
-					<tr>
-						<td><a href="{% url 'torrent:music_artist_view' pk=contribution.artist.pk %}">{{ contribution.artist.name }}</a></td>
-						<td>{{ contribution.get_contribution_type_display }}</td>
-						<td>
-							<a href="{% url 'torrent:music_contribution_edit' contribution.pk %}">ED</a> / 
-							<a href="{% url 'torrent:music_contribution_delete' contribution.pk %}">RM</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+    {% include 'torrent/music/breadcrumb.html' %}
+    
+    <h2>Release Group '{{ release_group.name }}'</h2>
+    
+    <div class="split three-col no-horizontal-lines">
+        <div class="item1">
+            <table id="torrent-info-table">
+                <thead>
+                    <tr><th colspan="2">Info</th></tr>
+                </thead>
+                
+                <tbody>
+                    <tr><td>First Release:</td> <td class="tr"></td></tr>
+                    <tr><td>Type:</td>          <td class="tr">{{ release_group.get_group_type_display }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="line1">
+            <div class="line"></div>
+        </div>
+        
+        <div class="item2">
+            <table id="torrent-operations-table">
+                <thead>
+                    <tr><th>Operations</th></tr>
+                </thead>
+                
+                <tbody>
+                    <tr><td>Subscribe to Release Group</td></tr>
+                    <tr><td><a href="{% url 'torrent:music_release_group_edit' release_group.pk %}">Edit Release Group</a></td></tr>
+                    <tr><td><a href="{% url 'torrent:music_release_group_delete' release_group.pk %}">Delete Release Group</a></td></tr>
+                    <tr><td><a href="{% url 'torrent:music_release_add' %}?release_group={{ release_group.pk }}">Add Release</a></td></tr>
+                    <tr><td><a href="{% url 'torrent:music_upload' %}?release_group={{ release_group.pk }}">Upload Release</a></td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="line2">
+            <div class="line"></div>
+        </div>
+        
+        <div class="item3">
+            <table id="torrent-album-art-table">
+                <thead>
+                    <tr><th>Album Art</th></tr>
+                </thead>
+                
+                <tbody>
+                    <tr><td><img src="{% static 'img/blank-album-cover.svg' %}"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <h3>Releases</h3>
+    
+    {% include 'torrent/music/release_group/as_table_without_album_header.html' %}
+    
+    <h3 class="with-nav">Contributing artists</h3>
+    
+    <nav class="subheader-nav">
+        <a href="{% url 'torrent:music_contribution_add' %}?release_group={{ release_group.pk }}">Add Contributor</a>
+    </nav>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Role</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for contribution in release_group.contributions.all %}
+                    <tr>
+                        <td><a href="{% url 'torrent:music_artist_view' pk=contribution.artist.pk %}">{{ contribution.artist.name }}</a></td>
+                        <td>{{ contribution.get_contribution_type_display }}</td>
+                        <td>
+                            <a href="{% url 'torrent:music_contribution_edit' contribution.pk %}">ED</a> / 
+                            <a href="{% url 'torrent:music_contribution_delete' contribution.pk %}">RM</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

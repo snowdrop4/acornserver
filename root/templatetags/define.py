@@ -7,4 +7,4 @@ register = template.Library()
 
 @register.simple_tag
 def define(value: Any) -> Any:
-	return value
+    return value

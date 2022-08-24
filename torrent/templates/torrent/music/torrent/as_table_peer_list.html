@@ -1,19 +1,19 @@
 <div class="table-container">
-	<table>
-		<thead>
-			<tr>
-				<th>Peer</th>
-				<th>Last Seen</th>
-			</tr>
-		</thead>
-		
-		<tbody>
-			{% for peer in torrent.peers.all %}
-				<tr>
-					<td>{{ peer.peer_id }}</td>
-					<td>{{ peer.last_seen }}</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <table>
+        <thead>
+            <tr>
+                <th>Peer</th>
+                <th>Last Seen</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for peer in torrent.peers.all %}
+                <tr>
+                    <td>{{ peer.peer_id }}</td>
+                    <td>{{ peer.last_seen }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>

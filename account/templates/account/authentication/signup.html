@@ -1,23 +1,23 @@
 {% extends 'account/authentication/base.html' %}
 
 {% block title %}
-	Sign Up
+    Sign Up
 {% endblock %}
 
 {% block content %}
-	<h2>Sign Up</h2>
-	
-	{% if form.errors %}
-		<p class="error">Error signing up. The invalid fields are marked below.</p>
-	{% endif %}
-	
-	<form method="post">
-		{% csrf_token %}
-		
-		{% include 'form-as-table.html' %}
-		
-		<div style="text-align: right; margin-top: 0.5rem">
-			<button style="display: inline-block;" type="submit">Sign Up</button>
-		</div>
-	</form>
+    <h2>Sign Up</h2>
+    
+    {% if form.errors %}
+        <p class="error">Error signing up. The invalid fields are marked below.</p>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% include 'form-as-table.html' %}
+        
+        <div style="text-align: right; margin-top: 0.5rem">
+            <button style="display: inline-block;" type="submit">Sign Up</button>
+        </div>
+    </form>
 {% endblock %}

@@ -1,45 +1,45 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Profile '{{ target_user.username }}'
+    Profile '{{ target_user.username }}'
 {% endblock %}
 
 {% block content %}
-	<h2 class="with-nav">Profile '{{ target_user.username }}'</h2>
-	
-	<nav class="subheader-nav">
-		{% if target_user.pk == user.pk %}
-			<a href="{% url 'account:account_edit' %}">Edit Account</a>
-			 | 
-			<a href="{% url 'account:profile_edit' %}">Edit Profile</a>
-		{% else %}
-			<a href="{% url 'inbox:thread_create' %}?to={{ target_user.pk }}">Message User</a>
-			 | 
-			Report User
-		{% endif %}
-	</nav>
-	
-	<h3>Biography</h3>
-	
-	<article class="markdown">{{ target_user.user_bio }}</article>
-	
-	<h3>Latest Uploads</h3>
-	
-	{% with grouped_torrents=latest_uploads %}
-		{% if grouped_torrents %}
-			{% include 'torrent/music/grouped_torrent_list.html' %}
-		{% else %}
-			<p>No uploads.</p>
-		{% endif %}
-	{% endwith %}
-	
-	<h3>Latest Downloads</h3>
-	
-	{% with grouped_torrents=latest_downloads %}
-		{% if grouped_torrents %}
-			{% include 'torrent/music/grouped_torrent_list.html' %}
-		{% else %}
-			<p>No downloads.</p>
-		{% endif %}
-	{% endwith %}
+    <h2 class="with-nav">Profile '{{ target_user.username }}'</h2>
+    
+    <nav class="subheader-nav">
+        {% if target_user.pk == user.pk %}
+            <a href="{% url 'account:account_edit' %}">Edit Account</a>
+            |
+            <a href="{% url 'account:profile_edit' %}">Edit Profile</a>
+        {% else %}
+            <a href="{% url 'inbox:thread_create' %}?to={{ target_user.pk }}">Message User</a>
+            |
+            Report User
+        {% endif %}
+    </nav>
+    
+    <h3>Biography</h3>
+    
+    <article class="markdown">{{ target_user.user_bio }}</article>
+    
+    <h3>Latest Uploads</h3>
+    
+    {% with grouped_torrents=latest_uploads %}
+        {% if grouped_torrents %}
+            {% include 'torrent/music/grouped_torrent_list.html' %}
+        {% else %}
+            <p>No uploads.</p>
+        {% endif %}
+    {% endwith %}
+    
+    <h3>Latest Downloads</h3>
+    
+    {% with grouped_torrents=latest_downloads %}
+        {% if grouped_torrents %}
+            {% include 'torrent/music/grouped_torrent_list.html' %}
+        {% else %}
+            <p>No downloads.</p>
+        {% endif %}
+    {% endwith %}
 {% endblock %}

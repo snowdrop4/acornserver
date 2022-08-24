@@ -5,40 +5,40 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>{% block title %}{% endblock %} | Acorn</title>
-	
-	<link rel="stylesheet" href="{% static 'css/acorn.css' %}">
-	<link rel="stylesheet" href="{% static 'css/acorn-forms.css' %}">
-	<link rel="stylesheet" href="{% static 'css/acorn-custom-elements.css' %}">
-	<link rel="stylesheet" href="{% static 'css/acorn-custom-containers.css' %}">
-	<link rel="stylesheet" href="{% static 'css/acorn-page-specifics.css' %}">
-	<link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
-	<link rel="icon" href="{% static 'img/favicon.svg' %}">
-	
-	<!-- Any page-specific CSS -->
-	{% block css %}{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{% block title %}{% endblock %} | Acorn</title>
+    
+    <link rel="stylesheet" href="{% static 'css/acorn.css' %}">
+    <link rel="stylesheet" href="{% static 'css/acorn-forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/acorn-custom-elements.css' %}">
+    <link rel="stylesheet" href="{% static 'css/acorn-custom-containers.css' %}">
+    <link rel="stylesheet" href="{% static 'css/acorn-page-specifics.css' %}">
+    <link rel="stylesheet" href="{% static 'flags/sprite-hq.css' %}">
+    <link rel="icon" href="{% static 'img/favicon.svg' %}">
+    
+    <!-- Any page-specific CSS -->
+    {% block css %}{% endblock %}
 </head>
 
 <body>
-	{% block blank-content %}{% endblock %}
-	
-	<script src="{% static 'js/autocomplete.js' %}"></script>
-	<script>
-		new Autocomplete(document.getElementById("search-artist"),
-			function() { return "{% url 'search:music_artist_autocomplete' %}?q=" },
-			function(pk, url) { location.href = url },
-			null);
-		
-		new Autocomplete(document.getElementById("search-release_group"),
-			function() { return "{% url 'search:music_release_group_autocomplete' %}?q=" },
-			function(pk, url) { location.href = url },
-			null);
-	</script>
-	
-	{% block javascript %}{% endblock %}
+    {% block blank-content %}{% endblock %}
+    
+    <script src="{% static 'js/autocomplete.js' %}"></script>
+    <script>
+        new Autocomplete(document.getElementById("search-artist"),
+            function() { return "{% url 'search:music_artist_autocomplete' %}?q=" },
+            function(pk, url) { location.href = url },
+            null);
+        
+        new Autocomplete(document.getElementById("search-release_group"),
+            function() { return "{% url 'search:music_release_group_autocomplete' %}?q=" },
+            function(pk, url) { location.href = url },
+            null);
+    </script>
+    
+    {% block javascript %}{% endblock %}
 </body>
 
 </html>

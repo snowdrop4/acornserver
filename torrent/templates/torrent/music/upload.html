@@ -7,236 +7,236 @@ Upload Torrent
 {% endblock %}
 
 {% block content %}
-	<h2>Upload Torrent</h2>
-	
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		
-		{% if artist_form.errors or release_group_form.errors or contribution_form.errors or release_form.errors or torrent_form.errors %}
-			<p class="error">Error processing the torrent. The invalid fields are marked below.</p>
-		{% endif %}
-		
-		{% if artist_form %}
-			<h3>Artist</h3>
-			
-			{% include 'form-as-table.html' with form=artist_form %}
-		{% endif %}
-		
-		{% if release_group_form %}
-			<h3>Release Group</h3>
-			
-			<div class="split two-col torrent-upload-form">
-				<div class="item1">
-					<table class="form">
-						<tbody>
-							{% include 'form-as-table-raw.html' with form=release_group_form %}
-							{% if contribution_form %}
-								{% include 'form-as-table-raw.html' with form=contribution_form %}
-							{% endif %}
-						</tbody>
-					</table>
-				</div>
-				
-				{% if contribution_select_form %}
-					<div class="line1">
-						<div class="line"></div>
-						<div class="text">or</div>
-						<div class="line"></div>
-					</div>
-					
-					<div class="item2">
-						<div class="selector">
-							{{ contribution_select_form }}
-						</div>
-					</div>
-				{% endif %}
-			</div>
-		{% endif %}
-		
-		{% if release_form %}
-			<h3>Release</h3>
-			
-			<div class="split two-col torrent-upload-form">
-				<div class="item1">
-					<table class="form">
-						<tbody>
-							{% include 'form-as-table-raw.html' with form=release_form %}
-						</tbody>
-					</table>
-				</div>
-				
-				{% if release_select_form %}
-					<div class="line1">
-						<div class="line"></div>
-						<div class="text">or</div>
-						<div class="line"></div>
-					</div>
-					
-					<div class="item2">
-						<div class="selector">
-							{{ release_select_form }}
-						</div>
-					</div>
-				{% endif %}
-			</div>
-		{% endif %}
-		
-		<h3>Torrent</h3>
-		
-		{% include 'form-as-table.html' with form=torrent_form %}
-		
-		{{ model_pk_form }}
-		
-		<div class="button-container">
-			<button type="submit">Upload</button>
-		</div>
-	</form>
+    <h2>Upload Torrent</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if artist_form.errors or release_group_form.errors or contribution_form.errors or release_form.errors or torrent_form.errors %}
+            <p class="error">Error processing the torrent. The invalid fields are marked below.</p>
+        {% endif %}
+        
+        {% if artist_form %}
+            <h3>Artist</h3>
+            
+            {% include 'form-as-table.html' with form=artist_form %}
+        {% endif %}
+        
+        {% if release_group_form %}
+            <h3>Release Group</h3>
+            
+            <div class="split two-col torrent-upload-form">
+                <div class="item1">
+                    <table class="form">
+                        <tbody>
+                            {% include 'form-as-table-raw.html' with form=release_group_form %}
+                            {% if contribution_form %}
+                                {% include 'form-as-table-raw.html' with form=contribution_form %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                {% if contribution_select_form %}
+                    <div class="line1">
+                        <div class="line"></div>
+                        <div class="text">or</div>
+                        <div class="line"></div>
+                    </div>
+                    
+                    <div class="item2">
+                        <div class="selector">
+                            {{ contribution_select_form }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        {% if release_form %}
+            <h3>Release</h3>
+            
+            <div class="split two-col torrent-upload-form">
+                <div class="item1">
+                    <table class="form">
+                        <tbody>
+                            {% include 'form-as-table-raw.html' with form=release_form %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                {% if release_select_form %}
+                    <div class="line1">
+                        <div class="line"></div>
+                        <div class="text">or</div>
+                        <div class="line"></div>
+                    </div>
+                    
+                    <div class="item2">
+                        <div class="selector">
+                            {{ release_select_form }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <h3>Torrent</h3>
+        
+        {% include 'form-as-table.html' with form=torrent_form %}
+        
+        {{ model_pk_form }}
+        
+        <div class="button-container">
+            <button type="submit">Upload</button>
+        </div>
+    </form>
 {% endblock %}
 
 {% block javascript %}
 <script src="{% static 'js/autofill.js' %}"></script>
 <script>
-	// Shared request object
+    // Shared request object
 
-	let request = new XMLHttpRequest();
-	request.responseType = "json";
+    let request = new XMLHttpRequest();
+    request.responseType = "json";
 
-	// Artist name autocomplete
+    // Artist name autocomplete
 
-	let artist_pk = document.getElementById("upload-model_pk-artist_pk");
+    let artist_pk = document.getElementById("upload-model_pk-artist_pk");
 
-	let artist_name_box = document.getElementById("upload-artist-name");
+    let artist_name_box = document.getElementById("upload-artist-name");
 
-	let artist_autocomplete = new Autocomplete(artist_name_box,
-		function() { return "{% url 'search:music_artist_autocomplete' %}?q=" },
-		function(pk, artist_url) { 
-			artist_pk.value = pk;
-			
-			request.abort();
-			contribution_select.clear_options();
-			
-			let url = "{% url 'torrent:music_artist_view_contributions_json' pk=12345 %}".replace("12345", pk)
-			request.open("GET", url);
-			request.send();
-			
-			request.onload = function() {
-				if (request.response !== null) {
-					contribution_select_box.disabled = false;
-					
-					for (var i in request.response) {
-						contribution_select.add_option(request.response[i]["pk"], request.response[i]["str"]);
-					}
-				}
-			};
-		},
-		function() { 
-			artist_pk.value = "";
-			
-			request.abort();
-			contribution_select.clear_options();
-			
-			contribution_select_box.disabled = true;
-		});
+    let artist_autocomplete = new Autocomplete(artist_name_box,
+        function() { return "{% url 'search:music_artist_autocomplete' %}?q=" },
+        function(pk, artist_url) { 
+            artist_pk.value = pk;
+            
+            request.abort();
+            contribution_select.clear_options();
+            
+            let url = "{% url 'torrent:music_artist_view_contributions_json' pk=12345 %}".replace("12345", pk)
+            request.open("GET", url);
+            request.send();
+            
+            request.onload = function() {
+                if (request.response !== null) {
+                    contribution_select_box.disabled = false;
+                    
+                    for (var i in request.response) {
+                        contribution_select.add_option(request.response[i]["pk"], request.response[i]["str"]);
+                    }
+                }
+            };
+        },
+        function() { 
+            artist_pk.value = "";
+            
+            request.abort();
+            contribution_select.clear_options();
+            
+            contribution_select_box.disabled = true;
+        });
 
-	// Contribution select box
+    // Contribution select box
 
-	let release_group_name       = document.getElementById("upload-release_group-name");
-	let release_group_group_type = document.getElementById("upload-release_group-group_type");
-	let contribution_contribution_type = document.getElementById("upload-contribution-contribution_type");
+    let release_group_name       = document.getElementById("upload-release_group-name");
+    let release_group_group_type = document.getElementById("upload-release_group-group_type");
+    let contribution_contribution_type = document.getElementById("upload-contribution-contribution_type");
 
-	let contribution_select_box = document.getElementById("upload-contribution_select-contribution");
-	let contribution_select = null;
+    let contribution_select_box = document.getElementById("upload-contribution_select-contribution");
+    let contribution_select = null;
 
-	if (contribution_select_box !== null) {
-		contribution_select_box.addEventListener("change",
-			function() {
-				value = contribution_select_box.value;
-				
-				request.abort();
-				release_select.clear_options();
-				
-				if (value !== "") {
-					let url = "{% url 'torrent:music_contribution_view_releases_json' pk=12345 %}".replace("12345", value)
-					request.open("GET", url);
-					request.send();
-					
-					request.onload = function() {
-						if (request.response !== null) {
-							release_select_box.disabled = false;
-							
-							for (var i in request.response) {
-								release_select.add_option(request.response[i]["pk"], request.response[i]["str"]);
-							}
-						}
-					};
-				}
-				else {
-					release_select_box.disabled = true;
-				}
-			});
-		
-		contribution_select = new Autofill(contribution_select_box,
-			function(value) { 
-				return "{% url 'torrent:music_contribution_view_json' pk=12345 %}?release_group=expand".replace("12345", value)
-			},
-			function(response) {
-				release_group_name.disabled       = true;
-				release_group_group_type.disabled = true;
-				contribution_contribution_type.disabled = true;
-				
-				release_group_name.value       = response[1].fields.name;
-				release_group_group_type.value = response[1].fields.group_type;
-				contribution_contribution_type.value = response[0].fields.contribution_type;
-			},
-			function() {
-				release_group_name.disabled       = false;
-				release_group_group_type.disabled = false;
-				contribution_contribution_type.disabled = false;
-				
-				release_group_name.value       = "";
-				release_group_group_type.value = "";
-				contribution_contribution_type.value = "";
-			});
-	}
+    if (contribution_select_box !== null) {
+        contribution_select_box.addEventListener("change",
+            function() {
+                value = contribution_select_box.value;
+                
+                request.abort();
+                release_select.clear_options();
+                
+                if (value !== "") {
+                    let url = "{% url 'torrent:music_contribution_view_releases_json' pk=12345 %}".replace("12345", value)
+                    request.open("GET", url);
+                    request.send();
+                    
+                    request.onload = function() {
+                        if (request.response !== null) {
+                            release_select_box.disabled = false;
+                            
+                            for (var i in request.response) {
+                                release_select.add_option(request.response[i]["pk"], request.response[i]["str"]);
+                            }
+                        }
+                    };
+                }
+                else {
+                    release_select_box.disabled = true;
+                }
+            });
+        
+        contribution_select = new Autofill(contribution_select_box,
+            function(value) { 
+                return "{% url 'torrent:music_contribution_view_json' pk=12345 %}?release_group=expand".replace("12345", value)
+            },
+            function(response) {
+                release_group_name.disabled       = true;
+                release_group_group_type.disabled = true;
+                contribution_contribution_type.disabled = true;
+                
+                release_group_name.value       = response[1].fields.name;
+                release_group_group_type.value = response[1].fields.group_type;
+                contribution_contribution_type.value = response[0].fields.contribution_type;
+            },
+            function() {
+                release_group_name.disabled       = false;
+                release_group_group_type.disabled = false;
+                contribution_contribution_type.disabled = false;
+                
+                release_group_name.value       = "";
+                release_group_group_type.value = "";
+                contribution_contribution_type.value = "";
+            });
+    }
 
-	// Release select box
+    // Release select box
 
-	let release_date  = document.getElementById("upload-release-date");
-	let release_label = document.getElementById("upload-release-label");
-	let release_catalog_number = document.getElementById("upload-release-catalog_number");
-	let release_release_format = document.getElementById("upload-release-release_format");
+    let release_date  = document.getElementById("upload-release-date");
+    let release_label = document.getElementById("upload-release-label");
+    let release_catalog_number = document.getElementById("upload-release-catalog_number");
+    let release_release_format = document.getElementById("upload-release-release_format");
 
-	let release_select_box = document.getElementById("upload-release_select-release");
+    let release_select_box = document.getElementById("upload-release_select-release");
 
-	let release_select = null;
+    let release_select = null;
 
-	if (release_select_box !== null) {
-		release_select = new Autofill(release_select_box,
-			function(value) {
-				return "{% url 'torrent:music_release_view_json' pk=12345 %}".replace("12345", value)
-			},
-			function(response) {
-				release_date.disabled  = true;
-				release_label.disabled = true;
-				release_catalog_number.disabled = true;
-				release_release_format.disabled = true;
-				
-				release_date.value  = response[0].fields.date;
-				release_label.value = response[0].fields.label;
-				release_catalog_number.value = response[0].fields.catalog_number;
-				release_release_format.value = response[0].fields.release_format;
-			},
-			function() {
-				release_date.disabled  = false;
-				release_label.disabled = false;
-				release_catalog_number.disabled = false;
-				release_release_format.disabled = false;
-				
-				release_date.value  = "";
-				release_label.value = "";
-				release_catalog_number.value = "";
-				release_release_format.value = "";
-			});
-	}
+    if (release_select_box !== null) {
+        release_select = new Autofill(release_select_box,
+            function(value) {
+                return "{% url 'torrent:music_release_view_json' pk=12345 %}".replace("12345", value)
+            },
+            function(response) {
+                release_date.disabled  = true;
+                release_label.disabled = true;
+                release_catalog_number.disabled = true;
+                release_release_format.disabled = true;
+                
+                release_date.value  = response[0].fields.date;
+                release_label.value = response[0].fields.label;
+                release_catalog_number.value = response[0].fields.catalog_number;
+                release_release_format.value = response[0].fields.release_format;
+            },
+            function() {
+                release_date.disabled  = false;
+                release_label.disabled = false;
+                release_catalog_number.disabled = false;
+                release_release_format.disabled = false;
+                
+                release_date.value  = "";
+                release_label.value = "";
+                release_catalog_number.value = "";
+                release_release_format.value = "";
+            });
+    }
 </script>
 {% endblock %}

@@ -1,11 +1,11 @@
 <h3>{{ article.title }}</h3>
 
 <article class="markdown">
-	{{ article.content }}
-	
-	<p style="text-align: right">
-		<small>
-			Published: {{ article.pub_date }}{% if article.mod_date != article.pub_date %}, Modified: {{ article.mod_date }}{% endif %}
-		</small>
-	</p>
+    {{ article.content }}
+    
+    <p style="text-align: right">
+        <small>
+            Published: {{ article.pub_date }}{% if article.mod_date != article.pub_date %}, Modified: {{ article.mod_date }}{% endif %}
+        </small>
+    </p>
 </article>

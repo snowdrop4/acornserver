@@ -10,33 +10,41 @@ from account.models import User
 
 
 class MessageFormAdd(forms.ModelForm):
-	prefix = 'message'
-	
-	class Meta:
-		model = InboxMessage
-		fields = ('content',)
-		
-		labels = {
-			'content': (''),
-		}
+    prefix = "message"
+
+    class Meta:
+        model = InboxMessage
+
+        fields = ("content",)
+
+        labels = {
+            "content": (""),
+        }
 
 
 class ThreadFormAdd(forms.Form):
-	prefix = 'thread'
-	
-	title    = forms.CharField(label='Title', max_length=InboxThread._meta.get_field('title').max_length)
-	receiver = forms.CharField(label='To',    max_length=InboxThread._meta.get_field('receiver').max_length)
-	
-	# Add an extra field to store content for the InboxMessage object that
-	# we'll need to create along with the InboxThread object.
-	content = forms.CharField(widget=MarkupTextarea, max_length=InboxMessage._meta.get_field('content').max_length)
-	
-	def clean_receiver(self, *args: Any, **kwargs: Any) -> User:
-		username = self.cleaned_data['receiver']
-		
-		try:
-			user = User.objects.get(username=username)
-		except User.DoesNotExist:
-			raise ValidationError('User does not exist')
-		
-		return user
+    prefix = "thread"
+
+    title = forms.CharField(
+        label="Title", max_length=InboxThread._meta.get_field("title").max_length
+    )
+    receiver = forms.CharField(
+        label="To", max_length=InboxThread._meta.get_field("receiver").max_length
+    )
+
+    # Add an extra field to store content for the InboxMessage object that
+    # we'll need to create along with the InboxThread object.
+    content = forms.CharField(
+        widget=MarkupTextarea,
+        max_length=InboxMessage._meta.get_field("content").max_length,
+    )
+
+    def clean_receiver(self, *args: Any, **kwargs: Any) -> User:
+        username = self.cleaned_data["receiver"]
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise ValidationError("User does not exist")
+
+        return user

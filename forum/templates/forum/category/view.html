@@ -1,40 +1,40 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Forum Category '{{ category.title }}'
+    Forum Category '{{ category.title }}'
 {% endblock %}
 
 {% block content %}
-	{% include 'forum/breadcrumb.html' %}
-	
-	{% if category.children.all %}
-		{% include 'forum/category/as_table.html' with category_title_override='Subcategories' %}
-	{% endif %}
-	
-	<h2>Forum category '{{ category.title }}'</h2>
-	
-	{% if not category.folder %}
-		<p><a href="{% url 'forum:thread_add' %}?category={{ category.pk }}">Create Thread</a></p>
-		
-		<div class="table-container">
-			<table class="forum-listings">
-				<thead>
-					<tr>
-						<th class="width-100 tl">Title</th>
-						<th>Latest Post</th>
-						<th>Replies</th>
-						<th>Author</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-					{% for thread in threads %}
-						<tr>{% include 'forum/thread/as_table_row.html' %}</tr>
-					{% empty %}
-						<tr><td colspan="4">No threads.</td></tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	{% endif %}
+    {% include 'forum/breadcrumb.html' %}
+    
+    {% if category.children.all %}
+        {% include 'forum/category/as_table.html' with category_title_override='Subcategories' %}
+    {% endif %}
+    
+    <h2>Forum category '{{ category.title }}'</h2>
+    
+    {% if not category.folder %}
+        <p><a href="{% url 'forum:thread_add' %}?category={{ category.pk }}">Create Thread</a></p>
+        
+        <div class="table-container">
+            <table class="forum-listings">
+                <thead>
+                    <tr>
+                        <th class="width-100 tl">Title</th>
+                        <th>Latest Post</th>
+                        <th>Replies</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for thread in threads %}
+                        <tr>{% include 'forum/thread/as_table_row.html' %}</tr>
+                    {% empty %}
+                        <tr><td colspan="4">No threads.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

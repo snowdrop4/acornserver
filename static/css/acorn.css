@@ -9,33 +9,33 @@
 /******************************************************************************/
 
 :root {
-	--green: #2ED573;
-	--red: #FF4757;
-	--blue: #70a1ff;
-	
-	--yellow: #fbc02d;
-	--orange: #fb8c00;
-	
-	--active: #FFB700;
-	--highlight: #FFB700;
-	
-	--form-element-background: #FDFDFD;
-	--form-element-background-disabled: #DFE4EA;
-	--form-element-border: #A4B0BE;
-	--form-element-box-shadow: rgba(0, 0, 0, 0.1);
-	
-	--white-background:   #FFFFFF; /* blank space outside of the website */
-	--light-background:   #DFE4EA; /* background that contains the actual website */
-	--element-background: #F1F2F6; /* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
-	--medium-background:  #858E9D; /* e.g.: subheaders underneath the main headers, and table headers */
-	--dark-background:    #2F3542; /* e.g.: main headers and <h1-5> elements, plus all borders */
-	
-	--font-color: #2F3542;
-	--font-color-inverted: #FFFFFF;
-	--font-color-inverted-background: #2F3542;
-	--font-color-disabled: #9E9E9E;
-	
-	--site-width: 66rem;
+    --green: #2ED573;
+    --red: #FF4757;
+    --blue: #70a1ff;
+    
+    --yellow: #fbc02d;
+    --orange: #fb8c00;
+    
+    --active: #FFB700;
+    --highlight: #FFB700;
+    
+    --form-element-background: #FDFDFD;
+    --form-element-background-disabled: #DFE4EA;
+    --form-element-border: #A4B0BE;
+    --form-element-box-shadow: rgba(0, 0, 0, 0.1);
+    
+    --white-background:   #FFFFFF; /* blank space outside of the website */
+    --light-background:   #DFE4EA; /* background that contains the actual website */
+    --element-background: #F1F2F6; /* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
+    --medium-background:  #858E9D; /* e.g.: subheaders underneath the main headers, and table headers */
+    --dark-background:    #2F3542; /* e.g.: main headers and <h1-5> elements, plus all borders */
+    
+    --font-color: #2F3542;
+    --font-color-inverted: #FFFFFF;
+    --font-color-inverted-background: #2F3542;
+    --font-color-disabled: #9E9E9E;
+    
+    --site-width: 66rem;
 }
 
 /******************************************************************************/
@@ -47,8 +47,8 @@
 /*----------------------------------------------------------------------------*/
 
 ::selection {
-	color: var(--font-color-inverted);
-	background-color: var(--highlight);
+    color: var(--font-color-inverted);
+    background-color: var(--highlight);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -56,9 +56,9 @@
 /*----------------------------------------------------------------------------*/
 
 h1, h2, h3, h4, h5 {
-	color: var(--font-color-inverted);
-	background-color: var(--font-color-inverted-background);
-	font-weight: bold;
+    color: var(--font-color-inverted);
+    background-color: var(--font-color-inverted-background);
+    font-weight: bold;
 }
 
 h1 { font-size: 2.00rem; margin: 1.75rem 0rem; }
@@ -72,24 +72,24 @@ h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
 /*----------------------------------------------------------------------------*/
 
 a {
-	text-decoration: none;
-	color: var(--font-color);
-	box-shadow: inset 0px -0.20rem 0px var(--font-color);
+    text-decoration: none;
+    color: var(--font-color);
+    box-shadow: inset 0px -0.20rem 0px var(--font-color);
 }
 
 a:hover, a:focus {
-	color: var(--font-color-inverted);
-	background-color: var(--highlight);
+    color: var(--font-color-inverted);
+    background-color: var(--highlight);
 }
 
 a:focus {
-	outline: none;
+    outline: none;
 }
 
 header a, footer a {
-	color: var(--font-color-inverted);
-	background-color: var(--font-color-inverted-background);
-	font-weight: bold;
+    color: var(--font-color-inverted);
+    background-color: var(--font-color-inverted-background);
+    font-weight: bold;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -97,11 +97,11 @@ header a, footer a {
 /*----------------------------------------------------------------------------*/
 
 ul, ol {
-	padding-left: 2rem;
+    padding-left: 2rem;
 }
 
 ul {
-	list-style: square;
+    list-style: square;
 }
 
 /******************************************************************************/
@@ -109,19 +109,19 @@ ul {
 /******************************************************************************/
 
 body {
-	font-family: sans-serif;
-	color: var(--font-color);
-	
-	margin: 0rem;
-	
-	background-color: #f1f2f6;
-	background-image: url("../img/backgrounds/heropatterns/topography.svg");
-	
-	/* 
-	 * Safari-specific override to stop the text size changing
-	 * when the device orientation is changed (!!!).
-	 */
-	-webkit-text-size-adjust: 100%;
+    font-family: sans-serif;
+    color: var(--font-color);
+    
+    margin: 0rem;
+    
+    background-color: #f1f2f6;
+    background-image: url("../img/backgrounds/heropatterns/topography.svg");
+    
+    /* 
+     * Safari-specific override to stop the text size changing
+     * when the device orientation is changed (!!!).
+     */
+    -webkit-text-size-adjust: 100%;
 }
 
 /******************************************************************************/
@@ -133,23 +133,23 @@ body {
 /*----------------------------------------------------------------------------*/
 
 #header-container {
-	background-color: var(--dark-background);
+    background-color: var(--dark-background);
 }
 
 header {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	align-items: center;
-	row-gap: 1rem;
-	column-gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 1rem;
+    column-gap: 1rem;
 }
 
 /* Left-justify (instead of right-justify) for small screens. */
 @media (max-width: 66rem) {
-	header {
-		justify-content: flex-start;
-	}
+    header {
+        justify-content: flex-start;
+    }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -157,17 +157,17 @@ header {
 /*----------------------------------------------------------------------------*/
 
 header h1 {
-	margin: 0rem;
+    margin: 0rem;
 }
 
 header h1 a {
-	display: flex;
-	align-items: center;
-	column-gap: 0.75rem;
+    display: flex;
+    align-items: center;
+    column-gap: 0.75rem;
 }
 
 header #header-logo-image {
-	height: 5rem;
+    height: 5rem;
 }
 
 /* 
@@ -175,9 +175,9 @@ header #header-logo-image {
  * in order to save horizontal space.
  */
 @media (max-width: 66rem) {
-	header h1 #header-logo-text {
-		display: none;
-	}
+    header h1 #header-logo-text {
+        display: none;
+    }
 }
 
 /* 
@@ -188,17 +188,17 @@ header #header-logo-image {
  * also reduce the size of the logo image to match.
  */
 @media (max-width: 44rem) {
-	header h1 #header-logo-text {
-		display: unset;
-	}
-	
-	header #header-logo-image {
-		height: 3rem;
-	}
-	
-	header h1 {
-		font-size: 1.5rem;
-	}
+    header h1 #header-logo-text {
+        display: unset;
+    }
+    
+    header #header-logo-image {
+        height: 3rem;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -207,14 +207,14 @@ header #header-logo-image {
 /* Right side of the header containing site nav and user bar */
 
 #header-links {
-	display: grid;
-	row-gap: 0.5rem;
+    display: grid;
+    row-gap: 0.5rem;
 }
 
 /* Divider inbetween items  */
 #header-links .divider {
-	width: 1px;
-	background-color: #858E9D;
+    width: 1px;
+    background-color: #858E9D;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -222,23 +222,23 @@ header #header-logo-image {
 /*----------------------------------------------------------------------------*/
 
 header #header-site-nav {
-	display: flex;
-	flex-wrap: wrap;
-	row-gap: 0.50rem;
-	column-gap: 0.50rem;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.50rem;
+    column-gap: 0.50rem;
 }
 
 /* Links */
 header #header-site-nav a {
-	font-size: 1.25rem;
-	white-space: nowrap;
+    font-size: 1.25rem;
+    white-space: nowrap;
 }
 
 /* Shrink the font size for very small screens. */
 @media (max-width: 44rem) {
-	header #header-site-nav a {
-		font-size: 1rem;
-	}
+    header #header-site-nav a {
+        font-size: 1rem;
+    }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -246,31 +246,31 @@ header #header-site-nav a {
 /*----------------------------------------------------------------------------*/
 
 header #header-user-bar {
-	display: flex;
-	flex-wrap: wrap;
-	column-gap: 0.50rem;
-	
-	color: var(--font-color-inverted);
-	
-	justify-self: end;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.50rem;
+    
+    color: var(--font-color-inverted);
+    
+    justify-self: end;
 }
 
 header #header-user-bar a {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 /* Left-justify (instead of right-justify) for small screens. */
 @media (max-width: 66rem) {
-	header #header-user-bar {
-		justify-self: start;
-	}
+    header #header-user-bar {
+        justify-self: start;
+    }
 }
 
 /* Shrink the font size for very small screens. */
 @media (max-width: 44rem) {
-	header #header-user-bar {
-		font-size: 0.80rem;
-	}
+    header #header-user-bar {
+        font-size: 0.80rem;
+    }
 }
 
 /******************************************************************************/
@@ -278,16 +278,16 @@ header #header-user-bar a {
 /******************************************************************************/
 
 main {
-	background-color: var(--light-background);
-	
-	/*
-	 * Don't ask me how this works, but we want child elements with a margin to
-	 * expand the dimensions of this (the parent) element.
-	 * 
-	 * If we don't have this, there is a gutter on the top and bottom of main,
-	 * between the header and footer.
-	*/
-	display: flow-root;
+    background-color: var(--light-background);
+    
+    /*
+     * Don't ask me how this works, but we want child elements with a margin to
+     * expand the dimensions of this (the parent) element.
+     * 
+     * If we don't have this, there is a gutter on the top and bottom of main,
+     * between the header and footer.
+    */
+    display: flow-root;
 }
 
 /******************************************************************************/
@@ -299,7 +299,7 @@ main {
 /*----------------------------------------------------------------------------*/
 
 nav.breadcrumb {
-	margin: 1rem 0rem;
+    margin: 1rem 0rem;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -313,14 +313,14 @@ nav.breadcrumb {
  h2.with-nav, h3.with-nav { margin-bottom: 0rem }
 
  nav.subheader-nav { 
-	 margin-top: 0rem;
-	 margin-bottom: 1.75rem;
-	 
-	 text-align: right;
-	 
-	 display: block;
-	 
-	 background-color: var(--medium-background);
+     margin-top: 0rem;
+     margin-bottom: 1.75rem;
+     
+     text-align: right;
+     
+     display: block;
+     
+     background-color: var(--medium-background);
  }
 
 /******************************************************************************/
@@ -329,10 +329,10 @@ nav.breadcrumb {
 
 /* Used to contain user biographies and site news. */
 article {
-	border: 1px solid var(--dark-background);
-	background-color: var(--element-background);
-	margin: 1rem 0rem;
-	padding: 0rem 1rem;
+    border: 1px solid var(--dark-background);
+    background-color: var(--element-background);
+    margin: 1rem 0rem;
+    padding: 0rem 1rem;
 }
 
 /******************************************************************************/
@@ -340,8 +340,8 @@ article {
 /******************************************************************************/
 
 footer {
-	background-color: var(--dark-background);
-	color: var(--font-color-inverted);
+    background-color: var(--dark-background);
+    color: var(--font-color-inverted);
 }
 
 /******************************************************************************/
@@ -349,12 +349,12 @@ footer {
 /******************************************************************************/
 
 .table-container {
-	overflow: auto; /* Make a scrollbar appear on small screens */
-	margin: 1rem 0rem;
+    overflow: auto; /* Make a scrollbar appear on small screens */
+    margin: 1rem 0rem;
 }
 
 table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 /*
@@ -364,7 +364,7 @@ table {
  * (transparent) background colour.
  */
  tr:not(.conjoined-table-spacer) {
-	background-color: var(--element-background);
+    background-color: var(--element-background);
 }
 
 /* 
@@ -372,13 +372,13 @@ table {
  * of each table a darker background to stand out.
  */
 thead > tr:first-of-type {
-	background-color: var(--medium-background);
+    background-color: var(--medium-background);
 }
 
 /* Give every cell a border and a little bit of padding */
 td, th {
-	border: 1px solid var(--dark-background);
-	padding: 0.5rem;
+    border: 1px solid var(--dark-background);
+    padding: 0.5rem;
 }
 
 /* 
@@ -386,8 +386,8 @@ td, th {
  * Give the spacer rows more space.
  */
 tr.conjoined-table-spacer > th {
-	border-width: 0px;
-	padding: 0.5rem;
+    border-width: 0px;
+    padding: 0.5rem;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -395,12 +395,12 @@ tr.conjoined-table-spacer > th {
 /*----------------------------------------------------------------------------*/
 
 tr.highlight {
-	background-color: var(--highlight);
+    background-color: var(--highlight);
 }
 
 tr.error {
-	background-color: var(--red);
-	color: var(--font-color-inverted);
+    background-color: var(--red);
+    color: var(--font-color-inverted);
 }
 
 th.tl, td.tl { text-align:   left; }
@@ -408,5 +408,5 @@ th.tc, td.tc { text-align: center; }
 th.tr, td.tr { text-align:  right; }
 
 th.width-100, td.width-100 {
-	width: 100vw;
+    width: 100vw;
 }

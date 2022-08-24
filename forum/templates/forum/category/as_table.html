@@ -1,73 +1,73 @@
 {% load humanize %}
 
 <div class="table-container">
-	<table class="forum-categories">
-		<thead>
-			<tr>
-				<th class="width-100 tl">
-					{% if category_title_override %}
-						{{ category_title_override }}
-					{% else %}
-						{% if category.folder %}
-							{{ category.title }}
-						{% else %}
-							<a href="{% url 'forum:category_view' pk=category.pk %}">{{ category.title }}</a>
-						{% endif %}
-					{% endif %}
-				</th>
-				
-				{% if category.children.all %}
-					<th>Latest Post</th>
-					
-					<th>Stats</th>
-				{% endif %}
-			</tr>
-		</thead>
-		
-		<tbody>
-			{% for category in category.children.all %}
-				<tr>
-					<td class="width-100">
-						{% if category.folder %}
-							{{ category.title }}
-						{% else %}
-							<a href="{% url 'forum:category_view' pk=category.pk %}">{{ category.title }}</a>
-						{% endif %}
-						
-						{% if category.children.all %}
-							<div style="font-size: 0.8rem; margin-top: 0.5rem">
-								Subcategories: 
-								{% for child in category.children.all %}
-									<a href="{% url 'forum:category_view' pk=child.pk %}">{{ child.title }}</a>{% if not forloop.last %},{% endif %}
-								{% endfor %}
-							</div>
-						{% endif %}
-					</td>
-					
-					<td>
-						{% if category.latest_post_thread is None %}
-							no posts
-						{% else %}
-							<a href="{% url 'forum:thread_view' pk=category.latest_post_thread.pk %}#{{ category.latest_post_thread.post_count }}">#{{ category.latest_post_thread.post_count }}</a>
-							in <a href="{% url 'forum:thread_view' pk=category.latest_post_thread.pk %}">{{ category.latest_post_thread.title }}</a>
-							
-							<br>
-							
-							by <a href="{% url 'account:profile_view' pk=category.latest_post_thread.latest_post_author.pk %}">{{ category.latest_post_thread.latest_post_author }}</a>
-							{{ category.latest_post_thread.latest_post_datetime|naturaltime }}
-						{% endif %}
-					</td>
-					
-					<td>
-						<div style="display: grid; grid-template: auto auto / auto auto; column-gap: 0.25rem">
-							<div>Threads:</div>
-							<div>{{ category.thread_count }}</div>
-							<div>Posts:</div>
-							<div>{{ category.post_count }}</div>
-						</div>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <table class="forum-categories">
+        <thead>
+            <tr>
+                <th class="width-100 tl">
+                    {% if category_title_override %}
+                        {{ category_title_override }}
+                    {% else %}
+                        {% if category.folder %}
+                            {{ category.title }}
+                        {% else %}
+                            <a href="{% url 'forum:category_view' pk=category.pk %}">{{ category.title }}</a>
+                        {% endif %}
+                    {% endif %}
+                </th>
+                
+                {% if category.children.all %}
+                    <th>Latest Post</th>
+                    
+                    <th>Stats</th>
+                {% endif %}
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for category in category.children.all %}
+                <tr>
+                    <td class="width-100">
+                        {% if category.folder %}
+                            {{ category.title }}
+                        {% else %}
+                            <a href="{% url 'forum:category_view' pk=category.pk %}">{{ category.title }}</a>
+                        {% endif %}
+                        
+                        {% if category.children.all %}
+                            <div style="font-size: 0.8rem; margin-top: 0.5rem">
+                                Subcategories: 
+                                {% for child in category.children.all %}
+                                    <a href="{% url 'forum:category_view' pk=child.pk %}">{{ child.title }}</a>{% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </td>
+                    
+                    <td>
+                        {% if category.latest_post_thread is None %}
+                            no posts
+                        {% else %}
+                            <a href="{% url 'forum:thread_view' pk=category.latest_post_thread.pk %}#{{ category.latest_post_thread.post_count }}">#{{ category.latest_post_thread.post_count }}</a>
+                            in <a href="{% url 'forum:thread_view' pk=category.latest_post_thread.pk %}">{{ category.latest_post_thread.title }}</a>
+                            
+                            <br>
+                            
+                            by <a href="{% url 'account:profile_view' pk=category.latest_post_thread.latest_post_author.pk %}">{{ category.latest_post_thread.latest_post_author }}</a>
+                            {{ category.latest_post_thread.latest_post_datetime|naturaltime }}
+                        {% endif %}
+                    </td>
+                    
+                    <td>
+                        <div style="display: grid; grid-template: auto auto / auto auto; column-gap: 0.25rem">
+                            <div>Threads:</div>
+                            <div>{{ category.thread_count }}</div>
+                            <div>Posts:</div>
+                            <div>{{ category.post_count }}</div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>

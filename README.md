@@ -25,51 +25,51 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 # Feature List & Roadmap
 
 * 🟩 Robust database schema
-	- 🟩 Capable of disambiguating multiple artists with the same name
+    - 🟩 Capable of disambiguating multiple artists with the same name
 * 🟩 Search
-	- 🟩 With autocomplete
-	- 🟨 Advanced search with filters
+    - 🟩 With autocomplete
+    - 🟨 Advanced search with filters
 * 🟩 metainfo uploading
 * 🟩 metainfo downloading
 * 🟩 bittorrent announce
-	- 🟩 Authentication with passkey
+    - 🟩 Authentication with passkey
 * 🟩 Progressive upload page
-	- 🟩 Fields can be autocompleted by searching for an artist or album
-	- 🟩 Fields can be autocompleted by clicking "upload here" on an artist/release group/release page
+    - 🟩 Fields can be autocompleted by searching for an artist or album
+    - 🟩 Fields can be autocompleted by clicking "upload here" on an artist/release group/release page
 * 🟩 Artist pages
-	- 🟩 Artist portrait image
-	- 🟩 Artist country flag
-	- 🟨 Artist biography
+    - 🟩 Artist portrait image
+    - 🟩 Artist country flag
+    - 🟨 Artist biography
 * 🟩 Release group pages
-	- 🟩 Album art image
+    - 🟩 Album art image
 * 🟩 Release pages
-	- 🟩 Album art image
+    - 🟩 Album art image
 * 🟩 Torrent pages
-	- 🟩 File list
+    - 🟩 File list
 * 🟨 WebTorrent support
-	- 🟨 Ability to stream an album
-	- 🟨 Ability to stream album art (maybe?)
+    - 🟨 Ability to stream an album
+    - 🟨 Ability to stream album art (maybe?)
 * 🟩 Forum
-	- 🟩 Categories
-		- 🟩 Subcategories/tree structure
-		- 🟨 Category descriptions
-	- 🟩 Threads
-	- 🟩 Posts
+    - 🟩 Categories
+        - 🟩 Subcategories/tree structure
+        - 🟨 Category descriptions
+    - 🟩 Threads
+    - 🟩 Posts
 * 🟩 Users
-	- 🟩 User biography
-	- 🟨 User avatar
-	- 🟩 User inbox/messaging system
-	- 🟩 Latest downloads/uploads
-	- 🟧 Downloads/uploads list
-	- 🟧 Download/upload totals and ratio
-	- 🟨 Current seeding list
-	- 🟩 Permissions system
-	- 🟨 User classes
-	- 🟩 User settings page
+    - 🟩 User biography
+    - 🟨 User avatar
+    - 🟩 User inbox/messaging system
+    - 🟩 Latest downloads/uploads
+    - 🟧 Downloads/uploads list
+    - 🟧 Download/upload totals and ratio
+    - 🟨 Current seeding list
+    - 🟩 Permissions system
+    - 🟨 User classes
+    - 🟩 User settings page
 * 🟨 Requests
-	- 🟨 Bounties
-	- 🟨 Subscribing to requests (for a notification when it is fulfilled)
-	- 🟨 Linking relevant requests on artist/release group/release pages
+    - 🟨 Bounties
+    - 🟨 Subscribing to requests (for a notification when it is fulfilled)
+    - 🟨 Linking relevant requests on artist/release group/release pages
 * 🟩 News
 * 🟨 Torrent subscription system (for a notification when an artist/release group/release has a new torrent)
 

@@ -1,14 +1,14 @@
 {% load units %}
 
 <ul class="file-list">
-	{% for k, v in file_list.items %}
-		{% if k == './' %}
-			{% for filename, size in v %}
-				<li>📄 <div class="name">{{ filename }}</div> <div class="size">({{ size|IEC_80000_13 }})</div></li>
-			{% endfor %}
-		{% else %}
-			<li>📂 <div class="name">{{ k }}/</div></li>
-			{% include 'torrent/music/torrent/as_file_list.html' with file_list=v %}
-		{% endif %}
-	{% endfor %}
+    {% for k, v in file_list.items %}
+        {% if k == './' %}
+            {% for filename, size in v %}
+                <li>📄 <div class="name">{{ filename }}</div> <div class="size">({{ size|IEC_80000_13 }})</div></li>
+            {% endfor %}
+        {% else %}
+            <li>📂 <div class="name">{{ k }}/</div></li>
+            {% include 'torrent/music/torrent/as_file_list.html' with file_list=v %}
+        {% endif %}
+    {% endfor %}
 </ul>

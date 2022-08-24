@@ -5,11 +5,11 @@ Homepage
 {% endblock %}
 
 {% block content %}
-	<h2>News</h2>
-	
-	{% for article in articles %}
-		{% include 'root/news_article/as_article.html' %}
-	{% empty %}
-		<p>No news.</p>
-	{% endfor %}
+    <h2>News</h2>
+    
+    {% for article in articles %}
+        {% include 'root/news_article/as_article.html' %}
+    {% empty %}
+        <p>No news.</p>
+    {% endfor %}
 {% endblock %}

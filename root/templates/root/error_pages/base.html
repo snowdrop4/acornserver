@@ -3,23 +3,23 @@
 {% load static %}
 
 {% block css %}
-	<link rel="stylesheet" href="{% static 'css/error_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/error_page.css' %}">
 {% endblock %}
 
 {% block title %}
-	HTTP {{ status_code_number }}
+    HTTP {{ status_code_number }}
 {% endblock %}
 
 {% block blank-content %}
-	<div class="center-max-width">
-		<div>
-			<h1>HTTP {{ status_code_number }}</h1>
-			<!-- <img style="height: 5rem;" src="{% static 'img/acorn-logo.svg' %}"> -->
-			<h2>{{ status_code_text }}</h2>
-			
-			<p>{{ message }}</p>
-			
-			<p><a href="{% url 'root:homepage' %}">← Go back to homepage</a></p>
-		</div>
-	</div>
+    <div class="center-max-width">
+        <div>
+            <h1>HTTP {{ status_code_number }}</h1>
+            <!-- <img style="height: 5rem;" src="{% static 'img/acorn-logo.svg' %}"> -->
+            <h2>{{ status_code_text }}</h2>
+            
+            <p>{{ message }}</p>
+            
+            <p><a href="{% url 'root:homepage' %}">← Go back to homepage</a></p>
+        </div>
+    </div>
 {% endblock %}

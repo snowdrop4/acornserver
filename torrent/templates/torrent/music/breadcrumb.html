@@ -1,29 +1,29 @@
 {% if artist and release_group %}
-	<nav class="breadcrumb">
-		Music →
-		
-		<a href="{% url 'torrent:music_artist_view' pk=artist.pk %}">{{ artist.name }}</a>
-		
-		→ {% include 'torrent/music/release_group/as_link.html' %}
-		
-		{% if release %}
-			→ {% include 'torrent/music/release/as_link.html' %}
-			
-			{% if torrent %}
-				→ {% include 'torrent/music/torrent/as_link.html' %}
-			{% endif %}
-		{% endif %}
-	</nav>
+    <nav class="breadcrumb">
+        Music →
+        
+        <a href="{% url 'torrent:music_artist_view' pk=artist.pk %}">{{ artist.name }}</a>
+        
+        → {% include 'torrent/music/release_group/as_link.html' %}
+        
+        {% if release %}
+            → {% include 'torrent/music/release/as_link.html' %}
+            
+            {% if torrent %}
+                → {% include 'torrent/music/torrent/as_link.html' %}
+            {% endif %}
+        {% endif %}
+    </nav>
 {% elif release_group and release %}
-	<nav class="breadcrumb">
-		Music →
-		
-		{% include 'torrent/music/release_group/as_link.html' %}
-					
-		→ {% include 'torrent/music/release/as_link.html' %}
-		
-		{% if torrent %}
-			→ {% include 'torrent/music/torrent/as_link.html' %}
-		{% endif %}
-	</nav>
+    <nav class="breadcrumb">
+        Music →
+        
+        {% include 'torrent/music/release_group/as_link.html' %}
+                    
+        → {% include 'torrent/music/release/as_link.html' %}
+        
+        {% if torrent %}
+            → {% include 'torrent/music/torrent/as_link.html' %}
+        {% endif %}
+    </nav>
 {% endif %}
