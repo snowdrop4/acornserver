@@ -47,7 +47,9 @@ def add(request: AuthedHttpRequest) -> HttpResponse:
         page = paginator.get_page(current_page_num)
 
         if request.method == "POST":
-            contribution_form = MusicContributionFormAdd(page.object_list, request.POST)
+            contribution_form = MusicContributionFormAdd(
+                page.object_list, request.POST  # type: ignore
+            )
 
             if contribution_form.is_valid():
                 contribution = contribution_form.save(commit=False)
@@ -68,7 +70,7 @@ def add(request: AuthedHttpRequest) -> HttpResponse:
 
                 return redirect("torrent:music_release_group_view", pk=release_group.pk)
         else:
-            contribution_form = MusicContributionFormAdd(page.object_list)
+            contribution_form = MusicContributionFormAdd(page.object_list)  # type: ignore
 
         template_args["page"] = page
         template_args["contribution_form"] = contribution_form

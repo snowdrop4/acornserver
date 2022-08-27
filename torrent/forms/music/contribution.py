@@ -1,6 +1,7 @@
-from typing import Any
+from typing import Any, cast
 
 from django import forms
+from django.forms import ChoiceField
 from django.db.models import QuerySet
 
 from torrent.models.music import MusicArtist, MusicContribution
@@ -30,12 +31,16 @@ class MusicContributionFormWithArtistFK(forms.ModelForm):
 
         self.artist_fk = fk
 
-        # Show the artist specified by `fk` (supplied by the query string) as the default value.
-        self.fields["artist"].choices = [("", fk)]
-        # Make the field show as disabled to the user, and make django discard the field even if it *is* POSTed.
-        self.fields["artist"].disabled = True
-        # Allow the field to be blank (this is necessary as django discards POST data for fields marked as `disabled`).
-        self.fields["artist"].required = False
+        artist_field = cast(ChoiceField, self.fields["artist"])
+        # Show the artist specified by `fk` (supplied by the query string)
+        # as the default value.
+        artist_field.choices = [("", fk)]
+        # Make the field show as disabled to the user, and make django discard
+        # the field even if it *is* POSTed.
+        artist_field.disabled = True
+        # Allow the field to be blank (this is necessary as django discards
+        # POST data for fields marked as `disabled`).
+        artist_field.required = False
 
     # Always return the artist as specified by `fk` for the value for the field.
     def clean_artist(self) -> MusicArtist:
@@ -53,7 +58,7 @@ class MusicContributionFormAdd(forms.ModelForm):
         )
         widgets = {"artist": ArtistRadioSelect}
 
-    def __init__(self, queryset: QuerySet, *args: Any, **kwargs: Any):
+    def __init__(self, queryset: list, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
 
         # Instead of setting `self.fields['artist'].queryset` and letting
@@ -71,9 +76,10 @@ class MusicContributionFormAdd(forms.ModelForm):
         #    since that does not translate well into SQL and it would not
         #    have a clear meaning either."
         #
-        # So we need to bypass this filtering stage by setting the choices
-        # ourselves.
-        self.fields["artist"].choices = [(a.pk, a.name) for a in queryset]
+        # So we need to bypass this filtering stage by directly setting the
+        # choices ourselves.
+        artist_field = cast(ChoiceField, self.fields["artist"])
+        artist_field.choices = [(a.pk, a.name) for a in queryset]
 
 
 class MusicContributionFormArtistSearch(forms.Form):

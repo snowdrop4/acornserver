@@ -1,6 +1,7 @@
-from typing import IO, Any
+from typing import IO, Any, cast
 
 from django import forms
+from django.forms import ModelChoiceField
 
 from bcoding import bdecode
 
@@ -49,18 +50,19 @@ class MusicTorrentFormAdd(forms.ModelForm):
         # release object in the database, so we need to restrict the possible
         # values for the `release` form field to releases belonging to the same
         # release group as the release specified by `fk`.
-        self.fields["release"].queryset = fk.release_group.releases
+        release_field = cast(ModelChoiceField, self.fields["release"])
+        release_field.queryset = fk.release_group.releases  # type: ignore
 
         # Set the default value for the `release` form field to the
         # `release` specified by `fk`.
-        self.fields["release"].initial = fk
+        release_field.initial = fk
 
     def clean_metainfo_file(self) -> IO[bytes]:
         return clean_metainfo_file(self)
 
 
 # Unlike most other edit forms where it is technically optional,
-#   this form requires `instance` (the PK of a torrent) as a kwarg.
+# this form requires `instance` (the PK of a torrent) as a kwarg.
 class MusicTorrentFormEdit(forms.ModelForm):
     prefix = "torrent"
 
@@ -71,14 +73,18 @@ class MusicTorrentFormEdit(forms.ModelForm):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
 
-        # If `instance` is supplied as a kwarg, restrict the possible values for the `release` form field
-        #   to releases belonging to the same release group as the current release.
+        # If `instance` is supplied as a kwarg, restrict the possible values
+        # for the `release` form field to releases belonging to the same
+        # release group as the current release.
         if "instance" in kwargs:
-            self.fields["release"].queryset = kwargs[
+            release_field = cast(ModelChoiceField, self.fields["release"])
+            release_field.queryset = kwargs[
                 "instance"
             ].release.release_group.releases
-        # Otherwise, throw an error since we can't construct the form. If we don't narrow down the possible values
-        #   for `release` then django will default to displaying every single release in the database which is nonsense.
+        # Otherwise, throw an error since we can't construct the form.
+        # If we don't narrow down the possible values for `release` then
+        # django will default to displaying every single release in the
+        # database which is nonsense.
         else:
             raise TypeError(
                 "MusicTorrentFormEdit() missing required keyword argument: 'instance'"

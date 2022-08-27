@@ -1,5 +1,5 @@
 import random
-from typing import Any
+from typing import Any, cast
 
 from django.http import HttpRequest, HttpResponse
 from django.test import RequestFactory
@@ -8,7 +8,7 @@ from django.shortcuts import render
 
 from root import messages
 from forum.models import ForumCategory
-from root.type_annotations import AuthedHttpRequest
+from root.type_annotations import AuthedHttpRequest, AuthedWSGIRequest
 from forum.forum_randomiser import (create_random_post, create_random_thread,
                                     create_random_category,)
 from account.account_randomiser import create_random_user
@@ -47,7 +47,7 @@ def populate_music_database(request: AuthedHttpRequest) -> HttpResponse:
                 }
 
                 # We don't need to provide the `release_group` pk,
-                #   as the upload view deduces it from the `contribution` pk.
+                # as the upload view deduces it from the `contribution` pk.
                 data: dict[str, Any] = {
                     **{ "model_pk-artist_pk": str(artist.pk), },
                     **{ "contribution_select-contribution": str(contribution.pk), },
@@ -56,9 +56,12 @@ def populate_music_database(request: AuthedHttpRequest) -> HttpResponse:
                 }
 
                 request_factory = RequestFactory()
-                request = request_factory.post(
-                    reverse("torrent:music_upload"), data, format="multipart"
-                )  # type: ignore
+                request = cast(
+                    AuthedWSGIRequest,
+                    request_factory.post(
+                        reverse("torrent:music_upload"), data, format="multipart"
+                    )
+                )
                 request.user = user
 
                 upload(request)

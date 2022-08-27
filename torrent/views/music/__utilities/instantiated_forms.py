@@ -3,15 +3,47 @@
 # may not be pre-filled and uneditable.
 
 from abc import abstractmethod
+from typing import Any, cast
 
 from django import forms
 from django.db import models
-from django.http import HttpRequest
+from django.http import Http404, HttpRequest
+from django.forms import ChoiceField, ModelChoiceField
 from django.shortcuts import get_object_or_404
 
 from torrent.forms.music import upload
 from torrent.models.music import MusicArtist, MusicContribution, MusicReleaseGroup
 from root.type_annotations import AuthedHttpRequest
+
+
+# Wrapper around the basic python dictionary object that accepts values of
+# type string and converts them to type int.
+#
+# If the conversion from string to integer fails, it throws a 404.
+class PkProvider:
+    def __init__(self, get_parameters: dict[str, str]):
+        self.pks: dict[str, int] = {}
+
+        for (k, vs) in get_parameters.items():
+            for v in vs:
+                self.__setitem__(k, v)
+
+    def __setitem__(self, pk_name: str, pk_value: str | int) -> None:
+        try:
+            self.pks[pk_name] = int(pk_value)
+        except ValueError:
+            # TODO: Can't just return a `HttpResponseBadRequest` because we
+            # aren't actually in a view.
+            #
+            # Only way to signal an error is use an exception here, but Http404
+            # is technically wrong.
+            raise Http404("The GET parameter '" + pk_name + "' must be an integer")
+
+    def __getitem__(self, pk_name: str) -> int:
+        return self.pks[pk_name]
+
+    def __contains__(self, pk_name: str) -> bool:
+        return pk_name in self.pks
 
 
 # The value for the HTML ID for each field when rendered in the template.
@@ -20,12 +52,16 @@ def auto_id() -> str:
 
 
 class BaseForm:
-    def __init__(self, pk_provider: dict, pk_name: str, form_class: type[forms.Form]):
+    def __init__(self,
+        pk_provider: PkProvider,
+        pk_name: str,
+        form_class: type[forms.Form] | type [forms.ModelForm]
+    ):
         self.pk_provider = pk_provider
         self.pk_name = pk_name
 
-        self.form_class: type[forms.Form] = form_class
-        self.form: forms.Form | None = None
+        self.form_class: type[forms.Form] | type[forms.ModelForm] = form_class
+        self.form: forms.Form | forms.ModelForm
 
         self.is_valid_override = False
 
@@ -70,7 +106,7 @@ class BaseForm:
 # Holds a hidden input field for an artist pk, which might be filled by
 # javascript if the user autocompletes an artist.
 class MusicModelPkForm(BaseForm):
-    def __init__(self, pk_provider: dict):
+    def __init__(self, pk_provider: PkProvider):
         super().__init__(pk_provider, "model_pk", upload.MusicModelPkForm)
 
     def instantiate_post(self, request: AuthedHttpRequest) -> None:
@@ -104,15 +140,18 @@ class MusicPkForm(BaseForm):
 class MusicObjectForm(MusicPkForm):
     def __init__(
         self,
-        pk_provider: dict,
+        pk_provider: PkProvider,
         pk_name: str,
-        form_class: type[forms.Form],
+        form_class: type[forms.ModelForm],
         object_class: type[models.Model],
     ):
         super().__init__(pk_provider, pk_name, form_class)
 
+        self.form_class: type[forms.ModelForm]
+        self.form: forms.ModelForm
+
         self.object_class: type[models.Model] = object_class
-        self.object: models.Model | None = None
+        self.object: models.Model
 
         # Whether the form was constructed from a primary key (used to tell us
         # if we need to save the object or not)
@@ -132,7 +171,7 @@ class MusicObjectForm(MusicPkForm):
 
 
 class MusicContributionSelectForm(MusicPkForm):
-    def __init__(self, pk_provider: dict):
+    def __init__(self, pk_provider: PkProvider):
         super().__init__(
             pk_provider, "contribution", upload.MusicContributionSelectForm
         )
@@ -140,22 +179,24 @@ class MusicContributionSelectForm(MusicPkForm):
         self.object: models.Model | None = None
 
     def populate_choices(self) -> None:
+        contribution_field = cast(ModelChoiceField, self.form.fields["contribution"])
+        choices: list[tuple[str, str]] = [("", "---------")]
+
         if "artist" in self.pk_provider:
             artist = get_object_or_404(MusicArtist, pk=self.pk_provider["artist"])
 
-            choices: list[tuple[str | int, str]] = [("", "---------")]
-
             for i in artist.contributions.all():
                 choices.append(
-                    (i.pk, f"{i.get_contribution_type_display()} - {i.release_group}")
+                    (str(i.pk), f"{i.get_contribution_type_display()} - {i.release_group}")
                 )
 
-            self.form.fields["contribution"].choices = choices
+            contribution_field.choices = choices
 
             if "contribution" in self.pk_provider:
-                self.form.initial["contribution"] = self.pk_provider["contribution"]
+                initial = cast(dict[str, str], self.form.initial)
+                initial["contribution"] = str(self.pk_provider["contribution"])
         else:
-            self.form.fields["contribution"].choices = [("", "---------")]
+            contribution_field.choices = choices
             self.disable_all_fields()
 
     def instantiate_pk(self, pk: int) -> None:
@@ -191,28 +232,30 @@ class MusicContributionSelectForm(MusicPkForm):
 
 
 class MusicReleaseSelectForm(MusicPkForm):
-    def __init__(self, pk_provider: dict):
+    def __init__(self, pk_provider: PkProvider):
         super().__init__(pk_provider, "release", upload.MusicReleaseSelectForm)
 
         self.object = None
 
     def populate_choices(self) -> None:
+        release_field = cast(ModelChoiceField, self.form.fields["release"])
+        choices: list[tuple[str, str]] = [("", "---------")]
+
         if "release_group" in self.pk_provider:
             release_group = get_object_or_404(
                 MusicReleaseGroup, pk=self.pk_provider["release_group"]
             )
 
-            choices: list[tuple[str | int, str]] = [("", "---------")]
-
             for i in release_group.releases.all():
-                choices.append((i.pk, str(i)))
+                choices.append((str(i.pk), str(i)))
 
-            self.form.fields["release"].choices = choices
+            release_field.choices = choices
 
             if "release" in self.pk_provider:
-                self.form.initial["release"] = self.pk_provider["release"]
+                initial = cast(dict[str, str], self.form.initial)
+                initial["release"] = str(self.pk_provider["release"])
         else:
-            self.form.fields["release"].choices = [("", "---------")]
+            release_field.choices = choices
             self.disable_all_fields()
 
     def instantiate_pk(self, pk: int) -> None:

@@ -133,7 +133,7 @@ DATABASES = {
 LANGUAGE_CODE = 'en-gb'
 TIME_ZONE = 'UTC'
 USE_I18N  = True
-USE_L10N  = False # Enforce logical date-time formatting
+USE_L10N  = False  # Enforce logical date-time formatting
 USE_TZ    = True
 
 # Date and time display

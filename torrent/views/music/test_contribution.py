@@ -1,10 +1,11 @@
-from typing import Any
+from typing import cast
 
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
 import torrent.views.music.contribution as contribution_views
 from torrent.models.music import MusicContribution
+from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
 from torrent.models.music_randomiser import (create_random_artist,
                                              create_random_release_group,)
@@ -30,7 +31,10 @@ class TestContribution(TestCase):
             "contribution-contribution_type": MusicContribution.ContributionType.GUEST
         }
 
-        request: Any = self.requestFactory.post(url, data)
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(url, data)
+        )
         request.user = self.user
 
         contribution_views.edit(request, contribution.pk)

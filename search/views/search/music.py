@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.http import HttpRequest, HttpResponse
+from django.db.models import QuerySet
 from django.shortcuts import render
 from django.core.paginator import Paginator
 
@@ -24,7 +25,7 @@ def search(request: AuthedHttpRequest) -> HttpResponse:
     template_args: dict[str, Any] = {"form": form}
 
     if form.is_valid():
-        query = None
+        query: QuerySet[MusicReleaseGroup | MusicArtist] | None = None
 
         if form.cleaned_data["artist_name"] and form.cleaned_data["release_group_name"]:
             model_name = "release_group"

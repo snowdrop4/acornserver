@@ -1,11 +1,12 @@
 import copy
-from typing import Any
+from typing import cast
 
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
 import torrent.views.music.release_group as release_group_views
 from torrent.models.music import MusicContribution, MusicReleaseGroup
+from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
 from torrent.models.music_randomiser import create_random_artist
 
@@ -33,8 +34,9 @@ class TestReleaseGroup(TestCase):
             + str(self.artist.pk)
         )
 
-        request: Any = self.requestFactory.post(
-            url, {**self.data, **self.contribution_data}
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(url, {**self.data, **self.contribution_data})
         )
         request.user = self.user
 
@@ -58,7 +60,10 @@ class TestReleaseGroup(TestCase):
         modified_data["release_group-name"] = "blueberry"
         modified_data["release_group-group_type"] = MusicReleaseGroup.GroupType.EP
 
-        request: Any = self.requestFactory.post(url, modified_data)
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(url, modified_data)
+        )
         request.user = self.user
 
         release_group_views.edit(request, release_group.pk)

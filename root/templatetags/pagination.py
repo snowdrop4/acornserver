@@ -9,11 +9,11 @@ def remove_page_from_query_string(qs: dict) -> str:
 
 
 # Given both the current page number and the total number of pages,
-#   returns a list of page numbers to be displayed in page navigation.
+# returns a list of page numbers to be displayed in page navigation.
 #
 # Provided the total number of pages is more than 11, the returned list
-#   will always be 11 elements long, regardless of the position of the
-#   current page (marked with `^` in the following example):
+# will always be 11 elements long, regardless of the position of the
+# current page (marked with `^` in the following example):
 #
 # [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55]
 #                                      ^^
@@ -25,7 +25,7 @@ def remove_page_from_query_string(qs: dict) -> str:
 #  ^
 #
 # Thus, the user can always see 11 pages regardless of their proximity
-#  to the start or the end of the list of pages.
+# to the start or the end of the list of pages.
 @register.simple_tag
 def generate_pagination_page_list(current_page: int, total_pages: int) -> list[int]:
     m = list(range(max(current_page - 5, 1), min(current_page + 5, total_pages) + 1))

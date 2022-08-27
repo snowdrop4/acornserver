@@ -1,6 +1,6 @@
 import os
 import copy
-from typing import Any
+from typing import cast
 
 from django.conf import settings
 from django.test import TestCase, RequestFactory
@@ -8,6 +8,7 @@ from django.urls import reverse
 
 import torrent.views.music.torrent as torrent_views
 from torrent.models.music import MusicTorrent
+from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
 from torrent.models.music_randomiser import (create_random_release,
                                              create_random_release_group,)
@@ -36,10 +37,11 @@ class TestTorrent(TestCase):
         self.torrent_file.close()
 
     def test_add(self) -> None:
-        url = reverse("torrent:music_torrent_add") + "?release=" + str(self.release.pk)
+        url = reverse("torrent:music_torrent_add") + f"?release={self.release.pk}"
 
-        request: Any = self.requestFactory.post(
-            url, self.torrent_data, format="multipart"
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(url, self.torrent_data, format="multipart")
         )
         request.user = self.user
 
@@ -54,10 +56,11 @@ class TestTorrent(TestCase):
 
     def test_edit(self) -> None:
         # First, create a new torrent.
-        url = reverse("torrent:music_torrent_add") + "?release=" + str(self.release.pk)
+        url = reverse("torrent:music_torrent_add") + f"?release={self.release.pk}"
 
-        request: Any = self.requestFactory.post(
-            url, self.torrent_data, format="multipart"
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(url, self.torrent_data, format="multipart"),
         )
         request.user = self.user
 
@@ -73,12 +76,15 @@ class TestTorrent(TestCase):
 
         url = reverse("torrent:music_torrent_edit", kwargs={"pk": torrent.pk})
 
-        request = self.requestFactory.post(url, modified_data, format="multipart")
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(url, modified_data, format="multipart")
+        )
         request.user = self.user
 
         torrent_views.edit(request, torrent.pk)
         torrent.refresh_from_db()
 
-        self.assertEquals(torrent.uploader.pk, self.user.pk)
+        self.assertEquals(torrent.uploader.pk, self.user.pk)  # type: ignore
         self.assertEquals(torrent.release.pk, self.release.pk)
         self.assertEquals(torrent.encode_format, modified_data["torrent-encode_format"])

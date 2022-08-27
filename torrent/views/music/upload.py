@@ -1,8 +1,10 @@
-from typing import Any
+from typing import Any, cast
 
+from django import forms
 from django.db import Error, transaction
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.core.files.uploadedfile import UploadedFile
 
 from bcoding import bdecode
 
@@ -18,48 +20,19 @@ from torrent.forms.music.torrent import MusicTorrentForm
 from torrent.forms.music.contribution import MusicContributionForm
 from torrent.forms.music.release_group import MusicReleaseGroupForm
 
-from .__utilities import instantiated_forms
-
-
-# Wrapper around the basic python dictionary object that accepts values of
-# type string and converts them to type int.
-#
-# If the conversion from string to integer fails, it throws a 404.
-class PkProvider:
-    def __init__(self, get_parameters: dict[str, str]):
-        self.pks: dict[str, int] = {}
-
-        for k, vs in get_parameters.items():
-            for v in vs:
-                self.__setitem__(k, v)
-
-    def __setitem__(self, pk_name: str, pk_value: str) -> None:
-        try:
-            self.pks[pk_name] = int(pk_value)
-        except ValueError:
-            # TODO: Can't just return a `HttpResponseBadRequest` because we
-            # aren't actually in a view.
-            #
-            # Only way to signal an error is use an exception here, but Http404
-            # is technically wrong.
-            raise Http404("The GET parameter '" + pk_name + "' must be an integer")
-
-    def __getitem__(self, pk_name: str) -> int:
-        return self.pks[pk_name]
-
-    def __contains__(self, pk_name: str) -> bool:
-        return pk_name in self.pks
+from .__utilities import instantiated_forms as in_forms
+from .__utilities.instantiated_forms import PkProvider
 
 
 def upload(request: AuthedHttpRequest) -> HttpResponse:
     # Sets of valid GET parameters and the corresponding forms that will be
     # used for the given parameters.
     #
-    # The order of the forms is important here, as they are instantiated in
+    # The order of the forms is important here, as they will be instantiated in
     # this order.
     #
-    # 'model_pk', 'contribution_select', and 'release_select' provide PKs to
-    # the other forms through PkProvider, so they must come first.
+    # Since 'model_pk', 'contribution_select', and 'release_select' provide PKs
+    # to the other forms through PkProvider, they must come first.
     all_forms = (
         "model_pk",
         "contribution_select",
@@ -79,7 +52,8 @@ def upload(request: AuthedHttpRequest) -> HttpResponse:
         ("release",): ("release", "torrent"),
     }
 
-    # Throw an error if the GET parameters don't match any of the valid sets of GET parameters.
+    # Throw an error if the GET parameters don't match any of the valid sets
+    # of GET parameters.
     if tuple(request.GET.keys()) not in valid_get_parameters.keys():
         valid_get_parameters_str = ", ".join(
             "(" + ", ".join(k) + ")" for k in valid_get_parameters.keys()
@@ -93,66 +67,90 @@ def upload(request: AuthedHttpRequest) -> HttpResponse:
     # Create our PkProvider object.
     pks = PkProvider(request.GET)
 
-    # TorrentForm is a file form, and is thus a special case. It needs to be fed 'request.FILES' if the request was a POST.
-    torrent_constructor = (
-        lambda *args, **kwargs: MusicTorrentForm(*args, request.FILES, **kwargs)
+    # TorrentForm is a file form, and is thus a special case.
+    # It needs to be fed 'request.FILES' if the request was a POST.
+    torrent_constructor: type[forms.ModelForm] = (
+        lambda *args, **kwargs: MusicTorrentForm(*args, request.FILES, **kwargs)  # type: ignore
         if (request.method == "POST")
         else MusicTorrentForm(*args, **kwargs)
     )
 
     # Dictionary of all possible forms.
     model_forms = {
-        "artist":              instantiated_forms.MusicObjectForm(pks, "artist",        MusicArtistForm,       MusicArtist),
-        "release_group":       instantiated_forms.MusicObjectForm(pks, "release_group", MusicReleaseGroupForm, MusicReleaseGroup),
-        "contribution":        instantiated_forms.MusicObjectForm(pks, "contribution",  MusicContributionForm, MusicContribution),
-        "release":             instantiated_forms.MusicObjectForm(pks, "release",       MusicReleaseForm,      MusicRelease),
-        "torrent":             instantiated_forms.MusicObjectForm(pks, "torrent",       torrent_constructor,   MusicTorrent),
-        "contribution_select": instantiated_forms.MusicContributionSelectForm(pks),
-        "release_select":      instantiated_forms.MusicReleaseSelectForm(pks),
-        "model_pk":            instantiated_forms.MusicModelPkForm(pks),
+        "artist":              in_forms.MusicObjectForm(pks, "artist",        MusicArtistForm,       MusicArtist),
+        "release_group":       in_forms.MusicObjectForm(pks, "release_group", MusicReleaseGroupForm, MusicReleaseGroup),
+        "contribution":        in_forms.MusicObjectForm(pks, "contribution",  MusicContributionForm, MusicContribution),
+        "release":             in_forms.MusicObjectForm(pks, "release",       MusicReleaseForm,      MusicRelease),
+        "torrent":             in_forms.MusicObjectForm(pks, "torrent",       torrent_constructor,   MusicTorrent),
+        "contribution_select": in_forms.MusicContributionSelectForm(pks),
+        "release_select":      in_forms.MusicReleaseSelectForm(pks),
+        "model_pk":            in_forms.MusicModelPkForm(pks),
     }
 
     # Remove the unneeded forms from model_forms.
     valid_forms = valid_get_parameters[tuple(request.GET.keys())]
     model_forms = {k: model_forms[k] for k in valid_forms}
 
-    # Instantiate all the forms (whether as blank forms, or from POSTed data, or from GETed parameters).
-    for k, v in model_forms.items():
+    # Instantiate all the forms (whether as blank forms, or from POSTed data,
+    # or from GETed parameters).
+    for (k, v) in model_forms.items():
         v.instantiate(request)
 
-    # If it was a POST and all the forms pass validation, save them to the database and finally redirect
-    #   to a view to display the new torrent.
+    # If it was a POST and all the forms pass validation, save them to the
+    # database and finally redirect to a view to display the new torrent.
     if request.method == "POST" and False not in [
         v.is_valid() for (k, v) in model_forms.items()
     ]:
         try:
             with transaction.atomic():
-                if "artist" in model_forms and model_forms["artist"].from_pk is False:
-                    model_forms["artist"].object.save()
+                artist_form = cast(
+                    in_forms.MusicObjectForm | None,
+                    model_forms.get("artist", None)
+                )
+                if artist_form and artist_form.from_pk is False:
+                    artist_form.object.save()
 
-                if ("release_group" in model_forms and model_forms["release_group"].from_pk is False):
-                    model_forms["release_group"].object.save()
+                release_group_form = cast(
+                    in_forms.MusicObjectForm | None,
+                    model_forms.get("release_group", None)
+                )
+                if release_group_form and release_group_form.from_pk is False:
+                    release_group_form.object.save()
 
-                if ("contribution" in model_forms and model_forms["contribution"].from_pk is False):
-                    model_forms["contribution"].object.artist        = model_forms["artist"].object
-                    model_forms["contribution"].object.release_group = model_forms["release_group"].object
-                    model_forms["contribution"].object.save()
+                contribution_form = cast(
+                    in_forms.MusicObjectForm | None,
+                    model_forms.get("contribution", None)
+                )
+                if contribution_form and contribution_form.from_pk is False:
+                    contribution_form.object.artist        = artist_form.object  # type: ignore
+                    contribution_form.object.release_group = release_group_form.object  # type: ignore
+                    contribution_form.object.save()
 
-                if "release" in model_forms and model_forms["release"].from_pk is False:
-                    model_forms["release"].object.release_group = model_forms["release_group"].object
-                    model_forms["release"].object.save()
+                release_form = cast(
+                    in_forms.MusicObjectForm | None,
+                    model_forms.get("release", None)
+                )
+                if release_form and release_form.from_pk is False:
+                    release_form.object.release_group = release_group_form.object  # type: ignore
+                    release_form.object.save()
 
-                metainfo = request.FILES["torrent-metainfo_file"]
+                metainfo = cast(UploadedFile, request.FILES["torrent-metainfo_file"])
                 metainfo.seek(0)
                 metainfo_decoded = bdecode(metainfo)
 
-                model_forms["torrent"].object.release = model_forms["release"].object
-                model_forms["torrent"].object.uploader = request.user
-                model_forms["torrent"].object.infohash_sha1_hexdigest = get_infohash_sha1_hexdigest(metainfo_decoded)
-                model_forms["torrent"].object.torrent_size = get_torrent_size(metainfo_decoded)
-                model_forms["torrent"].object.torrent_files = get_torrent_file_listing(metainfo_decoded)
+                torrent_form = cast(
+                    in_forms.MusicObjectForm,
+                    model_forms.get("torrent", None)
+                )
+                torrent = cast(MusicTorrent, torrent_form.object)
 
-                model_forms["torrent"].object.save()
+                torrent.release = release_form.object  # type: ignore
+                torrent.uploader = request.user
+                torrent.infohash_sha1_hexdigest = get_infohash_sha1_hexdigest(metainfo_decoded)
+                torrent.torrent_size = get_torrent_size(metainfo_decoded)
+                torrent.torrent_files = get_torrent_file_listing(metainfo_decoded)
+
+                torrent.save()
         except Error as e:
             return renderers.render_http_server_error(
                 request, f"Could not upload torrent. Error: {e}"
@@ -160,7 +158,7 @@ def upload(request: AuthedHttpRequest) -> HttpResponse:
 
         messages.creation(request, "Uploaded torrent.")
         return redirect(
-            "torrent:music_torrent_view", pk=model_forms["torrent"].object.pk
+            "torrent:music_torrent_view", pk=torrent.pk
         )
 
     # Extract the actual django forms from our ObjectForm class, and turn that into a dictionary.

@@ -9,11 +9,11 @@ def view(request: AuthedHttpRequest) -> HttpResponse:
     # Every category must be a child of a root category at `pk=1`.
     #
     # The children of the root category are assumed to have `folder` set
-    #   to `True`, which indicates that users can't post to that category.
+    # to `True`, which indicates that users can't post to that category.
     #
     # The root category won't be visible to users, but having a root category
-    #   greatly simplifies the code for the forum because it can be represented
-    #   as a simple tree branching down from one root node.
+    # greatly simplifies the code for the forum because it can be represented
+    # as a simple tree branching down from one root node.
     try:
         root = (
             ForumCategory.objects

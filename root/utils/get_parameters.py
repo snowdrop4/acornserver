@@ -9,11 +9,11 @@ def identity(x: Any) -> Any:
 
 
 # This is an interface for the django `request.GET` dictionary that makes it
-#   easier to work with when GET parameters are required to be integers or
-#   port numbers or any type of data other than plain, unvalidated, strings.
+# easier to work with when GET parameters are required to be integers or
+# port numbers or any type of data other than plain, unvalidated, strings.
 #
 # It takes the django `request` object, and a dictionary specifying which
-#   and what kind of GET parameters to expect.
+# and what kind of GET parameters to expect.
 #
 # This dictionary is a mapping of a parameter name to a tuple containing three values:
 #   (1) `required`: a boolean, which if `True`, indicates that the parameter *must* be
@@ -32,7 +32,7 @@ def identity(x: Any) -> Any:
 #       corresponds to each GET parameter
 #
 # On an error with one of the parameters, this function raises a ValueError
-#   with a string describing the error.
+# with a string describing the error.
 Required = bool
 ErrorMessage = str
 Constructor = Callable

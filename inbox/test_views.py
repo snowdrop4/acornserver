@@ -47,7 +47,7 @@ class TestThread(TestCase):
 
 
 class TestThreadQueries(TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.requestFactory = RequestFactory()
         self.user = create_random_user()
 

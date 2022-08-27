@@ -50,7 +50,7 @@ class MusicArtist(models.Model):
 # A release group is associated with one or more artists and one or more releases.
 #
 # E.g., the album 'BUTTERFLY' is associated with the artist
-#   'fox capture plan' and one release.
+# 'fox capture plan' and one release.
 class MusicReleaseGroup(models.Model):
     class GroupType(models.TextChoices):
         LP = ("LP", "LP")
@@ -77,7 +77,7 @@ class MusicReleaseGroup(models.Model):
         )
 
     # Used in the templates `as_table.html` and `as_table_no_header.html`
-    #   inside `torrent/templates/torrent/music/release_group/`.
+    # inside `torrent/templates/torrent/music/release_group/`.
     def get_releases_by_newest_prefetch_related(self) -> QuerySet["MusicRelease"]:
         return (
             self.releases.order_by("-date")
@@ -143,11 +143,11 @@ class MusicContribution(models.Model):
 
 
 # Prevent MusicContribution objects being deleted if the MusicReleaseGroup
-#   object it references does not have any other contributions referencing it.
+# object it references does not have any other contributions referencing it.
 #
 # This is for the same reason we use `on_delete=models.PROTECT` on the foreign
-#   keys for many models. It doesn't make sense to have orphaned torrents or
-#   releases or release groups in our database.
+# keys for many models. It doesn't make sense to have orphaned torrents or
+# releases or release groups in our database.
 @receiver(signals.pre_delete, sender=MusicContribution)
 def contribution_pre_delete_signal_handler(
     sender: MusicContribution, instance: MusicContribution, **kwargs: Any
@@ -155,16 +155,16 @@ def contribution_pre_delete_signal_handler(
     if instance.release_group.contributions.count() == 1:
         raise models.ProtectedError(
             "A contribution cannot be deleted if it is the only contribution to a release group.",
-            [instance],
+            set([instance]),
         )
 
 
 # A release is a specific pressing or edition that is distributed
-#   through physical or digital mediums.
+# through physical or digital mediums.
 #
 # E.g., the 2015-11-04 release on the CD format on the label 'Playwright'
-#   with the catalog number 'PWT18' is tied to the release group for the
-#   album 'BUTTERFLY' by the artist 'fox capture plan'.
+# with the catalog number 'PWT18' is tied to the release group for the
+# album 'BUTTERFLY' by the artist 'fox capture plan'.
 class MusicRelease(models.Model):
     class ReleaseFormat(models.TextChoices):
         WEB = "WB", "Web"
@@ -213,14 +213,14 @@ class MusicTorrent(torrent.Torrent):
         MP3320 = ("MP3320", "MP3 / 320")
 
     # Use `on_delete=models.PROTECT` instead of `on_delete=models.CASCADE` to
-    #   prevent the object referenced by this foreign key from being deleted.
+    # prevent the object referenced by this foreign key from being deleted.
     #
     # Torrents are the whole point of this entire exercise, after all, so we
-    #   don't want them to be accidentally lost just because someone deleted
-    #   a MusicRelease/MusicReleaseGroup/Artist higher up in the heirarchy.
+    # don't want them to be accidentally lost just because someone deleted
+    # a MusicRelease/MusicReleaseGroup/Artist higher up in the heirarchy.
     #
     # This has the effect of requiring that all child torrents be deleted FIRST,
-    #   before any parent release/release group/artist can be deleted.
+    # before any parent release/release group/artist can be deleted.
     release = models.ForeignKey(
         MusicRelease, on_delete=models.PROTECT, related_name="torrents"
     )

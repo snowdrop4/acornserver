@@ -1,5 +1,5 @@
 import os
-from typing import Any
+from typing import Any, cast
 
 from django.conf import settings
 from django.test import TestCase, RequestFactory
@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
                                   MusicContribution, MusicReleaseGroup,)
+from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
 from torrent.views.music.upload import upload
 from torrent.models.music_randomiser import (create_random_artist,
@@ -31,9 +32,7 @@ class TestUpload(TestCase):
         )
         self.torrent_file = open(torrent_path, "rb")
 
-        #
-        # Generic data that can be reused in each of the tests as POST data.
-        #
+        # Generic data that can be reused in each of the tests as POST data:
         self.artist_data = {
             "artist-name": "Test, Test, and Away!",
         }
@@ -98,26 +97,26 @@ class TestUpload(TestCase):
         self.assertEquals(torrent.release, release)
 
     def check_everything(self, **kwargs: Any) -> None:
-        ao, ad = kwargs.get("artist")
+        (ao, ad) = kwargs["artist"]
         self.check_artist(ao, ad)
 
-        go, gd = kwargs.get("release_group")
+        (go, gd) = kwargs["release_group"]
         self.check_release_group(go, gd)
 
-        co, cd = kwargs.get("contribution")
+        (co, cd) = kwargs["contribution"]
         self.check_contribution(co, cd)
 
-        ro, rd = kwargs.get("release")
+        (ro, rd) = kwargs["release"]
         self.check_release(ro, rd)
 
-        to, td = kwargs.get("torrent")
+        (to, td) = kwargs["torrent"]
         self.check_torrent(to, td)
 
         self.check_relations(ao, go, co, ro, to)
 
     # Test the basic form without autocomplete or autofill.
     def test_from_new(self) -> None:
-        data = {
+        data: dict[str, Any] = {
             **self.artist_data,
             **self.release_group_data,
             **self.contribution_data,
@@ -125,7 +124,10 @@ class TestUpload(TestCase):
             **self.torrent_data,
         }
 
-        request: Any = self.requestFactory.post(self.url, data, format="multipart")
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(self.url, data, format="multipart")
+        )
         request.user = self.user
 
         upload(request)
@@ -151,7 +153,7 @@ class TestUpload(TestCase):
         (_, _)                = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        data = {
+        data: dict[str, Any] = {
             **{"model_pk-artist_pk": "2",},
             **self.release_group_data,
             **self.contribution_data,
@@ -159,7 +161,10 @@ class TestUpload(TestCase):
             **self.torrent_data,
         }
 
-        request: Any = self.requestFactory.post(self.url, data, format="multipart")
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(self.url, data, format="multipart")
+        )
         request.user = self.user
 
         upload(request)
@@ -195,18 +200,18 @@ class TestUpload(TestCase):
             artist, release_group
         )
 
-        data = {
-            **{
-                "model_pk-artist_pk": "2",
-            },
-            **{
-                "contribution_select-contribution": "1",
-            },  # The upload view deduces the release_group pk from the contribution pk
+        data: dict[str, Any] = {
+            **{"model_pk-artist_pk": "2", },
+            **{"contribution_select-contribution": "1",},
+            # The upload view deduces the release_group pk from the contribution pk
             **self.release_data,
             **self.torrent_data,
         }
 
-        request: Any = self.requestFactory.post(self.url, data, format="multipart")
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(self.url, data, format="multipart")
+        )
         request.user = self.user
 
         upload(request)
@@ -246,15 +251,19 @@ class TestUpload(TestCase):
         (_, _) = create_random_release(release_group)
         (release, release_data) = create_random_release(release_group)
 
-        data = {
+        data: dict[str, Any] = {
             **{"model_pk-artist_pk": "2",},
-            # The upload view deduces the release_group pk from the contribution pk
+            # The upload view deduces the release_group pk from the
+            # contribution pk, so we don't need to specify it here
             **{"contribution_select-contribution": "1",},
             **{"release_select-release": "4",},
             **self.torrent_data,
         }
 
-        request: Any = self.requestFactory.post(self.url, data, format="multipart")
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(self.url, data, format="multipart")
+        )
         request.user = self.user
 
         upload(request)
@@ -274,15 +283,18 @@ class TestUpload(TestCase):
         (_, _) = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        data = {
+        data: dict[str, Any] = {
             **self.release_group_data,
             **self.contribution_data,
             **self.release_data,
             **self.torrent_data,
         }
 
-        request: Any = self.requestFactory.post(
-            self.url + "?artist=2", data, format="multipart"
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(
+                self.url + "?artist=2", data, format="multipart"
+            )
         )
         request.user = self.user
 
@@ -318,10 +330,13 @@ class TestUpload(TestCase):
             artist, release_group
         )
 
-        data = {**self.release_data, **self.torrent_data}
+        data: dict[str, Any] = {**self.release_data, **self.torrent_data}
 
-        request: Any = self.requestFactory.post(
-            self.url + "?contribution=1", data, format="multipart"
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(
+                self.url + "?contribution=1", data, format="multipart"
+            )
         )
         request.user = self.user
 
@@ -355,10 +370,13 @@ class TestUpload(TestCase):
             artist, release_group
         )
 
-        data = {**self.release_data, **self.torrent_data}
+        data: dict[str, Any] = {**self.release_data, **self.torrent_data}
 
-        request: Any = self.requestFactory.post(
-            self.url + "?release_group=3", data, format="multipart"
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(
+                self.url + "?release_group=3", data, format="multipart"
+            )
         )
         request.user = self.user
 
@@ -400,8 +418,11 @@ class TestUpload(TestCase):
 
         data = {**self.torrent_data}
 
-        request: Any = self.requestFactory.post(
-            self.url + "?release=4", data, format="multipart"
+        request = cast(
+            AuthedWSGIRequest,
+            self.requestFactory.post(
+                self.url + "?release=4", data, format="multipart"
+            )
         )
         request.user = self.user
 

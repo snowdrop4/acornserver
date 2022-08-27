@@ -41,7 +41,11 @@ class ForumContent(models.Model):
         abstract = True
 
 
-class ForumThread(ForumContent):
+# For some reason django-stubs/mypy is freaking out here with the error:
+#
+# "Couldn't resolve related manager for relation 'forumcategory'
+# (from ForumCategory.latest_post_thread)."
+class ForumThread(ForumContent):  # type: ignore
     category = models.ForeignKey(
         ForumCategory, on_delete=models.CASCADE, related_name="threads"
     )

@@ -4,19 +4,20 @@ from functools import partial
 
 from django.db import models
 from django.utils import timezone
+from django.core.files import File
 
 from picklefield.fields import PickledObjectField
 
 
 # Given a FileField, returns the sha1 digest of that file.
-def file_sha1_hexdigest(file: models.FileField) -> str:
+def file_sha1_hexdigest(file: File) -> str:
     hasher = sha1()
 
     # The file will be already open once this is called by django,
-    #   but we use `open()` to change the mode to make sure that it is set to `rb`.
+    # but we use `open()` to change the mode to make sure that it is set to `rb`.
     #
     # We don't need to close the file at the end of this function
-    #   as we're only changing the mode, not actually opening it.
+    # as we're only changing the mode, not actually opening it.
     file.open(mode="rb")
 
     # 32768 chunk size is untested for performance
@@ -27,7 +28,7 @@ def file_sha1_hexdigest(file: models.FileField) -> str:
 
 
 # Returns the path that the uploaded `.torrent` file should be saved to,
-#   relative to MEDIA_ROOT (which is set in `acorn/settings.py`).
+# relative to MEDIA_ROOT (which is set in `acorn/settings.py`).
 #
 # `MEDIA_ROOT/torrents/<sha1 hash of the uploaded file>.torrent`
 def upload_to(instance: "Torrent", filename: str) -> str:
@@ -37,13 +38,13 @@ def upload_to(instance: "Torrent", filename: str) -> str:
 
 
 # Abstract model that can be extended by models for specific types of torrent,
-#   like music torrents, or book torrents.
+# like music torrents, or book torrents.
 #
 # The reason that this model doesn't specify a mechanism to refer to the
-#   uploader and downloader is because it would require the addition of a
-#   ManyToManyField with an intermediary model. That intermediary model
-#   would require a foreign key that refers this model, but foreign
-#   keys cannot refer to abstract models.
+# uploader and downloader is because it would require the addition of a
+# ManyToManyField with an intermediary model. That intermediary model
+# would require a foreign key that refers this model, but foreign
+# keys cannot refer to abstract models.
 class Torrent(models.Model):
     metainfo_file = models.FileField(upload_to=upload_to)
 

@@ -1,11 +1,11 @@
-from typing import Any
+from typing import Any, cast
 
-from django.http import HttpRequest, FileResponse, HttpResponse
+from django.http import HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.text import slugify
 from django.views.generic.edit import DeleteView
+from django.core.files.uploadedfile import UploadedFile
 
 from bcoding import bdecode, bencode
 
@@ -34,11 +34,11 @@ def add(request: AuthedHttpRequest) -> HttpResponse:
 
         if form.is_valid():
             # A torrent object requires more fields than the torrent form provides,
-            #   so use `commit=False`, and then manually add these fields,
-            #   before finally saving the torrent object.
+            # so use `commit=False`, and then manually add these fields,
+            # before finally saving the torrent object.
             torrent = form.save(commit=False)
 
-            metainfo = request.FILES["torrent-metainfo_file"]
+            metainfo = cast(UploadedFile, request.FILES["torrent-metainfo_file"])
             metainfo.seek(0)
             metainfo_decoded = bdecode(metainfo)
 
@@ -117,7 +117,7 @@ class Delete(DeleteView):
 
         if self.request.POST.get("confirm", "no") == "yes":
             # Only delete the torrent if the current user has the permission to delete torrents,
-            #  or if it was the current user uploaded this torrent.
+            # or if it was the current user uploaded this torrent.
             if user.has_perm("torrent.delete_musictorrent") or user == torrent.uploader:
                 torrent.delete()
                 messages.deletion(self.request, "Deleted torrent.")
@@ -135,9 +135,9 @@ TRACKER_NAME = "[AcornTorrent]"
 
 # Register the torrent in the user's downloads if the user has not downloaded
 # the torrent before.
-# 
+#
 # If the user has already downloaded the torrent before, update the download date.
-# 
+#
 # Finally, send the torrent metainfo file as a response.
 def download(request: AuthedHttpRequest, pk: int) -> HttpResponse:
     # Get the torrent file
