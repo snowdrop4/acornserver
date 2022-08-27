@@ -1,4 +1,4 @@
-from typing import Any, cast
+from typing import cast
 
 from django import forms
 from django.db import Error, transaction
@@ -9,10 +9,18 @@ from django.core.files.uploadedfile import UploadedFile
 from bcoding import bdecode
 
 from root import messages, renderers
-from torrent.metainfo import (get_torrent_size, get_torrent_file_listing,
-                              get_infohash_sha1_hexdigest,)
-from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
-                                  MusicContribution, MusicReleaseGroup,)
+from torrent.metainfo import (
+    get_torrent_size,
+    get_torrent_file_listing,
+    get_infohash_sha1_hexdigest,
+)
+from torrent.models.music import (
+    MusicArtist,
+    MusicRelease,
+    MusicTorrent,
+    MusicContribution,
+    MusicReleaseGroup,
+)
 from root.type_annotations import AuthedHttpRequest
 from torrent.forms.music.artist import MusicArtistForm
 from torrent.forms.music.release import MusicReleaseForm

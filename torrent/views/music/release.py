@@ -2,7 +2,7 @@ from typing import Any
 
 from django.db import models
 from django.core import serializers
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import DeleteView
 

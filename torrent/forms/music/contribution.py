@@ -2,7 +2,6 @@ from typing import Any, cast
 
 from django import forms
 from django.forms import ChoiceField
-from django.db.models import QuerySet
 
 from torrent.models.music import MusicArtist, MusicContribution
 from torrent.widgets.music.artist import ArtistRadioSelect

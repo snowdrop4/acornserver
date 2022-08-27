@@ -6,7 +6,7 @@ from django.urls import reverse
 
 import torrent.views.music.artist as artist_views
 from torrent.models.music import MusicArtist
-from root.type_annotations import AuthedHttpRequest, AuthedWSGIRequest
+from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
 
 

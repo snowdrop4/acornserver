@@ -116,7 +116,7 @@ def bittorrent_announce(
     try:
         passkey_db = TorrentPasskey.objects.get(key=passkey)
         user = passkey_db.user
-    except TorrentPasskey.DoesNotExist as e:
+    except TorrentPasskey.DoesNotExist:
         return BencodedResponse({"failure reason": "invalid passkey"})
 
     try:

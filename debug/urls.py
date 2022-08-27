@@ -1,13 +1,28 @@
 from django.urls import path
 
-from .views import (index, test_messages, populate_news_database,
-                    populate_forum_database, populate_music_database,)
+from .views import (
+    index,
+    test_messages,
+    populate_news_database,
+    populate_forum_database,
+    populate_music_database,
+)
 
-app_name = 'debug'
+app_name = "debug"
 urlpatterns = [
-    path('', index, name=''),
-    path('populate_music_database', populate_music_database, name='populate_music_database'),
-    path('populate_forum_database', populate_forum_database, name='populate_forum_database'),
-    path('populate_news_database',  populate_news_database,  name='populate_news_database'),
-    path('test_messages', test_messages, name='test_messages'),
+    path("", index, name=""),
+    path(
+        "populate_music_database",
+        populate_music_database,
+        name="populate_music_database",
+    ),
+    path(
+        "populate_forum_database",
+        populate_forum_database,
+        name="populate_forum_database",
+    ),
+    path(
+        "populate_news_database", populate_news_database, name="populate_news_database"
+    ),
+    path("test_messages", test_messages, name="test_messages"),
 ]

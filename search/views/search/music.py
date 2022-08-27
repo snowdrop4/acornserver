@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.db.models import QuerySet
 from django.shortcuts import render
 from django.core.paginator import Paginator

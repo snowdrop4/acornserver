@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied

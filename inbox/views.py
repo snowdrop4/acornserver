@@ -1,5 +1,5 @@
 from django.db import Error, transaction
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import Http404, HttpResponse
 from django.utils import timezone
 from django.views import View
 from django.db.models import Q, QuerySet

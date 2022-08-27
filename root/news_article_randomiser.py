@@ -1,5 +1,3 @@
-from random import random
-
 from root.models import NewsArticle
 from root.utils.random import random_str, random_prose
 

@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse
 
 from torrent.models.music import MusicReleaseGroup
 from root.type_annotations import AuthedHttpRequest

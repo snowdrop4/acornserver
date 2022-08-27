@@ -1,7 +1,7 @@
 import random
 from typing import Any, cast
 
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.test import RequestFactory
 from django.urls import reverse
 from django.shortcuts import render
@@ -9,16 +9,21 @@ from django.shortcuts import render
 from root import messages
 from forum.models import ForumCategory
 from root.type_annotations import AuthedHttpRequest, AuthedWSGIRequest
-from forum.forum_randomiser import (create_random_post, create_random_thread,
-                                    create_random_category,)
+from forum.forum_randomiser import (
+    create_random_post,
+    create_random_thread,
+    create_random_category,
+)
 from account.account_randomiser import create_random_user
 from torrent.views.music.upload import upload
 from torrent.metainfo_randomiser import create_random_metainfo_file
 from root.news_article_randomiser import create_random_news_article
-from torrent.models.music_randomiser import (create_random_artist,
-                                             create_random_release,
-                                             create_random_contribution,
-                                             create_random_release_group,)
+from torrent.models.music_randomiser import (
+    create_random_artist,
+    create_random_release,
+    create_random_contribution,
+    create_random_release_group,
+)
 
 
 def index(request: AuthedHttpRequest) -> HttpResponse:
@@ -34,7 +39,7 @@ def populate_music_database(request: AuthedHttpRequest) -> HttpResponse:
     # create 4 release groups
     for _ in range(4):
         (release_group, _) = create_random_release_group()
-        (contribution,  _) = create_random_contribution(artist, release_group)
+        (contribution, _) = create_random_contribution(artist, release_group)
 
         # create 3 releases for each release group
         for _ in range(3):
@@ -49,9 +54,9 @@ def populate_music_database(request: AuthedHttpRequest) -> HttpResponse:
                 # We don't need to provide the `release_group` pk,
                 # as the upload view deduces it from the `contribution` pk.
                 data: dict[str, Any] = {
-                    **{ "model_pk-artist_pk": str(artist.pk), },
-                    **{ "contribution_select-contribution": str(contribution.pk), },
-                    **{ "release_select-release": str(release.pk), },
+                    **{"model_pk-artist_pk": str(artist.pk)},
+                    **{"contribution_select-contribution": str(contribution.pk)},
+                    **{"release_select-release": str(release.pk)},
                     **torrent_data,
                 }
 
@@ -60,7 +65,7 @@ def populate_music_database(request: AuthedHttpRequest) -> HttpResponse:
                     AuthedWSGIRequest,
                     request_factory.post(
                         reverse("torrent:music_upload"), data, format="multipart"
-                    )
+                    ),
                 )
                 request.user = user
 
@@ -95,13 +100,13 @@ def populate_news_database(request: AuthedHttpRequest) -> HttpResponse:
 
 
 def test_messages(request: AuthedHttpRequest) -> HttpResponse:
-    messages.success(     request, "Something succeeded.")
-    messages.failure(     request, "Something failed.")
-    messages.creation(    request, "Something created.")
-    messages.deletion(    request, "Something deleted.")
+    messages.success(request, "Something succeeded.")
+    messages.failure(request, "Something failed.")
+    messages.creation(request, "Something created.")
+    messages.deletion(request, "Something deleted.")
     messages.modification(request, "Something modified.")
-    messages.warning(     request, "Something warned.")
-    messages.error(       request, "Something errored.")
-    messages.information( request, "Something informed.")
+    messages.warning(request, "Something warned.")
+    messages.error(request, "Something errored.")
+    messages.information(request, "Something informed.")
 
     return render(request, "debug/test_messages.html")

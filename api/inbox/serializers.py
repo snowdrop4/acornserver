@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer
+from rest_framework.serializers import ModelSerializer
 
 from inbox.models import InboxThread, InboxMessage
 

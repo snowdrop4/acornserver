@@ -3,12 +3,12 @@
 # may not be pre-filled and uneditable.
 
 from abc import abstractmethod
-from typing import Any, cast
+from typing import cast
 
 from django import forms
 from django.db import models
-from django.http import Http404, HttpRequest
-from django.forms import ChoiceField, ModelChoiceField
+from django.http import Http404
+from django.forms import ModelChoiceField
 from django.shortcuts import get_object_or_404
 
 from torrent.forms.music import upload
@@ -52,10 +52,11 @@ def auto_id() -> str:
 
 
 class BaseForm:
-    def __init__(self,
+    def __init__(
+        self,
         pk_provider: PkProvider,
         pk_name: str,
-        form_class: type[forms.Form] | type [forms.ModelForm]
+        form_class: type[forms.Form] | type[forms.ModelForm]
     ):
         self.pk_provider = pk_provider
         self.pk_name = pk_name

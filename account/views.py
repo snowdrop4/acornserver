@@ -7,7 +7,7 @@ from django.contrib.auth import login, get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 from root import messages
-from account.models import TorrentPasskey, gen_passkey
+from account.models import gen_passkey
 from root.type_annotations import AuthedHttpRequest
 from torrent.models.music_utilities import group_torrents
 
