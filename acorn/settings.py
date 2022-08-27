@@ -9,7 +9,7 @@ if "test" in sys.argv[1:] and sys.platform == "darwin":
 
     # https://bugs.python.org/issue33725
     print(f"{RED}WARNING: Using `multiprocessing.set_start_method(\"fork\")` for testing.")
-    print(f"This may or may not cause issues with system libraries crashing!{NO_COLOUR}")
+    print(f"This may or may not cause issues with system libraries crashing!{NO_COLOUR}\n")
     multiprocessing.set_start_method("fork")
 
 import os

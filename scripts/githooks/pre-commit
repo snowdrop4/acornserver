@@ -1,13 +1,30 @@
 #!/usr/bin/env fish
 
+set BOLD_GREEN "\033[1;32m"
+set BOLD_BLUE "\033[1;34m"
+set NO_COLOUR "\033[0m"
+
 set hook_root (realpath (dirname (status -f)))
 set project_root (realpath (dirname (status -f)))/../..
 
-echo "Running isort..."
+echo -e $BOLD_BLUE
+echo -e "================"
+echo -e "Running isort..."
+echo -e "================\n"$NO_COLOUR
 poetry run python3 $hook_root/isort_hook.py
 set -a results $status
 
-echo "Running Django tests..."
+echo -e $BOLD_BLUE
+echo -e "================"
+echo -e "Running mypy ..."
+echo -e "================\n"
+poetry run mypy $project_root
+set -a results $status
+
+echo -e $BOLD_BLUE
+echo -e "======================="
+echo -e "Running Django tests..."
+echo -e "=======================\n"$NO_COLOUR
 poetry run python3 $project_root/manage.py test --parallel
 set -a results $status
 
@@ -17,4 +34,6 @@ for i in $results
     end
 end
 
+
+echo -e $BOLD_GREEN"\nNo errors found!"$NO_COLOUR
 exit 0
