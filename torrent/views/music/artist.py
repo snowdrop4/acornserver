@@ -1,8 +1,7 @@
 from typing import Any
 
 from django.db import models
-from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import DeleteView
@@ -107,23 +106,3 @@ class Delete(DeleteView):
                 )
 
         return redirect("torrent:music_artist_view", pk=artist.pk)
-
-
-def view_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
-    artist = get_object_or_404(MusicArtist, pk=pk)
-    data = serializers.serialize("json", [artist])
-    return HttpResponse(data, content_type="application/json")
-
-
-def view_contributions_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
-    artist = get_object_or_404(MusicArtist, pk=pk)
-
-    data = {}
-
-    for count, val in enumerate(artist.contributions.all()):
-        data[count] = {
-            "pk": val.pk,
-            "str": f"{val.get_contribution_type_display()} - {str(val.release_group)}",
-        }
-
-    return JsonResponse(data)

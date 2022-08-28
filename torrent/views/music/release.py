@@ -1,7 +1,6 @@
 from typing import Any
 
 from django.db import models
-from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import DeleteView
@@ -114,9 +113,3 @@ class Delete(DeleteView):
                 )
 
         return redirect("torrent:music_release_view", pk=release.pk)
-
-
-def view_json(request: AuthedHttpRequest, pk: int) -> HttpResponse:
-    release = get_object_or_404(MusicRelease, pk=pk)
-    data = serializers.serialize("json", [release])
-    return HttpResponse(data, content_type="application/json")
