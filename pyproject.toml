@@ -24,6 +24,7 @@ mypy = "*"
 isort = "*"
 pyflakes = "*"
 flake8 = "*"
+coverage = "^6.4.4"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]

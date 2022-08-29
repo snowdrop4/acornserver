@@ -41,7 +41,7 @@ jobs:
     # -------------------------------------------
     # Load cached venv, if cache exists
     # -------------------------------------------
-    - name: Load cached venv
+    - name: Load Cached Venv
       id: cached-poetry-dependencies
       uses: actions/cache@v2
       with:
@@ -51,15 +51,25 @@ jobs:
     # -------------------------------------------
     # Install dependencies, if cache does not exist
     # -------------------------------------------
-    - name: Install dependencies
+    - name: Install Dependencies
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --no-root
 
     #----------------------------------------------
-    # Run Django tests
+    # Run Django tests, and output coverage file
     #----------------------------------------------
     - name: Run Tests
       run: |
         poetry run python manage.py makemigrations
         poetry run python manage.py migrate
-        poetry run python manage.py test --parallel
+        poetry run coverage run manage.py test
+        poetry run coverage xml
+
+    #----------------------------------------------
+    # Upload coverage file
+    #----------------------------------------------
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: true
