@@ -1,6 +1,10 @@
+![](https://img.shields.io/github/checks-status/snowdrop4/acornserver/master)
+![](https://img.shields.io/codecov/c/github/snowdrop4/acornserver)
+![](https://img.shields.io/github/license/snowdrop4/acornserver)
+
 # About
 
-Torrent tracker. Fixes some of the annoyances with [Gazelle](https://whatcd.github.io/Gazelle/). Under heavy development.
+Private BitTorrent tracker, designed from the ground up for music. Fixes some of the annoyances with, and improves upon some of the features of, extant tracker software (such as [Gazelle](https://whatcd.github.io/Gazelle/)). Under heavy development.
 
 Multiple artists with the same name all get different pages, owing to a well-typed separation between:
 
@@ -25,7 +29,6 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 # Feature List & Roadmap
 
 * 🟩 Robust database schema
-    - 🟩 Capable of disambiguating multiple artists with the same name
 * 🟩 Search
     - 🟩 With autocomplete
     - 🟨 Advanced search with filters
@@ -76,35 +79,20 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 # Requirements
 
 * Python >=3.11
-
-# Dependencies
-
-* django
-* django-glrm
-* django-markupfield
-* django-picklefield
-* django-debug-toolbar
-* django-countries
-* django-mptt
-* djangorestframework
-* bcoding
-* markdown
-
-Development dependencies:
-
-* mypy
-* isort
+* [Fish Shell](https://fishshell.com/)
 
 # Development
 
-## Installing
+Code is 100% type annotated and checked. Formatting is done with black/isort.
+
+### Installing
 
 1. If not running python 3.11, install [pyenv](https://github.com/pyenv/pyenv).
 2. Install [poetry](https://python-poetry.org/docs/).
-3. Run `poetry install` from the repository directory to set up a virtual environment with the necessary python version and packages
+3. Run `poetry install` from the repository directory to set up a virtual environment with the necessary python version and packages.
 4. Run `fish scripts/installgithooks.fish` to install the appropriate git hooks.
 
-## Running
+### Running
 
 Populate the database:
 
@@ -114,11 +102,11 @@ Populate the database:
 
 Run the server: `poetry run python3 manage.py runserver`
 
-## Testing
+### Testing
 
 `poetry run python3 manage.py test`
 
-## Type checking
+### Type checking
 
 `poetry run mypy .`
 
