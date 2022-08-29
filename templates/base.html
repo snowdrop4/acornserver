@@ -13,7 +13,7 @@
                     <div id="header-logo-text">Acorn Torrent</div>
                 </a>
             </h1>
-            
+
             <div id="header-links">
                 <nav id="header-site-nav">
                     <a href="{% url 'torrent:music_latest' %}">Torrents</a>
@@ -28,7 +28,7 @@
                     <div class="divider"></div>
                     <a href="{% url 'account:signout' %}">Sign Out</a>
                 </nav>
-                
+
                 <div id="header-user-bar">
                     <a href="{% url 'inbox:inbox_view' %}">Inbox (0)</a>
                     <div class="divider"></div>
@@ -41,36 +41,36 @@
             </div>
         </header>
     </div>
-    
+
     <div class="search-container">
         <div class="search center-max-width">
             <form action="{% url 'search:music_search' %}" method="get">
                 <input id="search-artist" type="search" placeholder="Artist" name="artist_name">
             </form>
-            
+
             <form action="{% url 'search:music_search' %}" method="get">
                 <input id="search-release_group" type="search" placeholder="Release Group" name="release_group_name">
             </form>
-            
+
             <form action="{% url 'search:music_search' %}" method="get">
                 <input type="search" placeholder="Request" name="q">
             </form>
-            
+
             <form action="{% url 'search:music_search' %}" method="get">
                 <input type="search" placeholder="Forum" name="q">
             </form>
-            
-            <form action="{% url 'search:music_search' %}" method="get">
-                <input type="search" placeholder="User" name="q">
+
+            <form action="{% url 'search:user_search' %}" method="get">
+                <input id="search-user" type="search" placeholder="User" name="username">
             </form>
         </div>
     </div>
-    
+
     <main class="center-max-width">
         {% include 'messages.html' %}
         {% block content %}{% endblock %}
     </main>
-    
+
     <footer class="center-max-width">
         Page generated on {% now "DATETIME_FORMAT" %}. <a href="{% url 'root:about' %}">About</a>.
     </footer>

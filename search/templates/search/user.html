@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Search Users
+{% endblock %}
+
+{% block content %}
+    <h2>Search</h2>
+
+    <h3>Query</h3>
+
+    <form method="get">
+        {% include 'form-as-table.html' %}
+
+        <div class="button-container">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+
+    {% if page.object_list %}
+        <h3>Users</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for user in page.object_list %}
+                        <tr>
+                            <td><a href="{{ user.get_absolute_url }}">{{ user }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% include 'pagination.html' %}
+{% endblock %}

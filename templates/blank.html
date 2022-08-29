@@ -36,6 +36,11 @@
             function() { return "{% url 'api:music_release_group_autocomplete' %}?q=" },
             function(pk, url) { location.href = url },
             null);
+
+        new Autocomplete(document.getElementById("search-user"),
+            function() { return "{% url 'api:user_autocomplete' %}?q=" },
+            function(pk, url) { location.href = url },
+            null);
     </script>
 
     {% block javascript %}{% endblock %}

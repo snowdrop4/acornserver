@@ -2,6 +2,7 @@ import random
 from typing import Any
 
 from django.db import models, transaction
+from django.urls import reverse
 from django.utils import timezone
 from django.contrib import auth
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
@@ -68,6 +69,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Make the django 'python3 manage.py createsuperuser' command work
     # by telling it that it needs to also ask for email.
     REQUIRED_FIELDS = ["email"]
+
+    def get_absolute_url(self) -> str:
+        return reverse("account:profile_view", kwargs={"pk": self.pk})
 
     def __str__(self) -> str:
         return self.username

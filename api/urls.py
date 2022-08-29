@@ -19,6 +19,14 @@ search_autocomplete_music = [
     ),
 ]
 
+search_autocomplete_account = [
+    path(
+        "autocomplete/user",
+        autocomplete.account.user.autocomplete,
+        name="user_autocomplete",
+    ),
+]
+
 torrent_music_artist = [
     path(
         "music/artist/view/<int:pk>",
@@ -72,6 +80,7 @@ inbox = [
 
 urlpatterns = [
     *search_autocomplete_music,
+    *search_autocomplete_account,
     *torrent_music_artist,
     *torrent_music_release_group,
     *torrent_music_contribution,
