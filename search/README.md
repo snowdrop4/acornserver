@@ -1,1 +1,1 @@
-`search` contains the search and autocomplete functionality.
+`search` contains search functionality.

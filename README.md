@@ -1,4 +1,4 @@
-![](https://img.shields.io/github/checks-status/snowdrop4/acornserver/master)
+![](https://img.shields.io/github/workflow/status/snowdrop4/acornserver/Django%20CI)
 ![](https://img.shields.io/codecov/c/github/snowdrop4/acornserver)
 ![](https://img.shields.io/github/license/snowdrop4/acornserver)
 

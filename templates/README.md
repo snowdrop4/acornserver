@@ -1,1 +1,1 @@
-`templates` contains global templates intended for reuse across every app.
+`templates` contains global templates intended for re-use across every app.
