@@ -60,8 +60,8 @@ jobs:
     #----------------------------------------------
     - name: Run Tests
       run: |
-        poetry run python manage.py makemigrations
-        poetry run python manage.py migrate
+        poetry run python manage.py makemigrations --noinput
+        poetry run python manage.py migrate --noinput
         poetry run coverage run manage.py test
         poetry run coverage xml
 

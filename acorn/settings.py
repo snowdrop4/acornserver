@@ -1,11 +1,13 @@
+import os
 import sys
+
+RED = "\033[1;31m"
+BLUE = "\033[1;34m"
+NO_COLOUR = "\033[0m"
 
 # Enable tests to run in parallel on macOS
 if "test" in sys.argv[1:] and sys.platform == "darwin":
     import multiprocessing
-
-    RED = "\033[0;31m"
-    NO_COLOUR = "\033[0m"
 
     # https://bugs.python.org/issue33725
     print(
@@ -30,8 +32,8 @@ SECRET_KEY = "+n)-eo9&gxu&_-n=r5e0eq_c4guo8wtit#5fl^n9y*w$z2wnvz"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-INTERNAL_IPS = ["127.0.0.1", "192.168.1.110"]
-ALLOWED_HOSTS = ["127.0.0.1", "192.168.1.101"]
+INTERNAL_IPS = ["127.0.0.1", "192.168.1.110", "0.0.0.0"]
+ALLOWED_HOSTS = ["127.0.0.1", "192.168.1.101", "0.0.0.0"]
 
 # Custom User Model
 AUTH_USER_MODEL = "account.User"
@@ -46,17 +48,11 @@ LOGIN_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = (
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 )
 
 # Application definition
@@ -126,12 +122,42 @@ WSGI_APPLICATION = "acorn.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+DATABASES = {}
+
+if all(
+    i in os.environ
+    for i in [
+        "POSTGRES_NAME",
+        "POSTGRES_USER",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_HOST",
+        "POSTGRES_PORT",
+    ]
+):
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("POSTGRES_NAME"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     }
-}
+else:
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "acornserver",
+        "USER": "admin",
+        "PASSWORD": "password",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+
+if "runserver" in sys.argv[1:]:
+    print(
+        f"{BLUE}Connecting to Postgres at "
+        f"{DATABASES['default']['HOST']}:{DATABASES['default']['PORT']}{NO_COLOUR}"
+    )
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
