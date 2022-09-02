@@ -8,6 +8,7 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=acornserver
     volumes:
       - postgres-data:/var/lib/postgresql/data # default postgres directory
     profiles: ["production", "development"]
