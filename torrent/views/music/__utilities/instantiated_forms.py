@@ -3,7 +3,7 @@
 # may not be pre-filled and uneditable.
 
 from abc import abstractmethod
-from typing import cast
+from typing import Any, cast
 
 from django import forms
 from django.db import models
@@ -21,12 +21,11 @@ from root.type_annotations import AuthedHttpRequest
 #
 # If the conversion from string to integer fails, it throws a 404.
 class PkProvider:
-    def __init__(self, get_parameters: dict[str, str]):
+    def __init__(self, get_parameters: dict[str, Any]):
         self.pks: dict[str, int] = {}
 
-        for (k, vs) in get_parameters.items():
-            for v in vs:
-                self.__setitem__(k, v)
+        for (k, v) in get_parameters.items():
+            self.__setitem__(k, v)
 
     def __setitem__(self, pk_name: str, pk_value: str | int) -> None:
         try:
@@ -37,7 +36,7 @@ class PkProvider:
             #
             # Only way to signal an error is use an exception here, but Http404
             # is technically wrong.
-            raise Http404("The GET parameter '" + pk_name + "' must be an integer")
+            raise Http404(f"The GET parameter '{pk_name}' must be an integer")
 
     def __getitem__(self, pk_name: str) -> int:
         return self.pks[pk_name]

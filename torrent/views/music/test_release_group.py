@@ -41,7 +41,7 @@ class TestReleaseGroup(TestCase):
         request.user = self.user
 
         release_group_views.add(request)
-        release_group = MusicReleaseGroup.objects.get(pk=1)
+        release_group = cast(MusicReleaseGroup, MusicReleaseGroup.objects.last())
 
         self.assertEquals(release_group.name, self.data["release_group-name"])
         self.assertEquals(

@@ -41,7 +41,7 @@ class TestRelease(TestCase):
         request.user = self.user
 
         release_views.add(request)
-        release = MusicRelease.objects.get(pk=1)
+        release = cast(MusicRelease, MusicRelease.objects.last())
 
         self.assertEquals(release.date, self.date)
         self.assertEquals(release.label, self.data["release-label"])

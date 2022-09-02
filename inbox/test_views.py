@@ -1,4 +1,5 @@
 import random
+from typing import cast
 
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
@@ -29,8 +30,8 @@ class TestThread(TestCase):
         request.user = self.user
 
         ThreadCreateView.as_view()(request)
-        thread = InboxThread.objects.get(pk=1)
-        message = InboxMessage.objects.get(pk=1)
+        thread = cast(InboxThread, InboxThread.objects.last())
+        message = cast(InboxMessage, InboxMessage.objects.last())
 
         self.assertEquals(thread.title, self.data["thread-title"])
         self.assertEquals(thread.sender, self.user)

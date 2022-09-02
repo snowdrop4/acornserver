@@ -10,8 +10,10 @@ import torrent.views.music.torrent as torrent_views
 from torrent.models.music import MusicTorrent
 from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
-from torrent.models.music_randomiser import (create_random_release,
-                                             create_random_release_group,)
+from torrent.models.music_randomiser import (
+    create_random_release,
+    create_random_release_group,
+)
 
 
 class TestTorrent(TestCase):
@@ -46,7 +48,7 @@ class TestTorrent(TestCase):
         request.user = self.user
 
         torrent_views.add(request)
-        torrent = MusicTorrent.objects.get(pk=1)
+        torrent = cast(MusicTorrent, MusicTorrent.objects.last())
 
         self.assertEquals(torrent.uploader, self.user)
         self.assertEquals(torrent.release.pk, self.release.pk)
@@ -65,7 +67,7 @@ class TestTorrent(TestCase):
         request.user = self.user
 
         torrent_views.add(request)
-        torrent = MusicTorrent.objects.get(pk=1)
+        torrent = cast(MusicTorrent, MusicTorrent.objects.last())
 
         # Second, modify it.
         modified_data = copy.copy(self.torrent_data)

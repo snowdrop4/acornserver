@@ -5,15 +5,22 @@ from django.conf import settings
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
-from torrent.models.music import (MusicArtist, MusicRelease, MusicTorrent,
-                                  MusicContribution, MusicReleaseGroup,)
+from torrent.models.music import (
+    MusicArtist,
+    MusicRelease,
+    MusicTorrent,
+    MusicContribution,
+    MusicReleaseGroup,
+)
 from root.type_annotations import AuthedWSGIRequest
 from account.account_randomiser import create_random_user
 from torrent.views.music.upload import upload
-from torrent.models.music_randomiser import (create_random_artist,
-                                             create_random_release,
-                                             create_random_contribution,
-                                             create_random_release_group,)
+from torrent.models.music_randomiser import (
+    create_random_artist,
+    create_random_release,
+    create_random_contribution,
+    create_random_release_group,
+)
 
 
 class TestUpload(TestCase):
@@ -132,11 +139,11 @@ class TestUpload(TestCase):
 
         upload(request)
 
-        artist = MusicArtist.objects.get(pk=1)
-        release_group = MusicReleaseGroup.objects.get(pk=1)
-        contribution = MusicContribution.objects.get(pk=1)
-        release = MusicRelease.objects.get(pk=1)
-        torrent = MusicTorrent.objects.get(pk=1)
+        artist = MusicArtist.objects.last()
+        release_group = MusicReleaseGroup.objects.last()
+        contribution = MusicContribution.objects.last()
+        release = MusicRelease.objects.last()
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, data),
@@ -154,7 +161,7 @@ class TestUpload(TestCase):
         (artist, artist_data) = create_random_artist()
 
         data: dict[str, Any] = {
-            **{"model_pk-artist_pk": "2",},
+            **{"model_pk-artist_pk": artist.pk},
             **self.release_group_data,
             **self.contribution_data,
             **self.release_data,
@@ -169,10 +176,10 @@ class TestUpload(TestCase):
 
         upload(request)
 
-        release_group = MusicReleaseGroup.objects.get(pk=1)
-        contribution = MusicContribution.objects.get(pk=1)
-        release = MusicRelease.objects.get(pk=1)
-        torrent = MusicTorrent.objects.get(pk=1)
+        release_group = MusicReleaseGroup.objects.last()
+        contribution = MusicContribution.objects.last()
+        release = MusicRelease.objects.last()
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),
@@ -190,8 +197,7 @@ class TestUpload(TestCase):
         (_, _) = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        # Do the same for release_group, this time with two throwaways so we
-        # don't get overlapping PKs with artist.
+        # Do the same for release_group.
         (_, _) = create_random_release_group()
         (_, _) = create_random_release_group()
         (release_group, release_group_data) = create_random_release_group()
@@ -201,8 +207,8 @@ class TestUpload(TestCase):
         )
 
         data: dict[str, Any] = {
-            **{"model_pk-artist_pk": "2", },
-            **{"contribution_select-contribution": "1",},
+            **{"model_pk-artist_pk": artist.pk},
+            **{"contribution_select-contribution": contribution.pk},
             # The upload view deduces the release_group pk from the contribution pk
             **self.release_data,
             **self.torrent_data,
@@ -216,8 +222,8 @@ class TestUpload(TestCase):
 
         upload(request)
 
-        release = MusicRelease.objects.get(pk=1)
-        torrent = MusicTorrent.objects.get(pk=1)
+        release = MusicRelease.objects.last()
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),
@@ -235,8 +241,7 @@ class TestUpload(TestCase):
         (_, _) = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        # Do the same for release_group, this time with two throwaways so we
-        # don't get overlapping PKs with artist.
+        # Do the same for release_group.
         (_, _) = create_random_release_group()
         (_, _) = create_random_release_group()
         (release_group, release_group_data) = create_random_release_group()
@@ -252,11 +257,11 @@ class TestUpload(TestCase):
         (release, release_data) = create_random_release(release_group)
 
         data: dict[str, Any] = {
-            **{"model_pk-artist_pk": "2",},
+            **{"model_pk-artist_pk": artist.pk},
             # The upload view deduces the release_group pk from the
             # contribution pk, so we don't need to specify it here
-            **{"contribution_select-contribution": "1",},
-            **{"release_select-release": "4",},
+            **{"contribution_select-contribution": contribution.pk},
+            **{"release_select-release": release.pk},
             **self.torrent_data,
         }
 
@@ -268,7 +273,7 @@ class TestUpload(TestCase):
 
         upload(request)
 
-        torrent = MusicTorrent.objects.get(pk=1)
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),
@@ -293,17 +298,17 @@ class TestUpload(TestCase):
         request = cast(
             AuthedWSGIRequest,
             self.requestFactory.post(
-                self.url + "?artist=2", data, format="multipart"
+                f"{self.url}?artist={artist.pk}", data, format="multipart"
             )
         )
         request.user = self.user
 
         upload(request)
 
-        release_group = MusicReleaseGroup.objects.get(pk=1)
-        contribution = MusicContribution.objects.get(pk=1)
-        release = MusicRelease.objects.get(pk=1)
-        torrent = MusicTorrent.objects.get(pk=1)
+        release_group = MusicReleaseGroup.objects.last()
+        contribution = MusicContribution.objects.last()
+        release = MusicRelease.objects.last()
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),
@@ -320,8 +325,7 @@ class TestUpload(TestCase):
         (_, _) = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        # Do the same for release_group, this time with two throwaways so we
-        # don't get overlapping PKs with artist.
+        # Do the same for release_group.
         (_, _) = create_random_release_group()
         (_, _) = create_random_release_group()
         (release_group, release_group_data) = create_random_release_group()
@@ -335,15 +339,15 @@ class TestUpload(TestCase):
         request = cast(
             AuthedWSGIRequest,
             self.requestFactory.post(
-                self.url + "?contribution=1", data, format="multipart"
+                f"{self.url}?contribution={contribution.pk}", data, format="multipart"
             )
         )
         request.user = self.user
 
         upload(request)
 
-        release = MusicRelease.objects.get(pk=1)
-        torrent = MusicTorrent.objects.get(pk=1)
+        release = MusicRelease.objects.last()
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),
@@ -360,8 +364,7 @@ class TestUpload(TestCase):
         (_, _) = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        # Do the same for release_group, this time with two throwaways so we
-        # don't get overlapping PKs with artist.
+        # Do the same for release_group.
         (_, _) = create_random_release_group()
         (_, _) = create_random_release_group()
         (release_group, release_group_data) = create_random_release_group()
@@ -375,15 +378,15 @@ class TestUpload(TestCase):
         request = cast(
             AuthedWSGIRequest,
             self.requestFactory.post(
-                self.url + "?release_group=3", data, format="multipart"
+                f"{self.url}?release_group={release_group.pk}", data, format="multipart"
             )
         )
         request.user = self.user
 
         upload(request)
 
-        release = MusicRelease.objects.get(pk=1)
-        torrent = MusicTorrent.objects.get(pk=1)
+        release = MusicRelease.objects.last()
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),
@@ -393,15 +396,14 @@ class TestUpload(TestCase):
             torrent=(torrent, data),
         )
 
-    # Test the form with the contribution set by GET parameter.
+    # Test the form with the release set by GET parameter.
     def test_get_parameter_release(self) -> None:
         # Create a throwaway artist to increment the PK counter, to additionally
         # test that the right PK is going through.
         (_, _) = create_random_artist()
         (artist, artist_data) = create_random_artist()
 
-        # Do the same for release_group, this time with two throwaways so we
-        # don't get overlapping PKs with artist.
+        # Do the same for release_group.
         (_, _) = create_random_release_group()
         (_, _) = create_random_release_group()
         (release_group, release_group_data) = create_random_release_group()
@@ -421,14 +423,14 @@ class TestUpload(TestCase):
         request = cast(
             AuthedWSGIRequest,
             self.requestFactory.post(
-                self.url + "?release=4", data, format="multipart"
+                f"{self.url}?release={release.pk}", data, format="multipart"
             )
         )
         request.user = self.user
 
         upload(request)
 
-        torrent = MusicTorrent.objects.get(pk=1)
+        torrent = MusicTorrent.objects.last()
 
         self.check_everything(
             artist=(artist, artist_data),

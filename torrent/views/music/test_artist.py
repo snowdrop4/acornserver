@@ -30,7 +30,7 @@ class TestArtist(TestCase):
         request.user = self.user
 
         artist_views.add(request)
-        artist = MusicArtist.objects.get(pk=1)
+        artist = cast(MusicArtist, MusicArtist.objects.last())
 
         self.assertEquals(artist.name, self.data["artist-name"])
         self.assertEquals(artist.artist_type, self.data["artist-artist_type"])

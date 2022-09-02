@@ -1,4 +1,5 @@
 import os
+from typing import cast
 
 from django.conf import settings
 from django.test import TestCase, RequestFactory
@@ -10,10 +11,12 @@ from bcoding import bdecode, bencode
 from torrent import metainfo
 from torrent.models.music import MusicTorrent, MusicTorrentPeer
 from account.account_randomiser import create_random_user
-from torrent.models.music_randomiser import (create_random_artist,
-                                             create_random_release,
-                                             create_random_contribution,
-                                             create_random_release_group,)
+from torrent.models.music_randomiser import (
+    create_random_artist,
+    create_random_release,
+    create_random_contribution,
+    create_random_release_group,
+)
 
 from .views import bittorrent_announce
 
@@ -82,7 +85,7 @@ class TestAnnounce(TestCase):
         bittorrent_announce(request, self.user.passkey.key, "music")
 
         self.user.refresh_from_db()
-        peer = MusicTorrentPeer.objects.get(pk=1)
+        peer = cast(MusicTorrentPeer, MusicTorrentPeer.objects.first())
 
         self.assertEqual(self.user.uploaded, self.data["uploaded"])
         self.assertEqual(self.user.downloaded, self.data["downloaded"])
