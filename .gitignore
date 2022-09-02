@@ -7,6 +7,7 @@ media/
 *.sublime-workspace
 *.code-workspace
 .idea/
+.vscode/
 
 # MacOS pollution
 .DS_Store
