@@ -24,7 +24,7 @@ def search(request: AuthedHttpRequest) -> HttpResponse:
     template_args: dict[str, Any] = {"form": form}
 
     if form.is_valid() and (username := form.cleaned_data["username"]):
-        query = User.objects.filter(username__icontains=username)
+        query = User.objects.filter(username__icontains=username).order_by("pk")
         paginator = Paginator(query, 5)
         template_args["page"] = paginator.get_page(get_params.get("page", 1))
 

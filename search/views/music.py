@@ -31,15 +31,21 @@ def search(request: AuthedHttpRequest) -> HttpResponse:
             release_group_name := form.cleaned_data["release_group_name"]
         ):
             model_name = "release_group"
-            query = MusicReleaseGroup.objects.filter(
-                name__icontains=release_group_name
-            ).filter(contributions__artist__name__icontains=artist_name)
+            query = (
+                MusicReleaseGroup.objects.filter(name__icontains=release_group_name)
+                .filter(contributions__artist__name__icontains=artist_name)
+                .order_by("pk")
+            )
         elif artist_name:
             model_name = "artist"
-            query = MusicArtist.objects.filter(name__icontains=artist_name)
+            query = MusicArtist.objects.filter(
+                name__icontains=artist_name
+            ).order_by("pk")
         elif release_group_name:
             model_name = "release_group"
-            query = MusicReleaseGroup.objects.filter(name__icontains=release_group_name)
+            query = MusicReleaseGroup.objects.filter(
+                name__icontains=release_group_name
+            ).order_by("pk")
 
         if query is not None:
             paginator = Paginator(query, 5)
