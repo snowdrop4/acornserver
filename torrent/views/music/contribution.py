@@ -40,7 +40,7 @@ def add(request: AuthedHttpRequest) -> HttpResponse:
 
     if search_form.is_valid() and search_form.cleaned_data["artist_name"]:
         query = MusicArtist.objects.filter(
-            name__contains=search_form.cleaned_data["artist_name"]
+            name__icontains=search_form.cleaned_data["artist_name"]
         )
 
         paginator = Paginator(query, 5)

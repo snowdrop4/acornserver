@@ -7,7 +7,7 @@ from root.type_annotations import AuthedHttpRequest
 def autocomplete(request: AuthedHttpRequest) -> HttpResponse:
     if "q" in request.GET:
         search_term = request.GET["q"]
-        results = MusicArtist.objects.filter(name__contains=search_term)[:5]
+        results = MusicArtist.objects.filter(name__icontains=search_term)[:5]
 
         return JsonResponse(
             {"results": [(i.pk, i.name, i.get_absolute_url()) for i in results]}

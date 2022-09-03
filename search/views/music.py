@@ -32,14 +32,14 @@ def search(request: AuthedHttpRequest) -> HttpResponse:
         ):
             model_name = "release_group"
             query = MusicReleaseGroup.objects.filter(
-                name__contains=release_group_name
-            ).filter(contributions__artist__name__contains=artist_name)
+                name__icontains=release_group_name
+            ).filter(contributions__artist__name__icontains=artist_name)
         elif artist_name:
             model_name = "artist"
-            query = MusicArtist.objects.filter(name__contains=artist_name)
+            query = MusicArtist.objects.filter(name__icontains=artist_name)
         elif release_group_name:
             model_name = "release_group"
-            query = MusicReleaseGroup.objects.filter(name__contains=release_group_name)
+            query = MusicReleaseGroup.objects.filter(name__icontains=release_group_name)
 
         if query is not None:
             paginator = Paginator(query, 5)
