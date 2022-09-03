@@ -3,21 +3,25 @@
 {% load static %}
 
 {% block title %}
-    Release for release group '{{ release.release_group.name }}'
+    {% if artist %}
+        Release for '{{ release.release_group.name }}' < {{ artist.name }} < Music
+    {% else %}
+        Release for '{{ release.release_group.name }}' < Music
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     {% include 'torrent/music/breadcrumb.html' %}
-    
-    <h2>Release for release group '{{ release.release_group.name }}'</h2>
-    
+
+    <h2>{{ release.release_group.name }} <span class="small">:: Release</span></h2>
+
     <div class="split three-col no-horizontal-lines">
         <div class="item1">
             <table id="torrent-info-table">
                 <thead>
                     <tr><th colspan="2">Info</th></tr>
                 </thead>
-                
+
                 <tbody>
                     <tr><td>Date:</td>           <td class="tr width-100">{{ release.date }}</td></tr>
                     <tr><td>Label:</td>          <td class="tr width-100">{{ release.label }}</td></tr>
@@ -26,17 +30,17 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="line1">
             <div class="line"></div>
         </div>
-        
+
         <div class="item2">
             <table id="torrent-operations-table">
                 <thead>
                     <tr><th>Operations</th></tr>
                 </thead>
-                
+
                 <tbody>
                     <tr><td>Subscribe to Release</td></tr>
                     <tr><td><a href="{% url 'torrent:music_release_edit' release.pk %}">Edit Release</a></td></tr>
@@ -46,32 +50,32 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="line2">
             <div class="line"></div>
         </div>
-        
+
         <div class="item3">
             <table id="torrent-album-art-table">
                 <thead>
                     <tr><th>Album Art</th></tr>
                 </thead>
-                
+
                 <tbody>
                     <tr><td><img src="{% static 'img/blank-album-cover.svg' %}"></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
-    
+
     <h3>Torrents</h3>
-    
+
     <div class="table-container">
         <table class="torrent-listings">
             <thead>
                 <tr>{% include 'torrent/music/torrent/as_table_header.html' %}</tr>
             </thead>
-            
+
             <tbody>
                 {% for torrent in release.torrents.all %}
                     <tr>{% include 'torrent/music/torrent/as_table_data.html' %}</tr>

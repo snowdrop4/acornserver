@@ -1,23 +1,33 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Thread '{{ thread.title }}'
+    {{ thread.title }}
+    <
+    {{ category.title }}
+    {% for c in category_ancestors reversed %}
+        <
+        {% if c.pk is 1 %}
+            Forum
+        {% else %}
+            {{ c.title }}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block content %}
     {% include 'forum/breadcrumb.html' %}
-    
-    <h2>Thread '{{ thread.title }}'</h2>
-    
+
+    <h2>{{ thread.title }} <span class="small">:: Thread</span></h2>
+
     {% include 'forum/post/as_table.html' with post=thread %}
-    
+
     {% for post in thread.replies.all %}
         {% include 'forum/post/as_table.html' %}
     {% endfor %}
-    
+
     <form method="post">
         {% csrf_token %}
-        
+
         <div class="table-container">
             <table class="form" style="width: 100%;">
                 <tbody>
@@ -25,7 +35,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="button-container">
             <button type="submit">Reply</button>
         </div>

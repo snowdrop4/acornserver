@@ -62,7 +62,12 @@ def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
     else:
         form = PostFormAdd()
 
-    template_args = {"form": form, "thread": thread, "category": category}
+    template_args = {
+        "form": form,
+        "thread": thread,
+        "category": category,
+        "category_ancestors": category.get_ancestors(),
+    }
 
     return render(request, "forum/thread/view.html", template_args)
 

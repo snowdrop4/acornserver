@@ -13,7 +13,7 @@
     <nav class="subheader-nav">
         <a href="{% url 'inbox:thread_create' %}">Compose New Thread</a>
     </nav>
-    
+
     <div class="grid-table" style="grid-template-columns: 1fr max-content max-content max-content;">
         <div class="row header" style="grid-column: 1 / 5">
             <div>Title</div>
@@ -21,19 +21,19 @@
             <div>From</div>
             <div>Last Message</div>
         </div>
-        
+
         {% for thread in threads %}
             {% if thread.sender == user and thread.sender_unread_messages > 0 %}
                 {% define "highlight" as highlight %}
             {% elif thread.receiver == user and thread.receiver_unread_messages > 0 %}
                 {% define "highlight" as highlight %}
             {% endif %}
-            
+
             <div class="row {{ highlight }}" style="grid-column: 1 / 5">
-                <div>
+                <div class="ellipsis">
                     <a href="{% url 'inbox:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
                 </div>
-                
+
                 <div>
                     {% if thread.receiver == request.user %}
                         You
@@ -41,7 +41,7 @@
                         <a href="{% url 'account:profile_view' pk=thread.receiver.pk %}">{{ thread.receiver }}</a>
                     {% endif %}
                 </div>
-                
+
                 <div>
                     {% if thread.sender == request.user %}
                         You
@@ -49,7 +49,7 @@
                         <a href="{% url 'account:profile_view' pk=thread.sender.pk %}">{{ thread.sender }}</a>
                     {% endif %}
                 </div>
-                
+
                 <div>
                     {{ thread.latest_message_datetime }}
                 </div>

@@ -1,40 +1,67 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
+
 {% block title %}
-    Forum Category '{{ category.title }}'
+    {{ category.title }}
+    {% for c in category_ancestors reversed %}
+        <
+        {% if c.pk is 1 %}
+            Forum
+        {% else %}
+            {{ c.title }}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block content %}
     {% include 'forum/breadcrumb.html' %}
-    
+
     {% if category.children.all %}
-        {% include 'forum/category/as_table.html' with category_title_override='Subcategories' %}
+        {% if not category.folder %}
+            <h4>Subcategories</h4>
+        {% else %}
+            <h2>{{ category.title }}</h2>
+            <h4>Subcategories</h4>
+        {% endif %}
+
+        {% include 'forum/category/as_table.html' with category_title_override='Title' %}
     {% endif %}
-    
-    <h2>Forum category '{{ category.title }}'</h2>
-    
+
     {% if not category.folder %}
+        <h2>{{ category.title }} <span class="small">:: Category</span></h2>
+
         <p><a href="{% url 'forum:thread_add' %}?category={{ category.pk }}">Create Thread</a></p>
-        
-        <div class="table-container">
-            <table class="forum-listings">
-                <thead>
-                    <tr>
-                        <th class="width-100 tl">Title</th>
-                        <th>Latest Post</th>
-                        <th>Replies</th>
-                        <th>Author</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    {% for thread in threads %}
-                        <tr>{% include 'forum/thread/as_table_row.html' %}</tr>
-                    {% empty %}
-                        <tr><td colspan="4">No threads.</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+
+        <div class="grid-table forum">
+            <div class="row header">
+                <div>Title</div>
+                <div>Latest Post</div>
+                <div class="hidden-small-screens">Replies</div>
+                <div class="hidden-small-screens">Author</div>
+            </div>
+
+            {% for thread in threads %}
+                <div class="row">
+                    <div class="ellipsis">
+                        <a href="{% url 'forum:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
+                    </div>
+                    <div class="ellipsis">
+                        <a href="{% url 'forum:thread_view' pk=thread.pk %}#{{ thread.post_count }}">#{{ thread.post_count }}</a>
+                        by <a href="{% url 'account:profile_view' pk=thread.latest_post_author.pk %}">{{ thread.latest_post_author }}</a>
+                        {{ thread.latest_post_datetime|naturaltime }}
+                    </div>
+                    <div class="hidden-small-screens">{{ thread.reply_count }}</div>
+                    <div class="hidden-small-screens"><a href="{% url 'account:profile_view' pk=thread.author.pk %}">{{ thread.author }}</a></div>
+                </div>
+            {% empty %}
+                <div class="row">
+                    <div>{% include 'none.html' %}</div>
+                    <div>{% include 'none.html' %}</div>
+                    <div>{% include 'none.html' %}</div>
+                    <div>{% include 'none.html' %}</div>
+                </div>
+            {% endfor %}
         </div>
     {% endif %}
 {% endblock %}

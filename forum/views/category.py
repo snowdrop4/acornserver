@@ -24,6 +24,10 @@ def view(request: AuthedHttpRequest, pk: int) -> HttpResponse:
         .select_related("latest_post_author")
     )
 
-    template_args = {"category": category, "threads": threads}
+    template_args = {
+        "category": category,
+        "category_ancestors": category.get_ancestors(),
+        "threads": threads,
+    }
 
     return render(request, "forum/category/view.html", template_args)

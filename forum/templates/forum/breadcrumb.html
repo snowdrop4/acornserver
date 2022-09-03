@@ -1,15 +1,15 @@
 <nav class="breadcrumb">
-    {% for c in category.get_ancestors %}
+    {% for c in category_ancestors %}
         {% if c.pk is 1 %}
             <a href="{% url 'forum:index_view' %}">Forum</a>
         {% else %}
             <a href="{% url 'forum:category_view' pk=c.pk %}">{{ c.title }}</a>
         {% endif %}
-         → 
+         →
     {% endfor %}
-    
+
     <a href="{% url 'forum:category_view' pk=category.pk %}">{{ category.title }}</a>
-    
+
     {% if thread %}
         → <a href="{% url 'forum:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
     {% endif %}

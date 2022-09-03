@@ -7,8 +7,8 @@ body {
     align-items: center;
     justify-content: safe center;
     flex-direction: column;
-    
-    background-color: #f1f2f6;
+
+    background-color: #F1F2F6;
     background-image: url("../img/backgrounds/heropatterns/graph-paper.svg");
 }
 

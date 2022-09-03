@@ -4,17 +4,30 @@
 
 .center-max-width {
     max-width: var(--site-width);
-    
+
     margin-left:  auto;
     margin-right: auto;
-    
+
     padding: 1rem;
+
     box-sizing: border-box;
 }
 
 main.center-max-width {
     padding-top:    0rem;
     padding-bottom: 0rem;
+}
+
+@media (max-width: 55rem) {
+    .center-max-width {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 33rem) {
+    .center-max-width {
+        padding: 0.50rem;
+    }
 }
 
 /******************************************************************************/
@@ -57,7 +70,7 @@ main.center-max-width {
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    
+
     opacity: 0.5;
 }
 
@@ -78,9 +91,9 @@ main.center-max-width {
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-    
+
     color: var(--dark-background);
-    
+
     line-height: 3rem;
 }
 
@@ -102,24 +115,24 @@ main.center-max-width {
         grid-template-columns: 1fr;
         grid-template-areas: "item1" "line1" "item2";
     }
-    
+
     .split.three-col {
         grid-template-rows: min-content 2.5rem min-content 2.5rem min-content;
         grid-template-columns: 1fr;
         grid-template-areas: "item1" "line1" "item2" "line2" "item3";
     }
-    
+
     .split > .line1,
     .split > .line2 {
         flex-direction: row;
     }
-    
+
     .split > .line1 > .line,
     .split > .line2 > .line {
         height: 1px;
         width: 100%;
     }
-    
+
     /* Mix-in to disable the display of lines when in horizontal flow mode for small screens */
     .split.two-col.no-horizontal-lines {
         grid-template-rows: min-content 1.5rem min-content;
@@ -143,14 +156,14 @@ main.center-max-width {
  * .grid-table {
  *     grid-template-columns: 1fr max-content max-content max-content;
  * }
- * 
+ *
  * And then set `grid-column` in `.grid-table .row` to an appropriate value,
  * like:
- * 
+ *
  * .grid-table .row {
  *     grid-column: 1 / 5;
  * }
- * 
+ *
  */
 
 .grid-table {
@@ -162,7 +175,7 @@ main.center-max-width {
 .grid-table .row {
     display: grid;
     grid-template-columns: subgrid;
-    
+
     background-color: var(--element-background);
 }
 

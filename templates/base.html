@@ -25,8 +25,6 @@
                     <a href="{% url 'forum:index_view' %}">Forum</a>
                     <div class="divider"></div>
                     <a href="{% url 'account:profile_view' pk=user.pk %}">Profile</a>
-                    <div class="divider"></div>
-                    <a href="{% url 'account:signout' %}">Sign Out</a>
                 </nav>
 
                 <div id="header-user-bar">
@@ -37,6 +35,8 @@
                     <div>Down: {{ user.downloaded|IEC_80000_13 }}</div>
                     <div class="divider"></div>
                     <div>Ratio: {% divide user.uploaded user.downloaded %}</div>
+                    <div class="divider"></div>
+                    <a href="{% url 'account:signout' %}">Sign Out</a>
                 </div>
             </div>
         </header>

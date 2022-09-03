@@ -3,21 +3,25 @@
 {% load units %}
 
 {% block title %}
-    Torrent for '{{ release_group.name }}'
+    {% if artist %}
+        Torrent for '{{ release_group.name }}' < {{ artist.name }} < Music
+    {% else %}
+        Torrent for '{{ release_group.name }}' < Music
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     {% include 'torrent/music/breadcrumb.html' %}
-    
-    <h2>Torrent for release group '{{ release_group.name }}'</h2>
-    
+
+    <h2>{{ release_group.name }} <span class="small">:: Torrent</span></h2>
+
     <div class="split three-col no-horizontal-lines">
         <div class="item1">
             <table id="torrent-info-table">
                 <thead>
                     <tr><th colspan="2">Info</th></tr>
                 </thead>
-                
+
                 <tbody>
                     <tr><td>Uploader:</td> <td class="tr width-100"><a href="{% url 'account:profile_view' pk=torrent.uploader.pk %}">{{ torrent.uploader }}</a></td></tr>
                     <tr><td>Date:</td>     <td class="tr width-100">{{ torrent.upload_datetime }}</td></tr>
@@ -26,17 +30,17 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="line1">
             <div class="line"></div>
         </div>
-        
+
         <div class="item2">
             <table id="torrent-operations-table">
                 <thead>
                     <tr><th colspan="2">Operations</th></tr>
                 </thead>
-                
+
                 <tbody>
                     <tr><td><a href="{% url 'torrent:music_torrent_download' pk=torrent.pk %}">Download</a></td></tr>
                     <tr><td>Freeleech</td></tr>
@@ -46,17 +50,17 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="line2">
             <div class="line"></div>
         </div>
-        
+
         <div class="item3">
             <table id="torrent-stats-table">
                 <thead>
                     <tr><th colspan="2">Stats</th></tr>
                 </thead>
-                
+
                 <tbody>
                     <tr><td>Seeders:</td>   <td class="tr width-100">{{ torrent.get_num_seeders }}</td></tr>
                     <tr><td>Leechers:</td>  <td class="tr width-100">{{ torrent.get_num_leechers }}</td></tr>
@@ -65,12 +69,12 @@
             </table>
         </div>
     </div>
-    
+
     <h3>File List</h3>
-    
+
     {% include 'torrent/music/torrent/as_file_list.html' with file_list=torrent.torrent_files %}
-    
+
     <h3>Swarm</h3>
-    
+
     {% include 'torrent/music/torrent/as_table_peer_list.html' %}
 {% endblock %}

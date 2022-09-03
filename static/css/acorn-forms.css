@@ -8,7 +8,7 @@
     flex-wrap: wrap;
     row-gap: 0.5rem;
     column-gap: 0.5rem;
-    
+
     margin: 1rem 0rem;
 }
 
@@ -17,11 +17,11 @@ button {
     padding: 0.5rem;
     line-height: 0.5rem;
     font-size: 1rem;
-    
+
     color: var(--font-color);
     border: 1px solid var(--dark-background);
     background-color: var(--element-background);
-    
+
     -webkit-appearance: none;
        -moz-appearance: none;
         -ms-appearance: none;
@@ -62,9 +62,9 @@ input:not([type="checkbox"]):not([type="radio"]),
     background-color: var(--form-element-background);
     border: 1px solid var(--form-element-border);
     box-shadow: inset 1px 1px 3px var(--form-element-box-shadow);
-    
+
     border-radius: 0px;
-    
+
     -webkit-appearance: none;
        -moz-appearance: none;
         -ms-appearance: none;
@@ -86,9 +86,9 @@ input:not([type="checkbox"]):not([type="radio"]):focus,
 textarea {
     width: 100%;
     height: 10rem;
-    
+
     padding: 0.5rem;
-    
+
     box-sizing: border-box;
 }
 
@@ -100,10 +100,16 @@ input {
     width: 100%;
     min-width: 15rem;
     height: 2rem;
-    
+
     padding: 0.5rem;
-    
+
     box-sizing: border-box;
+}
+
+@media (max-width: 44rem) {
+    input {
+        height: 1.75rem;
+    }
 }
 
 input:not([type="checkbox"]):not([type="radio"]):disabled {
@@ -116,7 +122,7 @@ input:not([type="checkbox"]):not([type="radio"]):disabled {
 /* File selector input fields */
 /*----------------------------------------------------------------------------*/
 
-/* 
+/*
  * The styling is the same as a normal input field,
  * except we just remove the 2rem height as it needs to be taller.
  */
@@ -128,7 +134,7 @@ input[type="file"] {
 /* Checkbox/radio input fields */
 /*----------------------------------------------------------------------------*/
 
-/* 
+/*
  * The styling is the same as a normal input field,
  * except we just remove the dimension overrides as it needs to be smaller.
  */
@@ -148,13 +154,19 @@ input[type="checkbox"], input[type="radio"] {
     height: 2rem;
 }
 
+@media (max-width: 44rem) {
+    .select {
+        height: 1.75rem;
+    }
+}
+
 .select > select {
     width: 100%;
     height: 100%;
-    
+
     margin: 0rem;
     padding: 0 0 0 0.5rem;
-    
+
     border-right: 0rem;
 }
 
@@ -173,19 +185,25 @@ input[type="checkbox"], input[type="radio"] {
     position: absolute;
     right: 0;
     top: 0;
-    
+
     line-height: calc(2rem - 2px);
     font-size: 0.8rem;
     padding: 0rem 0.8rem;
-    
+
     pointer-events: none;
-    
+
     border-left: 0rem;
-    
+
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
+}
+
+@media (max-width: 44rem) {
+    .select > div {
+        line-height: calc(1.75rem - 2px);
+    }
 }
 
 /******************************************************************************/

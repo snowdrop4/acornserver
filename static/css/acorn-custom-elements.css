@@ -4,7 +4,7 @@
 
 .search-container {
     background-color: var(--medium-background);
-    /* 
+    /*
      * Allow scrolling when the screen is too small.
      * Letting the search boxes wrap around to multiple lines would look ugly.
      */
@@ -22,7 +22,7 @@
     flex: 1 0;
 }
 
-/* 
+/*
  * Overide the minimum width for input boxes that we defined elsewhere,
  * so that they can shrink to be as small as we need them to be in the
  * confined space of the search bar.
@@ -43,7 +43,7 @@
 .message {
     margin: 1rem 0rem;
     padding: 0rem 1rem;
-    
+
     border: 2px dashed var(--dark-background);
     font-weight: bold;
 }
@@ -81,11 +81,11 @@
 
 .autocomplete {
     cursor: pointer;
-    
+
     border: 1px solid var(--active);
     border-top: 0px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    
+
     background: #FFF;
 
     position: absolute;
@@ -97,7 +97,7 @@
     padding: 0.5em;
     line-height: 0.5rem;
     font-size: 1rem;
-    
+
     position: relative;
     white-space: nowrap;
     overflow: hidden;
@@ -125,10 +125,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     width: 100%;
     column-gap: 0.75rem;
-    
+
     margin-bottom: 1rem;
 }
 
@@ -173,21 +173,21 @@ ul.file-list .size {
 /******************************************************************************/
 /* Markdown boxes *************************************************************/
 /******************************************************************************/
-/* 
+/*
  * Used anywhere there is user-enterable text,
  * like in the forum or in user biographies
  */
 
-.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 { 
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 {
     font-size: 1rem;
     font-weight: normal;
     margin: 1rem 0rem;
-    
+
     /*
      * Make it so that the width of the element is only as big as the text
      * contained within. We could use `display: inline-block` instead,
      * but that breaks margin collapsing.
-     * 
+     *
      * We don't want the user-generated markdown headers to have a
      * big horizontal bar like our (real) site headers.
      */
@@ -237,20 +237,20 @@ ul.file-list .size {
 .tooltip:before {
     content: attr(data-text); /* here's the magic */
     position: absolute;
-    
+
     /* vertically center */
     bottom: 50%;
     left: 50%;
     transform: translateY(-50%);
     transform: translateX(-50%);
-    
+
     /* basic styles */
     padding: 10px;
     border-radius: 10px;
     background: #000;
     color: #fff;
     text-align: center;
-  
+
     display: none; /* hide by default */
 }
 
@@ -261,6 +261,7 @@ ul.file-list .size {
 /******************************************************************************/
 /* Spoilers *******************************************************************/
 /******************************************************************************/
+
 .spoiler {
     background: #000;
     border-radius: 0.2em;

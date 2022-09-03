@@ -12,30 +12,44 @@
     --green: #2ED573;
     --red: #FF4757;
     --blue: #70a1ff;
-    
+
     --yellow: #fbc02d;
     --orange: #fb8c00;
-    
+
     --active: #FFB700;
     --highlight: #FFB700;
-    
+
     --form-element-background: #FDFDFD;
     --form-element-background-disabled: #DFE4EA;
     --form-element-border: #A4B0BE;
     --form-element-box-shadow: rgba(0, 0, 0, 0.1);
-    
+
     --white-background:   #FFFFFF; /* blank space outside of the website */
     --light-background:   #DFE4EA; /* background that contains the actual website */
     --element-background: #F1F2F6; /* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
     --medium-background:  #858E9D; /* e.g.: subheaders underneath the main headers, and table headers */
     --dark-background:    #2F3542; /* e.g.: main headers and <h1-5> elements, plus all borders */
-    
+
     --font-color: #2F3542;
     --font-color-inverted: #FFFFFF;
     --font-color-inverted-background: #2F3542;
     --font-color-disabled: #9E9E9E;
-    
+
     --site-width: 66rem;
+
+    font-size: 16px;
+}
+
+@media (max-width: 55rem) {
+    :root {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 44rem) {
+    :root {
+        font-size: 14px;
+    }
 }
 
 /******************************************************************************/
@@ -66,6 +80,22 @@ h2 { font-size: 1.75rem; margin: 1.75rem 0rem; }
 h3 { font-size: 1.50rem; margin: 1.50rem 0rem; }
 h4 { font-size: 1.25rem; margin: 1.50rem 0rem; }
 h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
+
+@media (max-width: 55rem) {
+    h1 { font-size: 1.60rem; margin: 1.25rem 0rem; }
+    h2 { font-size: 1.45rem; margin: 1.25rem 0rem; }
+    h3 { font-size: 1.30rem; margin: 1.25rem 0rem; }
+    h4 { font-size: 1.15rem; margin: 1.25rem 0rem; }
+    h5 { font-size: 1.00rem; margin: 1.25rem 0rem; }
+}
+
+@media (max-width: 44rem) {
+    h1 { font-size: 1.60rem; margin: 1.25rem 0rem; }
+    h2 { font-size: 1.30rem; margin: 1.25rem 0rem; }
+    h3 { font-size: 1.20rem; margin: 1.25rem 0rem; }
+    h4 { font-size: 1.10rem; margin: 1.25rem 0rem; }
+    h5 { font-size: 1.00rem; margin: 1.25rem 0rem; }
+}
 
 /*----------------------------------------------------------------------------*/
 /* Links */
@@ -111,13 +141,13 @@ ul {
 body {
     font-family: sans-serif;
     color: var(--font-color);
-    
+
     margin: 0rem;
-    
-    background-color: #f1f2f6;
+
+    background-color: #F1F2F6;
     background-image: url("../img/backgrounds/heropatterns/topography.svg");
-    
-    /* 
+
+    /*
      * Safari-specific override to stop the text size changing
      * when the device orientation is changed (!!!).
      */
@@ -170,7 +200,7 @@ header #header-logo-image {
     height: 5rem;
 }
 
-/* 
+/*
  * Don't display the logo text on small screens
  * in order to save horizontal space.
  */
@@ -180,24 +210,33 @@ header #header-logo-image {
     }
 }
 
-/* 
+/*
  * On very small screens, things will start flowing
  * vertically, so we have horizontal space available now.
- * 
+ *
  * Display the logo text again, but shrink the font size, and
  * also reduce the size of the logo image to match.
  */
 @media (max-width: 44rem) {
+    header #header-logo-image {
+        height: 4rem;
+    }
+}
+
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+ @media (max-width: 33rem) {
     header h1 #header-logo-text {
         display: unset;
     }
-    
+
     header #header-logo-image {
         height: 3rem;
-    }
-    
-    header h1 {
-        font-size: 1.5rem;
     }
 }
 
@@ -234,8 +273,7 @@ header #header-site-nav a {
     white-space: nowrap;
 }
 
-/* Shrink the font size for very small screens. */
-@media (max-width: 44rem) {
+@media (max-width: 33rem) {
     header #header-site-nav a {
         font-size: 1rem;
     }
@@ -249,9 +287,9 @@ header #header-user-bar {
     display: flex;
     flex-wrap: wrap;
     column-gap: 0.50rem;
-    
+
     color: var(--font-color-inverted);
-    
+
     justify-self: end;
 }
 
@@ -279,11 +317,11 @@ header #header-user-bar a {
 
 main {
     background-color: var(--light-background);
-    
+
     /*
      * Don't ask me how this works, but we want child elements with a margin to
      * expand the dimensions of this (the parent) element.
-     * 
+     *
      * If we don't have this, there is a gutter on the top and bottom of main,
      * between the header and footer.
     */
@@ -305,21 +343,21 @@ nav.breadcrumb {
 /*----------------------------------------------------------------------------*/
 /* h2/h3 underbar */
 /*----------------------------------------------------------------------------*/
-/* 
+/*
  * Intended to display commonly reoccurring links to actions specific to the page
  * being displayed, such as a "Edit profile" link when displaying a user profile.
  */
- 
+
  h2.with-nav, h3.with-nav { margin-bottom: 0rem }
 
- nav.subheader-nav { 
+ nav.subheader-nav {
      margin-top: 0rem;
      margin-bottom: 1.75rem;
-     
+
      text-align: right;
-     
+
      display: block;
-     
+
      background-color: var(--medium-background);
  }
 
@@ -359,7 +397,7 @@ table {
 
 /*
  * Give standard rows a background colour.
- * 
+ *
  * Ignore spacer rows so that they still have an unset
  * (transparent) background colour.
  */
@@ -367,7 +405,7 @@ table {
     background-color: var(--element-background);
 }
 
-/* 
+/*
  * Give the the first row in the header section
  * of each table a darker background to stand out.
  */
@@ -381,7 +419,7 @@ td, th {
     padding: 0.5rem;
 }
 
-/* 
+/*
  * Remove the border on spacer rows as the spacer is intended to be invisible.
  * Give the spacer rows more space.
  */
@@ -409,4 +447,19 @@ th.tr, td.tr { text-align:  right; }
 
 th.width-100, td.width-100 {
     width: 100vw;
+}
+
+/******************************************************************************/
+/* Mixin-ins ******************************************************************/
+/******************************************************************************/
+
+.ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+h2 > span.small {
+    font-size: 80%;
+    color: var(--font-color-disabled);
 }

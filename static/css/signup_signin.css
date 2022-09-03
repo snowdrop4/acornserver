@@ -5,8 +5,8 @@ html, body {
 body {
     display: grid;
     place-items: center;
-    
-    background-color: #f1f2f6;
+
+    background-color: #F1F2F6;
     background-image: url("/static/img/backgrounds/heropatterns/bank-note.svg");
 }
 
