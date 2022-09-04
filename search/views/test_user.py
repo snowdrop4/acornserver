@@ -19,7 +19,7 @@ class TestUserQueries(TestCase):
             for i in range(0, 10)
         ]
 
-    def test_inbox_view(self) -> None:
+    def test_inbox_view_queries(self) -> None:
         url = reverse("search:user_search")
         request = cast(
             AuthedWSGIRequest, self.requestFactory.get(url, {"username": "user"})

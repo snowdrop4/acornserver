@@ -73,28 +73,27 @@ class TestThreadQueries(TestCase):
             for i in range(0, 5):
                 create_random_message(thread, random.choice([sender, receiver]))
 
-    def test_inbox_view(self) -> None:
-        url = reverse("inbox:inbox_view")
-        request = self.requestFactory.get(url)
+    def test_inbox_view_queries(self) -> None:
+        request = self.requestFactory.get(reverse("inbox:inbox_view"))
         request.user = self.user
 
         with self.assertNumQueries(1):
             InboxView.as_view()(request)
 
-    def test_thread_reply_view(self) -> None:
-        # get a random thread
+    def test_thread_reply_view_queries(self) -> None:
+        # Get a random thread
         thread = random.choice(self.threads)
 
-        # make sure the unread message count for the thread is 0, otherwise
-        # the view will sometimes do an SQL UPDATE on the object
+        # Set the unread message count for the thread to 0 before we run the view,
+        # otherwise the view might do an SQL UPDATE on the object to mark the
+        # unread message as read.
         thread.sender_unread_messages = 0
         thread.receiver_unread_messages = 0
         thread.save()
 
         data = {"pk": thread.pk}
 
-        url = reverse("inbox:thread_view", kwargs=data)
-        request = self.requestFactory.get(url)
+        request = self.requestFactory.get(reverse("inbox:thread_view", kwargs=data))
         request.user = self.user
 
         with self.assertNumQueries(2):
