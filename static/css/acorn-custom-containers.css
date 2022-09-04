@@ -133,12 +133,16 @@ main.center-max-width {
         width: 100%;
     }
 
-    /* Mix-in to disable the display of lines when in horizontal flow mode for small screens */
+    /*
+     * Mix-in to disable the display of lines when in horizontal flow mode
+     * for small screens
+     */
     .split.two-col.no-horizontal-lines {
         grid-template-rows: min-content 1.5rem min-content;
         grid-template-columns: 1fr;
         grid-template-areas: "item1" "." "item2" ".";
     }
+
     .split.three-col.no-horizontal-lines {
         grid-template-rows: min-content 1.5rem min-content 1.5rem min-content;
         grid-template-columns: 1fr;

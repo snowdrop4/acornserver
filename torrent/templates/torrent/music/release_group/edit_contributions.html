@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit Contributions to Release Group '{{ release_group.name }}'
+{% endblock %}
+
+{% block content %}
+    <h2>Edit Contributions to Release Group '{{ release_group.name }}'</h2>
+
+    <h3>Add New Contribution</h3>
+
+    <p><strong>Search for artist to add:</strong></p>
+
+    <form method="get">
+        {% include 'form-as-table.html' with form=search_form %}
+
+        <div class="button-container">
+            <button type="submit" name="release_group" value="{{ release_group.pk }}">Search</button>
+        </div>
+    </form>
+
+    {% if page.object_list %}
+        <p><strong>Select artist to add:</strong></p>
+
+        {% if contribution_form.errors %}
+            <p class="error">Error processing the contribution. The invalid fields are marked below.</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% include 'form-as-table.html' with form=contribution_form %}
+
+            <div class="button-container">
+                <button type="submit">Add Contribution</button>
+            </div>
+        </form>
+    {% endif %}
+
+    <h3>Edit Current Contributions</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Role</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for contribution in release_group.contributions.all %}
+                    <tr>
+                        <td><a href="{% url 'torrent:music_artist_view' pk=contribution.artist.pk %}">{{ contribution.artist.name }}</a></td>
+                        <td>{{ contribution.get_contribution_type_display }}</td>
+                        <td>
+                            <a href="{% url 'torrent:music_contribution_edit' contribution.pk %}">ED</a> /
+                            <a href="{% url 'torrent:music_contribution_delete' contribution.pk %}">RM</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

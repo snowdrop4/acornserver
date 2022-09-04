@@ -21,6 +21,7 @@ urlpatterns = [
     path("music/release_group/view/<int:pk>",   release_group.view,             name="music_release_group_view"),
     path("music/release_group/edit/<int:pk>",   release_group.edit,             name="music_release_group_edit"),
     path("music/release_group/delete/<int:pk>", release_group.Delete.as_view(), name="music_release_group_delete"),
+    path("music/release_group/edit-contributions/<int:pk>", release_group.edit_contributions, name="music_release_group_edit_contributions"),
 
     path("music/contribution/add",             contribution.add,               name="music_contribution_add"),
     path("music/contribution/edit/<int:pk>",   contribution.edit,              name="music_contribution_edit"),

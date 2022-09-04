@@ -1,33 +1,35 @@
 {% load pagination %}
 
 {% if page.object_list %}
-    {% with query_string=request.GET|remove_page_from_query_string %}
-        <div class="pagination">
-            {% if page.number != 1 %}
-                <a class="arrow" href="?{{ query_string }}&page=1">⭰</a>
-                <a class="arrow" href="?{{ query_string }}&page={{ page.previous_page_number }}">⭠</a>
-                <div class="line"></div>
-            {% endif %}
-            
-            <div>
-                {% generate_pagination_page_list page.number page.paginator.num_pages as page_list %}
-                
-                {% for pn in page_list %}
-                    {% if pn == page.number %}
-                        {{ pn }}
-                    {% else %}
-                        <a href="?{{ query_string }}&page={{ pn }}">{{ pn }}</a>
-                    {% endif %}
-                {% endfor %}
+    {% if page.paginator.num_pages > 1 %}
+        {% with query_string=request.GET|remove_page_from_query_string %}
+            <div class="pagination">
+                {% if page.number != 1 %}
+                    <a class="arrow" href="?{{ query_string }}&page=1">⭰</a>
+                    <a class="arrow" href="?{{ query_string }}&page={{ page.previous_page_number }}">⭠</a>
+                    <div class="line"></div>
+                {% endif %}
+
+                <div>
+                    {% generate_pagination_page_list page.number page.paginator.num_pages as page_list %}
+
+                    {% for pn in page_list %}
+                        {% if pn == page.number %}
+                            {{ pn }}
+                        {% else %}
+                            <a href="?{{ query_string }}&page={{ pn }}">{{ pn }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if page.has_next %}
+                    <div class="line"></div>
+                    <a class="arrow" href="?{{ query_string }}&page={{ page.next_page_number }}">⭢</a>
+                    <a class="arrow" href="?{{ query_string }}&page={{ page.paginator.num_pages }}">⭲</a>
+                {% endif %}
             </div>
-            
-            {% if page.has_next %}
-                <div class="line"></div>
-                <a class="arrow" href="?{{ query_string }}&page={{ page.next_page_number }}">⭢</a>
-                <a class="arrow" href="?{{ query_string }}&page={{ page.paginator.num_pages }}">⭲</a>
-            {% endif %}
-        </div>
-    {% endwith %}
+        {% endwith %}
+    {% endif %}
 {% else %}
     <p>No results.</p>
 {% endif %}

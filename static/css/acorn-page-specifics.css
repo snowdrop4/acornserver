@@ -14,9 +14,9 @@ table.torrent-listings {
 /*
  * Make the tables grow as much as they can, inside separator3.
  */
-table#torrent-info-table, table#torrent-operations-table,
-table#torrent-stats-table, table#torrent-album-art-table,
-table#torrent-artist-portrait-table {
+table#torrent-artists-table, table#torrent-info-table,
+table#torrent-operations-table, table#torrent-stats-table,
+table#torrent-album-art-table, table#torrent-artist-portrait-table {
     width: 100%;
 }
 
@@ -160,5 +160,29 @@ table.forum-listings {
 
     .grid-table.forum .hidden-small-screens {
         display: none;
+    }
+}
+
+/******************************************************************************/
+/* Release Group **************************************************************/
+/******************************************************************************/
+.release-group-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "artists info operations art";
+    gap: 1rem;
+}
+
+@media (max-width: 66rem) {
+    .release-group-info {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "artists info" "operations art";
+    }
+}
+
+@media (max-width: 33rem) {
+    .release-group-info {
+        grid-template-columns: 1fr;
+        grid-template-areas: "artists" "art" "info" "operations";
     }
 }

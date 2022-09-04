@@ -44,7 +44,7 @@
     margin: 1rem 0rem;
     padding: 0rem 1rem;
 
-    border: 2px dashed var(--dark-background);
+    border: 3px dashed var(--dark-background);
     font-weight: bold;
 }
 

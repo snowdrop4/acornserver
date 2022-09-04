@@ -22,8 +22,8 @@ def add(request: AuthedHttpRequest) -> HttpResponse:
         get_params = fill_typed_get_parameters(
             request,
             {
-                "release_group": (True,  int, "must be an integer"),
-                "page":          (False, int, "must be an integer"),
+                "release_group": (True, int, "must be an integer"),
+                "page": (False, int, "must be an integer"),
             },
         )
     except ValueError as e:
@@ -59,13 +59,11 @@ def add(request: AuthedHttpRequest) -> HttpResponse:
                 try:
                     contribution.save()
                 except IntegrityError:
-                    messages.failure(
-                        request,
-                        (
-                            "Release groups cannot have multiple "
-                            "contributions from the same artist."
-                        ),
+                    msg = (
+                        "Release groups cannot have multiple "
+                        "contributions from the same artist."
                     )
+                    messages.failure(request, msg)
                 else:
                     messages.creation(request, "Created contribution.")
 

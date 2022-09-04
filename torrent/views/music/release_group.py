@@ -1,15 +1,20 @@
 from typing import Any
 
-from django.db import models
+from django.db import IntegrityError, models
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
 from django.views.generic.edit import DeleteView
 
 from root import messages, renderers
 from torrent.models.music import MusicArtist, MusicReleaseGroup
 from root.type_annotations import AuthedHttpRequest
 from root.utils.get_parameters import fill_typed_get_parameters
-from torrent.forms.music.contribution import MusicContributionFormWithArtistFK
+from torrent.forms.music.contribution import (
+    MusicContributionFormAdd,
+    MusicContributionFormArtistSearch,
+    MusicContributionFormWithArtistFK,
+)
 from torrent.forms.music.release_group import MusicReleaseGroupForm
 
 
@@ -123,3 +128,63 @@ class Delete(DeleteView):
                 )
 
         return redirect("torrent:music_release_group_view", pk=release_group.pk)
+
+
+def edit_contributions(request: AuthedHttpRequest, pk: int) -> HttpResponse:
+    try:
+        get_params = fill_typed_get_parameters(
+            request, {"page": (False, int, "must be an integer")}
+        )
+    except ValueError as e:
+        return renderers.render_http_bad_request(request, str(e))
+
+    release_group = get_object_or_404(
+        MusicReleaseGroup.objects.prefetch_related("contributions__artist"), pk=pk
+    )
+
+    search_form = MusicContributionFormArtistSearch(request.GET)
+
+    template_args = {
+        "search_form": search_form,
+        "release_group": release_group,
+    }
+
+    if search_form.is_valid() and search_form.cleaned_data["artist_name"]:
+        query = MusicArtist.objects.filter(
+            name__icontains=search_form.cleaned_data["artist_name"]
+        )
+
+        paginator = Paginator(query, 5)
+        current_page_num = get_params.get("page", 1)
+        page = paginator.get_page(current_page_num)
+
+        if request.method == "POST":
+            contribution_form = MusicContributionFormAdd(
+                page.object_list, request.POST  # type: ignore
+            )
+
+            if contribution_form.is_valid():
+                contribution = contribution_form.save(commit=False)
+                contribution.release_group = release_group
+
+                try:
+                    contribution.save()
+                except IntegrityError:
+                    msg = (
+                        "Release groups cannot have multiple "
+                        "contributions from the same artist."
+                    )
+                    messages.failure(request, msg)
+                else:
+                    messages.creation(request, "Created contribution.")
+
+                return redirect("torrent:music_release_group_view", pk=release_group.pk)
+        else:
+            contribution_form = MusicContributionFormAdd(page.object_list)  # type: ignore
+
+        template_args["page"] = page
+        template_args["contribution_form"] = contribution_form
+
+    return render(
+        request, "torrent/music/release_group/edit_contributions.html", template_args
+    )
