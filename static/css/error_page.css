@@ -1,33 +1,514 @@
+/******************************************************************************/
+/* Global *********************************************************************/
+/******************************************************************************/
+* {
+  box-sizing: border-box;
+}
+
+/******************************************************************************/
+/* Colours ********************************************************************/
+/******************************************************************************/
+/* blank space outside of the website */
+/* background that contains the actual website */
+/* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
+/* e.g.: subheaders underneath the main headers, and table headers */
+/* e.g.: main headers and <h1-5> elements, plus all borders */
+/******************************************************************************/
+/* Site widths ****************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+/* Typography *****************************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Base font sizes */
+/*----------------------------------------------------------------------------*/
+:root {
+  font-size: 16px;
+}
+@media (max-width: 55rem) {
+  :root {
+    font-size: 15px;
+  }
+}
+@media (max-width: 44rem) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Selection */
+/*----------------------------------------------------------------------------*/
+::selection {
+  color: #FFFFFF;
+  background-color: #FFB700;
+}
+
+/*----------------------------------------------------------------------------*/
+/* h1/h2/h3/h4/h5 */
+/*----------------------------------------------------------------------------*/
+h1, h2, h3, h4, h5 {
+  color: #FFFFFF;
+  background-color: #2F3542;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 1.75rem 0rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 1.75rem 0rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0rem;
+}
+
+h5 {
+  font-size: 1rem;
+  margin: 1.5rem 0rem;
+}
+
+@media (max-width: 55rem) {
+  h1 {
+    font-size: 1.6rem;
+    margin: 1.25rem 0rem;
+  }
+  h2 {
+    font-size: 1.45rem;
+    margin: 1.25rem 0rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+    margin: 1.25rem 0rem;
+  }
+  h4 {
+    font-size: 1.15rem;
+    margin: 1.25rem 0rem;
+  }
+  h5 {
+    font-size: 1rem;
+    margin: 1.25rem 0rem;
+  }
+}
+@media (max-width: 44rem) {
+  h1 {
+    font-size: 1.6rem;
+    margin: 1.25rem 0rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+    margin: 1.25rem 0rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+    margin: 1.25rem 0rem;
+  }
+  h4 {
+    font-size: 1.1rem;
+    margin: 1.25rem 0rem;
+  }
+  h5 {
+    font-size: 1rem;
+    margin: 1.25rem 0rem;
+  }
+}
+/*----------------------------------------------------------------------------*/
+/* Links */
+/*----------------------------------------------------------------------------*/
+a {
+  text-decoration: none;
+  color: #2F3542;
+  box-shadow: inset 0px -0.2rem 0px #2F3542;
+}
+a:hover, a:focus {
+  color: #FFFFFF;
+  background-color: #FFB700;
+}
+a:focus {
+  outline: none;
+}
+
+header a, footer a {
+  color: #FFFFFF;
+  background-color: #2F3542;
+  font-weight: bold;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Lists */
+/*----------------------------------------------------------------------------*/
+ul, ol {
+  padding-left: 2rem;
+}
+
+ul {
+  list-style: square;
+}
+
+/******************************************************************************/
+/* Body ***********************************************************************/
+/******************************************************************************/
+body {
+  font-family: sans-serif;
+  color: #2F3542;
+  margin: 0rem;
+  background-color: #F1F2F6;
+  background-image: url("../img/backgrounds/heropatterns/topography.svg");
+  /*
+   * Safari-specific override to stop the text size changing
+   * when the device orientation is changed (!!!).
+   */
+  -webkit-text-size-adjust: 100%;
+}
+
+/******************************************************************************/
+/* Header *********************************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Header */
+/*----------------------------------------------------------------------------*/
+#header-container {
+  background-color: #2F3542;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  /* Left-justify (instead of right-justify) for small screens. */
+}
+@media (max-width: 66rem) {
+  header {
+    justify-content: flex-start;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Logo */
+/*----------------------------------------------------------------------------*/
+header h1 {
+  margin: 0rem;
+}
+header h1 a {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+header #header-logo-image {
+  height: 5rem;
+}
+
+/*
+ * Don't display the logo text on small screens
+ * in order to save horizontal space.
+ */
+@media (max-width: 66rem) {
+  header h1 #header-logo-text {
+    display: none;
+  }
+}
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: 44rem) {
+  header #header-logo-image {
+    height: 4rem;
+  }
+}
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: 33rem) {
+  header h1 #header-logo-text {
+    display: unset;
+  }
+  header #header-logo-image {
+    height: 3rem;
+  }
+}
+/*----------------------------------------------------------------------------*/
+/* Header: Links */
+/*----------------------------------------------------------------------------*/
+/* Right side of the header containing site nav and user bar */
+#header-links {
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+/* Divider inbetween items  */
+#header-links .divider {
+  width: 1px;
+  background-color: #858E9D;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
+/*----------------------------------------------------------------------------*/
+header #header-site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+/* Links */
+header #header-site-nav a {
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+@media (max-width: 33rem) {
+  header #header-site-nav a {
+    font-size: 1rem;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: User bar (containing stuff like ratio and inbox) */
+/*----------------------------------------------------------------------------*/
+header #header-user-bar {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  color: #FFFFFF;
+  justify-self: end;
+  /* Left-justify (instead of right-justify) for small screens. */
+  /* Shrink the font size for very small screens. */
+}
+header #header-user-bar a {
+  font-weight: normal;
+}
+@media (max-width: 66rem) {
+  header #header-user-bar {
+    justify-self: start;
+  }
+}
+@media (max-width: 44rem) {
+  header #header-user-bar {
+    font-size: 0.8rem;
+  }
+}
+
+/******************************************************************************/
+/* Main ***********************************************************************/
+/******************************************************************************/
+main {
+  background-color: #DFE4EA;
+  /*
+   * Don't ask me how this works, but we want child elements with a margin to
+   * expand the dimensions of this (the parent) element.
+   *
+   * If we don't have this, there is a gutter on the top and bottom of main,
+   * between the header and footer.
+  */
+  display: flow-root;
+}
+
+/******************************************************************************/
+/* Miscellaneous navigation ***************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Breadcrumb navigation */
+/*----------------------------------------------------------------------------*/
+nav.breadcrumb {
+  margin: 1rem 0rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* h2/h3 underbar */
+/*----------------------------------------------------------------------------*/
+/*
+ * Intended to display commonly reoccurring links to actions specific to the page
+ * being displayed, such as a "Edit profile" link when displaying a user profile.
+ */
+h2.with-nav, h3.with-nav {
+  margin-bottom: 0rem;
+}
+
+nav.subheader-nav {
+  margin-top: 0rem;
+  margin-bottom: 1.75rem;
+  text-align: right;
+  display: block;
+  background-color: #858E9D;
+}
+
+/******************************************************************************/
+/* Article ********************************************************************/
+/******************************************************************************/
+/* Used to contain user biographies and site news. */
+article {
+  border: 1px solid #2F3542;
+  background-color: #F1F2F6;
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
+}
+
+/******************************************************************************/
+/* Footer *********************************************************************/
+/******************************************************************************/
+footer {
+  background-color: #2F3542;
+  color: #FFFFFF;
+}
+
+/******************************************************************************/
+/* Tables *********************************************************************/
+/******************************************************************************/
+.table-container {
+  overflow: auto; /* Make a scrollbar appear on small screens */
+  margin: 1rem 0rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/*
+ * Give standard rows a background colour.
+ *
+ * Ignore spacer rows so that they still have an unset
+ * (transparent) background colour.
+ */
+tr:not(.conjoined-table-spacer) {
+  background-color: #F1F2F6;
+}
+
+/*
+ * Give the the first row in the header section
+ * of each table a darker background to stand out.
+ */
+thead > tr:first-of-type {
+  background-color: #858E9D;
+}
+
+/* Give every cell a border and a little bit of padding */
+td, th {
+  border: 1px solid #2F3542;
+  padding: 0.5rem;
+}
+
+/*
+ * Remove the border on spacer rows as the spacer is intended to be invisible.
+ * Give the spacer rows more space.
+ */
+tr.conjoined-table-spacer > th {
+  border-width: 0px;
+  padding: 0.5rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Handy mix-ins */
+/*----------------------------------------------------------------------------*/
+tr.highlight {
+  background-color: #FFB700;
+}
+
+tr.error {
+  background-color: #FF4757;
+  color: #FFFFFF;
+}
+
+th.tl, td.tl {
+  text-align: left;
+}
+
+th.tc, td.tc {
+  text-align: center;
+}
+
+th.tr, td.tr {
+  text-align: right;
+}
+
+th.width-100, td.width-100 {
+  width: 100vw;
+}
+
+/******************************************************************************/
+/* Mixin-ins ******************************************************************/
+/******************************************************************************/
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+h2 > span.small {
+  font-size: 80%;
+  color: #9E9E9E;
+}
+
 html, body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: safe center;
-    flex-direction: column;
-
-    background-color: #F1F2F6;
-    background-image: url("../img/backgrounds/heropatterns/graph-paper.svg");
+  display: flex;
+  align-items: center;
+  justify-content: safe center;
+  flex-direction: column;
+  background-color: #F1F2F6;
+  background-image: url("../img/backgrounds/heropatterns/graph-paper.svg");
 }
 
 h1, h2 {
-    display: table;
-    margin: 0rem;
-    background-color: unset;
-    color: var(--font-color);
+  display: table;
+  margin: 0rem;
+  background-color: unset;
+  color: #2F3542;
 }
 
-h1 { font-size: 6rem; line-height: 6rem; }
-h2 { font-size: 3.5rem; line-height: 3.5rem; }
+h1 {
+  font-size: 6rem;
+  line-height: 6rem;
+}
+
+h2 {
+  font-size: 3.5rem;
+  line-height: 3.5rem;
+}
 
 @media (max-width: 50rem) {
-    h1 { font-size: 5rem; line-height: 5rem; }
-    h2 { font-size: 2.5rem; line-height: 2.5rem; }
+  h1 {
+    font-size: 5rem;
+    line-height: 5rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+  }
+}
+@media (max-width: 30rem) {
+  h1 {
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+  h2 {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
 }
 
-@media (max-width: 30rem) {
-    h1 { font-size: 4rem; line-height: 4rem; }
-    h2 { font-size: 2rem; line-height: 2rem; }
-}
+/*# sourceMappingURL=error_page.css.map */

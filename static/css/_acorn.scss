@@ -8,61 +8,68 @@
 /* Colours ********************************************************************/
 /******************************************************************************/
 
-:root {
-    --green: #2ED573;
-    --red: #FF4757;
-    --blue: #70a1ff;
+$green: #2ED573;
+$red: #FF4757;
+$blue: #70a1ff;
 
-    --yellow: #fbc02d;
-    --orange: #fb8c00;
+$yellow: #fbc02d;
+$orange: #fb8c00;
 
-    --active: #FFB700;
-    --highlight: #FFB700;
+$active: #FFB700;
+$highlight: #FFB700;
 
-    --form-element-background: #FDFDFD;
-    --form-element-background-disabled: #DFE4EA;
-    --form-element-border: #A4B0BE;
-    --form-element-box-shadow: rgba(0, 0, 0, 0.1);
+$form-element-background: #FDFDFD;
+$form-element-background-disabled: #DFE4EA;
+$form-element-border: #A4B0BE;
+$form-element-box-shadow: rgba(0, 0, 0, 0.1);
 
-    --white-background:   #FFFFFF; /* blank space outside of the website */
-    --light-background:   #DFE4EA; /* background that contains the actual website */
-    --element-background: #F1F2F6; /* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
-    --medium-background:  #858E9D; /* e.g.: subheaders underneath the main headers, and table headers */
-    --dark-background:    #2F3542; /* e.g.: main headers and <h1-5> elements, plus all borders */
+$white-background:   #FFFFFF; /* blank space outside of the website */
+$light-background:   #DFE4EA; /* background that contains the actual website */
+$element-background: #F1F2F6; /* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
+$medium-background:  #858E9D; /* e.g.: subheaders underneath the main headers, and table headers */
+$dark-background:    #2F3542; /* e.g.: main headers and <h1-5> elements, plus all borders */
 
-    --font-color: #2F3542;
-    --font-color-inverted: #FFFFFF;
-    --font-color-inverted-background: #2F3542;
-    --font-color-disabled: #9E9E9E;
+$font-color: #2F3542;
+$font-color-inverted: #FFFFFF;
+$font-color-inverted-background: #2F3542;
+$font-color-disabled: #9E9E9E;
 
-    --site-width: 66rem;
+/******************************************************************************/
+/* Site widths ****************************************************************/
+/******************************************************************************/
 
-    font-size: 16px;
-}
-
-@media (max-width: 55rem) {
-    :root {
-        font-size: 15px;
-    }
-}
-
-@media (max-width: 44rem) {
-    :root {
-        font-size: 14px;
-    }
-}
+$base-width-1: 66rem;
+$base-width-2: 55rem;
+$base-width-3: 44rem;
+$base-width-4: 33rem;
 
 /******************************************************************************/
 /* Typography *****************************************************************/
 /******************************************************************************/
 
 /*----------------------------------------------------------------------------*/
+/* Base font sizes */
+/*----------------------------------------------------------------------------*/
+
+:root {
+    font-size: 16px;
+
+    @media (max-width: $base-width-2) {
+        font-size: 15px;
+    }
+
+    @media (max-width: $base-width-3) {
+        font-size: 14px;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
 /* Selection */
 /*----------------------------------------------------------------------------*/
 
 ::selection {
-    color: var(--font-color-inverted);
-    background-color: var(--highlight);
+    color: $font-color-inverted;
+    background-color: $highlight;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -70,8 +77,8 @@
 /*----------------------------------------------------------------------------*/
 
 h1, h2, h3, h4, h5 {
-    color: var(--font-color-inverted);
-    background-color: var(--font-color-inverted-background);
+    color: $font-color-inverted;
+    background-color: $font-color-inverted-background;
     font-weight: bold;
 }
 
@@ -81,7 +88,7 @@ h3 { font-size: 1.50rem; margin: 1.50rem 0rem; }
 h4 { font-size: 1.25rem; margin: 1.50rem 0rem; }
 h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
 
-@media (max-width: 55rem) {
+@media (max-width: $base-width-2) {
     h1 { font-size: 1.60rem; margin: 1.25rem 0rem; }
     h2 { font-size: 1.45rem; margin: 1.25rem 0rem; }
     h3 { font-size: 1.30rem; margin: 1.25rem 0rem; }
@@ -89,7 +96,7 @@ h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
     h5 { font-size: 1.00rem; margin: 1.25rem 0rem; }
 }
 
-@media (max-width: 44rem) {
+@media (max-width: $base-width-3) {
     h1 { font-size: 1.60rem; margin: 1.25rem 0rem; }
     h2 { font-size: 1.30rem; margin: 1.25rem 0rem; }
     h3 { font-size: 1.20rem; margin: 1.25rem 0rem; }
@@ -103,22 +110,22 @@ h5 { font-size: 1.00rem; margin: 1.50rem 0rem; }
 
 a {
     text-decoration: none;
-    color: var(--font-color);
-    box-shadow: inset 0px -0.20rem 0px var(--font-color);
-}
+    color: $font-color;
+    box-shadow: inset 0px -0.20rem 0px $font-color;
 
-a:hover, a:focus {
-    color: var(--font-color-inverted);
-    background-color: var(--highlight);
-}
+    &:hover, &:focus {
+        color: $font-color-inverted;
+        background-color: $highlight;
+    }
 
-a:focus {
-    outline: none;
+    &:focus {
+        outline: none;
+    }
 }
 
 header a, footer a {
-    color: var(--font-color-inverted);
-    background-color: var(--font-color-inverted-background);
+    color: $font-color-inverted;
+    background-color: $font-color-inverted-background;
     font-weight: bold;
 }
 
@@ -140,7 +147,7 @@ ul {
 
 body {
     font-family: sans-serif;
-    color: var(--font-color);
+    color: $font-color;
 
     margin: 0rem;
 
@@ -163,7 +170,7 @@ body {
 /*----------------------------------------------------------------------------*/
 
 #header-container {
-    background-color: var(--dark-background);
+    background-color: $dark-background;
 }
 
 header {
@@ -173,11 +180,9 @@ header {
     align-items: center;
     row-gap: 1rem;
     column-gap: 1rem;
-}
 
-/* Left-justify (instead of right-justify) for small screens. */
-@media (max-width: 66rem) {
-    header {
+    /* Left-justify (instead of right-justify) for small screens. */
+    @media (max-width: $base-width-1) {
         justify-content: flex-start;
     }
 }
@@ -188,12 +193,12 @@ header {
 
 header h1 {
     margin: 0rem;
-}
 
-header h1 a {
-    display: flex;
-    align-items: center;
-    column-gap: 0.75rem;
+    & a {
+        display: flex;
+        align-items: center;
+        column-gap: 0.75rem;
+    }
 }
 
 header #header-logo-image {
@@ -217,7 +222,7 @@ header #header-logo-image {
  * Display the logo text again, but shrink the font size, and
  * also reduce the size of the logo image to match.
  */
-@media (max-width: 44rem) {
+@media (max-width: $base-width-3) {
     header #header-logo-image {
         height: 4rem;
     }
@@ -230,7 +235,7 @@ header #header-logo-image {
  * Display the logo text again, but shrink the font size, and
  * also reduce the size of the logo image to match.
  */
- @media (max-width: 33rem) {
+ @media (max-width: $base-width-4) {
     header h1 #header-logo-text {
         display: unset;
     }
@@ -271,10 +276,8 @@ header #header-site-nav {
 header #header-site-nav a {
     font-size: 1.25rem;
     white-space: nowrap;
-}
 
-@media (max-width: 33rem) {
-    header #header-site-nav a {
+    @media (max-width: $base-width-4) {
         font-size: 1rem;
     }
 }
@@ -288,25 +291,21 @@ header #header-user-bar {
     flex-wrap: wrap;
     column-gap: 0.50rem;
 
-    color: var(--font-color-inverted);
+    color: $font-color-inverted;
 
     justify-self: end;
-}
 
-header #header-user-bar a {
-    font-weight: normal;
-}
+    & a {
+        font-weight: normal;
+    }
 
-/* Left-justify (instead of right-justify) for small screens. */
-@media (max-width: 66rem) {
-    header #header-user-bar {
+    /* Left-justify (instead of right-justify) for small screens. */
+    @media (max-width: $base-width-1) {
         justify-self: start;
     }
-}
 
-/* Shrink the font size for very small screens. */
-@media (max-width: 44rem) {
-    header #header-user-bar {
+    /* Shrink the font size for very small screens. */
+    @media (max-width: $base-width-3) {
         font-size: 0.80rem;
     }
 }
@@ -316,7 +315,7 @@ header #header-user-bar a {
 /******************************************************************************/
 
 main {
-    background-color: var(--light-background);
+    background-color: $light-background;
 
     /*
      * Don't ask me how this works, but we want child elements with a margin to
@@ -348,9 +347,9 @@ nav.breadcrumb {
  * being displayed, such as a "Edit profile" link when displaying a user profile.
  */
 
- h2.with-nav, h3.with-nav { margin-bottom: 0rem }
+h2.with-nav, h3.with-nav { margin-bottom: 0rem }
 
- nav.subheader-nav {
+nav.subheader-nav {
      margin-top: 0rem;
      margin-bottom: 1.75rem;
 
@@ -358,7 +357,7 @@ nav.breadcrumb {
 
      display: block;
 
-     background-color: var(--medium-background);
+     background-color: $medium-background;
  }
 
 /******************************************************************************/
@@ -367,8 +366,8 @@ nav.breadcrumb {
 
 /* Used to contain user biographies and site news. */
 article {
-    border: 1px solid var(--dark-background);
-    background-color: var(--element-background);
+    border: 1px solid $dark-background;
+    background-color: $element-background;
     margin: 1rem 0rem;
     padding: 0rem 1rem;
 }
@@ -378,8 +377,8 @@ article {
 /******************************************************************************/
 
 footer {
-    background-color: var(--dark-background);
-    color: var(--font-color-inverted);
+    background-color: $dark-background;
+    color: $font-color-inverted;
 }
 
 /******************************************************************************/
@@ -402,7 +401,7 @@ table {
  * (transparent) background colour.
  */
  tr:not(.conjoined-table-spacer) {
-    background-color: var(--element-background);
+    background-color: $element-background;
 }
 
 /*
@@ -410,12 +409,12 @@ table {
  * of each table a darker background to stand out.
  */
 thead > tr:first-of-type {
-    background-color: var(--medium-background);
+    background-color: $medium-background;
 }
 
 /* Give every cell a border and a little bit of padding */
 td, th {
-    border: 1px solid var(--dark-background);
+    border: 1px solid $dark-background;
     padding: 0.5rem;
 }
 
@@ -433,12 +432,12 @@ tr.conjoined-table-spacer > th {
 /*----------------------------------------------------------------------------*/
 
 tr.highlight {
-    background-color: var(--highlight);
+    background-color: $highlight;
 }
 
 tr.error {
-    background-color: var(--red);
-    color: var(--font-color-inverted);
+    background-color: $red;
+    color: $font-color-inverted;
 }
 
 th.tl, td.tl { text-align:   left; }
@@ -461,5 +460,5 @@ th.width-100, td.width-100 {
 
 h2 > span.small {
     font-size: 80%;
-    color: var(--font-color-disabled);
+    color: $font-color-disabled;
 }

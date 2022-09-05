@@ -18,9 +18,9 @@ button {
     line-height: 0.5rem;
     font-size: 1rem;
 
-    color: var(--font-color);
-    border: 1px solid var(--dark-background);
-    background-color: var(--element-background);
+    color: $font-color;
+    border: 1px solid $dark-background;
+    background-color: $element-background;
 
     -webkit-appearance: none;
        -moz-appearance: none;
@@ -29,18 +29,18 @@ button {
 }
 
 button.danger {
-    color: var(--font-color-inverted);
-    background-color: var(--red);
+    color: $font-color-inverted;
+    background-color: red;
 }
 
 button:hover {
-    color: var(--font-color-inverted);
-    background-color: var(--dark-background);
+    color: $font-color-inverted;
+    background-color: $dark-background;
 }
 
 button:focus, button:active {
-    background-color: var(--active);
-    color: var(--font-color);
+    background-color: $active;
+    color: $font-color;
 }
 
 button:active {
@@ -59,9 +59,9 @@ textarea,
 input:not([type="checkbox"]):not([type="radio"]),
 .select > select,
 .select > div {
-    background-color: var(--form-element-background);
-    border: 1px solid var(--form-element-border);
-    box-shadow: inset 1px 1px 3px var(--form-element-box-shadow);
+    background-color: $form-element-background;
+    border: 1px solid $form-element-border;
+    box-shadow: inset 1px 1px 3px $form-element-box-shadow;
 
     border-radius: 0px;
 
@@ -75,7 +75,7 @@ textarea:focus,
 input:not([type="checkbox"]):not([type="radio"]):focus,
 .select:focus-within > select,
 .select:focus-within > div {
-    border-color: var(--active);
+    border-color: $active;
     outline: none;
 }
 
@@ -104,17 +104,15 @@ input {
     padding: 0.5rem;
 
     box-sizing: border-box;
-}
 
-@media (max-width: 44rem) {
-    input {
+    @media (max-width: $base-width-3) {
         height: 1.75rem;
     }
 }
 
 input:not([type="checkbox"]):not([type="radio"]):disabled {
-    background-color: var(--form-element-background-disabled);
-    color: var(--font-color-disabled);
+    background-color: $form-element-background-disabled;
+    color: $font-color-disabled;
     cursor: not-allowed;
 }
 
@@ -152,10 +150,8 @@ input[type="checkbox"], input[type="radio"] {
     position: relative;
     width: 100%;
     height: 2rem;
-}
 
-@media (max-width: 44rem) {
-    .select {
+    @media (max-width: $base-width-3) {
         height: 1.75rem;
     }
 }
@@ -172,13 +168,13 @@ input[type="checkbox"], input[type="radio"] {
 
 .select > select:disabled,
 .select > select:disabled + div {
-    background-color: var(--form-element-background-disabled);
-    color: var(--font-color-disabled);
+    background-color: $form-element-background-disabled;
+    color: $font-color-disabled;
     cursor: not-allowed;
 }
 
 .select > select:enabled:hover + div {
-    color: var(--active);
+    color: $active;
 }
 
 .select > div {
@@ -198,10 +194,8 @@ input[type="checkbox"], input[type="radio"] {
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-}
 
-@media (max-width: 44rem) {
-    .select > div {
+    @media (max-width: $base-width-3) {
         line-height: calc(1.75rem - 2px);
     }
 }
@@ -213,11 +207,9 @@ input[type="checkbox"], input[type="radio"] {
 /* Give them a minimum width on large screens. */
 table.form {
     width: 32rem;
-}
 
-/* Make them take up the full width on small screens. */
-@media (max-width: 66rem) {
-    table.form {
+    /* Make them take up the full width on small screens. */
+    @media (max-width: $base-width-1) {
         width: 100%;
     }
 }

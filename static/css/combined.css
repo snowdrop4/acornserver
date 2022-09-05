@@ -1,0 +1,1357 @@
+@charset "UTF-8";
+/******************************************************************************/
+/* Global *********************************************************************/
+/******************************************************************************/
+* {
+  box-sizing: border-box;
+}
+
+/******************************************************************************/
+/* Colours ********************************************************************/
+/******************************************************************************/
+/* blank space outside of the website */
+/* background that contains the actual website */
+/* e.g.: unique elements that comprise the page content (like tables or user-contributed text) */
+/* e.g.: subheaders underneath the main headers, and table headers */
+/* e.g.: main headers and <h1-5> elements, plus all borders */
+/******************************************************************************/
+/* Site widths ****************************************************************/
+/******************************************************************************/
+/******************************************************************************/
+/* Typography *****************************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Base font sizes */
+/*----------------------------------------------------------------------------*/
+:root {
+  font-size: 16px;
+}
+@media (max-width: 55rem) {
+  :root {
+    font-size: 15px;
+  }
+}
+@media (max-width: 44rem) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Selection */
+/*----------------------------------------------------------------------------*/
+::selection {
+  color: #FFFFFF;
+  background-color: #FFB700;
+}
+
+/*----------------------------------------------------------------------------*/
+/* h1/h2/h3/h4/h5 */
+/*----------------------------------------------------------------------------*/
+h1, h2, h3, h4, h5 {
+  color: #FFFFFF;
+  background-color: #2F3542;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 1.75rem 0rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 1.75rem 0rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0rem;
+}
+
+h5 {
+  font-size: 1rem;
+  margin: 1.5rem 0rem;
+}
+
+@media (max-width: 55rem) {
+  h1 {
+    font-size: 1.6rem;
+    margin: 1.25rem 0rem;
+  }
+  h2 {
+    font-size: 1.45rem;
+    margin: 1.25rem 0rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+    margin: 1.25rem 0rem;
+  }
+  h4 {
+    font-size: 1.15rem;
+    margin: 1.25rem 0rem;
+  }
+  h5 {
+    font-size: 1rem;
+    margin: 1.25rem 0rem;
+  }
+}
+@media (max-width: 44rem) {
+  h1 {
+    font-size: 1.6rem;
+    margin: 1.25rem 0rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+    margin: 1.25rem 0rem;
+  }
+  h3 {
+    font-size: 1.2rem;
+    margin: 1.25rem 0rem;
+  }
+  h4 {
+    font-size: 1.1rem;
+    margin: 1.25rem 0rem;
+  }
+  h5 {
+    font-size: 1rem;
+    margin: 1.25rem 0rem;
+  }
+}
+/*----------------------------------------------------------------------------*/
+/* Links */
+/*----------------------------------------------------------------------------*/
+a {
+  text-decoration: none;
+  color: #2F3542;
+  box-shadow: inset 0px -0.2rem 0px #2F3542;
+}
+a:hover, a:focus {
+  color: #FFFFFF;
+  background-color: #FFB700;
+}
+a:focus {
+  outline: none;
+}
+
+header a, footer a {
+  color: #FFFFFF;
+  background-color: #2F3542;
+  font-weight: bold;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Lists */
+/*----------------------------------------------------------------------------*/
+ul, ol {
+  padding-left: 2rem;
+}
+
+ul {
+  list-style: square;
+}
+
+/******************************************************************************/
+/* Body ***********************************************************************/
+/******************************************************************************/
+body {
+  font-family: sans-serif;
+  color: #2F3542;
+  margin: 0rem;
+  background-color: #F1F2F6;
+  background-image: url("../img/backgrounds/heropatterns/topography.svg");
+  /*
+   * Safari-specific override to stop the text size changing
+   * when the device orientation is changed (!!!).
+   */
+  -webkit-text-size-adjust: 100%;
+}
+
+/******************************************************************************/
+/* Header *********************************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Header */
+/*----------------------------------------------------------------------------*/
+#header-container {
+  background-color: #2F3542;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  /* Left-justify (instead of right-justify) for small screens. */
+}
+@media (max-width: 66rem) {
+  header {
+    justify-content: flex-start;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Logo */
+/*----------------------------------------------------------------------------*/
+header h1 {
+  margin: 0rem;
+}
+header h1 a {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+header #header-logo-image {
+  height: 5rem;
+}
+
+/*
+ * Don't display the logo text on small screens
+ * in order to save horizontal space.
+ */
+@media (max-width: 66rem) {
+  header h1 #header-logo-text {
+    display: none;
+  }
+}
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: 44rem) {
+  header #header-logo-image {
+    height: 4rem;
+  }
+}
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: 33rem) {
+  header h1 #header-logo-text {
+    display: unset;
+  }
+  header #header-logo-image {
+    height: 3rem;
+  }
+}
+/*----------------------------------------------------------------------------*/
+/* Header: Links */
+/*----------------------------------------------------------------------------*/
+/* Right side of the header containing site nav and user bar */
+#header-links {
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+/* Divider inbetween items  */
+#header-links .divider {
+  width: 1px;
+  background-color: #858E9D;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
+/*----------------------------------------------------------------------------*/
+header #header-site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+/* Links */
+header #header-site-nav a {
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+@media (max-width: 33rem) {
+  header #header-site-nav a {
+    font-size: 1rem;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: User bar (containing stuff like ratio and inbox) */
+/*----------------------------------------------------------------------------*/
+header #header-user-bar {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  color: #FFFFFF;
+  justify-self: end;
+  /* Left-justify (instead of right-justify) for small screens. */
+  /* Shrink the font size for very small screens. */
+}
+header #header-user-bar a {
+  font-weight: normal;
+}
+@media (max-width: 66rem) {
+  header #header-user-bar {
+    justify-self: start;
+  }
+}
+@media (max-width: 44rem) {
+  header #header-user-bar {
+    font-size: 0.8rem;
+  }
+}
+
+/******************************************************************************/
+/* Main ***********************************************************************/
+/******************************************************************************/
+main {
+  background-color: #DFE4EA;
+  /*
+   * Don't ask me how this works, but we want child elements with a margin to
+   * expand the dimensions of this (the parent) element.
+   *
+   * If we don't have this, there is a gutter on the top and bottom of main,
+   * between the header and footer.
+  */
+  display: flow-root;
+}
+
+/******************************************************************************/
+/* Miscellaneous navigation ***************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Breadcrumb navigation */
+/*----------------------------------------------------------------------------*/
+nav.breadcrumb {
+  margin: 1rem 0rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* h2/h3 underbar */
+/*----------------------------------------------------------------------------*/
+/*
+ * Intended to display commonly reoccurring links to actions specific to the page
+ * being displayed, such as a "Edit profile" link when displaying a user profile.
+ */
+h2.with-nav, h3.with-nav {
+  margin-bottom: 0rem;
+}
+
+nav.subheader-nav {
+  margin-top: 0rem;
+  margin-bottom: 1.75rem;
+  text-align: right;
+  display: block;
+  background-color: #858E9D;
+}
+
+/******************************************************************************/
+/* Article ********************************************************************/
+/******************************************************************************/
+/* Used to contain user biographies and site news. */
+article {
+  border: 1px solid #2F3542;
+  background-color: #F1F2F6;
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
+}
+
+/******************************************************************************/
+/* Footer *********************************************************************/
+/******************************************************************************/
+footer {
+  background-color: #2F3542;
+  color: #FFFFFF;
+}
+
+/******************************************************************************/
+/* Tables *********************************************************************/
+/******************************************************************************/
+.table-container {
+  overflow: auto; /* Make a scrollbar appear on small screens */
+  margin: 1rem 0rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/*
+ * Give standard rows a background colour.
+ *
+ * Ignore spacer rows so that they still have an unset
+ * (transparent) background colour.
+ */
+tr:not(.conjoined-table-spacer) {
+  background-color: #F1F2F6;
+}
+
+/*
+ * Give the the first row in the header section
+ * of each table a darker background to stand out.
+ */
+thead > tr:first-of-type {
+  background-color: #858E9D;
+}
+
+/* Give every cell a border and a little bit of padding */
+td, th {
+  border: 1px solid #2F3542;
+  padding: 0.5rem;
+}
+
+/*
+ * Remove the border on spacer rows as the spacer is intended to be invisible.
+ * Give the spacer rows more space.
+ */
+tr.conjoined-table-spacer > th {
+  border-width: 0px;
+  padding: 0.5rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Handy mix-ins */
+/*----------------------------------------------------------------------------*/
+tr.highlight {
+  background-color: #FFB700;
+}
+
+tr.error {
+  background-color: #FF4757;
+  color: #FFFFFF;
+}
+
+th.tl, td.tl {
+  text-align: left;
+}
+
+th.tc, td.tc {
+  text-align: center;
+}
+
+th.tr, td.tr {
+  text-align: right;
+}
+
+th.width-100, td.width-100 {
+  width: 100vw;
+}
+
+/******************************************************************************/
+/* Mixin-ins ******************************************************************/
+/******************************************************************************/
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+h2 > span.small {
+  font-size: 80%;
+  color: #9E9E9E;
+}
+
+/******************************************************************************/
+/* Form buttons ***************************************************************/
+/******************************************************************************/
+/* Used to hold multiple buttons together next to each other. */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  margin: 1rem 0rem;
+}
+
+button {
+  margin: 0rem;
+  padding: 0.5rem;
+  line-height: 0.5rem;
+  font-size: 1rem;
+  color: #2F3542;
+  border: 1px solid #2F3542;
+  background-color: #F1F2F6;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+}
+
+button.danger {
+  color: #FFFFFF;
+  background-color: red;
+}
+
+button:hover {
+  color: #FFFFFF;
+  background-color: #2F3542;
+}
+
+button:focus, button:active {
+  background-color: #FFB700;
+  color: #2F3542;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/******************************************************************************/
+/* Form input elements ********************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Common rules for textarea, input, and select */
+/*----------------------------------------------------------------------------*/
+textarea,
+input:not([type=checkbox]):not([type=radio]),
+.select > select,
+.select > div {
+  background-color: #FDFDFD;
+  border: 1px solid #A4B0BE;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+}
+
+textarea:focus,
+input:not([type=checkbox]):not([type=radio]):focus,
+.select:focus-within > select,
+.select:focus-within > div {
+  border-color: #FFB700;
+  outline: none;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Textareas */
+/*----------------------------------------------------------------------------*/
+textarea {
+  width: 100%;
+  height: 10rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Input fields */
+/*----------------------------------------------------------------------------*/
+input {
+  width: 100%;
+  min-width: 15rem;
+  height: 2rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+@media (max-width: 44rem) {
+  input {
+    height: 1.75rem;
+  }
+}
+
+input:not([type=checkbox]):not([type=radio]):disabled {
+  background-color: #DFE4EA;
+  color: #9E9E9E;
+  cursor: not-allowed;
+}
+
+/*----------------------------------------------------------------------------*/
+/* File selector input fields */
+/*----------------------------------------------------------------------------*/
+/*
+ * The styling is the same as a normal input field,
+ * except we just remove the 2rem height as it needs to be taller.
+ */
+input[type=file] {
+  height: auto;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Checkbox/radio input fields */
+/*----------------------------------------------------------------------------*/
+/*
+ * The styling is the same as a normal input field,
+ * except we just remove the dimension overrides as it needs to be smaller.
+ */
+input[type=checkbox], input[type=radio] {
+  width: auto;
+  min-width: auto;
+  height: auto;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Select fields */
+/*----------------------------------------------------------------------------*/
+.select {
+  position: relative;
+  width: 100%;
+  height: 2rem;
+}
+@media (max-width: 44rem) {
+  .select {
+    height: 1.75rem;
+  }
+}
+
+.select > select {
+  width: 100%;
+  height: 100%;
+  margin: 0rem;
+  padding: 0 0 0 0.5rem;
+  border-right: 0rem;
+}
+
+.select > select:disabled,
+.select > select:disabled + div {
+  background-color: #DFE4EA;
+  color: #9E9E9E;
+  cursor: not-allowed;
+}
+
+.select > select:enabled:hover + div {
+  color: #FFB700;
+}
+
+.select > div {
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: calc(2rem - 2px);
+  font-size: 0.8rem;
+  padding: 0rem 0.8rem;
+  pointer-events: none;
+  border-left: 0rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@media (max-width: 44rem) {
+  .select > div {
+    line-height: calc(1.75rem - 2px);
+  }
+}
+
+/******************************************************************************/
+/* Form tables ****************************************************************/
+/******************************************************************************/
+/* Give them a minimum width on large screens. */
+table.form {
+  width: 32rem;
+  /* Make them take up the full width on small screens. */
+}
+@media (max-width: 66rem) {
+  table.form {
+    width: 100%;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Error/help messages for form fields */
+/*----------------------------------------------------------------------------*/
+tr.error > .form-data-cell > .error-text.inline,
+tr.error > .form-data-cell > .help-text.inline {
+  font-size: 80%;
+  margin: 0.5rem 0rem 0rem 0rem;
+}
+
+tr.error > .form-data-cell > .error-text.inline::before {
+  content: "🛑 ";
+}
+
+tr.error > .form-data-cell > .help-text.inline::before {
+  content: "ℹ️ ";
+}
+
+/******************************************************************************/
+/* Search bar *****************************************************************/
+/******************************************************************************/
+.search-container {
+  background-color: #858E9D;
+  /*
+   * Allow scrolling when the screen is too small.
+   * Letting the search boxes wrap around to multiple lines would look ugly.
+   */
+  overflow: auto;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 0.5rem;
+}
+
+/* Let the flex items grow in size when there's free space. */
+.search > form {
+  flex: 1 0;
+}
+
+/*
+ * Overide the minimum width for input boxes that we defined elsewhere,
+ * so that they can shrink to be as small as we need them to be in the
+ * confined space of the search bar.
+ */
+.search > form > input {
+  min-width: 5rem;
+  /*
+   * Make them grow when focused, so that the user has enough space
+   * to work with.
+   */
+}
+.search > form > input:focus {
+  min-width: 18rem;
+}
+
+/******************************************************************************/
+/* Message boxes **************************************************************/
+/******************************************************************************/
+.message {
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
+  border: 3px dashed #2F3542;
+  font-weight: bold;
+}
+
+.message > p {
+  color: #2F3542;
+  margin: 0.5rem 0rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Specific message boxes */
+/*----------------------------------------------------------------------------*/
+.message.success {
+  background-color: #2ED573;
+}
+
+.message.failure {
+  background-color: #FF4757;
+}
+
+.message.creation {
+  background-color: #2ED573;
+}
+
+.message.deletion {
+  background-color: #FF4757;
+}
+
+.message.error {
+  background-color: #FF4757;
+}
+
+.message.warning {
+  background-color: #fb8c00;
+}
+
+.message.modification {
+  background-color: #fbc02d;
+}
+
+.message.information {
+  background-color: #70a1ff;
+}
+
+.message.success > p::before {
+  content: "✔️ ";
+}
+
+.message.failure > p::before {
+  content: "❌ ";
+}
+
+.message.creation > p::before {
+  content: "📄 ";
+}
+
+.message.deletion > p::before {
+  content: "🗑️ ";
+}
+
+.message.error > p::before {
+  content: "🛑 ";
+}
+
+.message.warning > p::before {
+  content: "⚠️ ";
+}
+
+.message.modification > p::before {
+  content: "✏️ ";
+}
+
+.message.information > p::before {
+  content: "ℹ️ ";
+}
+
+/******************************************************************************/
+/* Autocomplete ***************************************************************/
+/******************************************************************************/
+.autocomplete {
+  cursor: pointer;
+  border: 1px solid #FFB700;
+  border-top: 0px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  background: #FFF;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+}
+
+.autocomplete > .item {
+  padding: 0.5em;
+  line-height: 0.5rem;
+  font-size: 1rem;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.autocomplete > .item b {
+  font-weight: normal;
+  color: #1F8DD6;
+}
+
+.autocomplete > .item:hover {
+  background-color: #DDD;
+}
+
+.autocomplete > .item.highlighted {
+  background-color: #DFE4EA;
+}
+
+/******************************************************************************/
+/* Pagination *****************************************************************/
+/******************************************************************************/
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  column-gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.pagination > .line {
+  background-color: #2F3542;
+  width: 1px;
+  height: 1.5rem;
+  opacity: 0.5;
+}
+
+.pagination a.arrow {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+/******************************************************************************/
+/* File listing ***************************************************************/
+/******************************************************************************/
+/* Used on `torrent/music/torrent/view` */
+ul.file-list {
+  list-style: none;
+  padding-left: 0rem;
+}
+
+/* Start adding left-padding only when we're recursing. */
+ul.file-list > ul.file-list {
+  padding-left: 2rem;
+}
+
+ul.file-list .name {
+  background-color: #F1F2F6;
+  display: inline;
+}
+
+ul.file-list .size {
+  display: inline;
+  font-size: 0.8rem;
+  opacity: 75%;
+}
+
+/******************************************************************************/
+/* Markdown boxes *************************************************************/
+/******************************************************************************/
+/*
+ * Used anywhere there is user-enterable text,
+ * like in the forum or in user biographies
+ */
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 1rem 0rem;
+  /*
+   * Make it so that the width of the element is only as big as the text
+   * contained within. We could use `display: inline-block` instead,
+   * but that breaks margin collapsing.
+   *
+   * We don't want the user-generated markdown headers to have a
+   * big horizontal bar like our (real) site headers.
+   */
+  display: table;
+}
+
+.markdown h1::before {
+  content: "# ";
+}
+
+.markdown h2::before {
+  content: "## ";
+}
+
+.markdown h3::before {
+  content: "### ";
+}
+
+.markdown h4::before {
+  content: "#### ";
+}
+
+.markdown h5::before {
+  content: "##### ";
+}
+
+.markdown li {
+  list-style: none;
+  margin-bottom: 0.25rem;
+}
+
+.markdown li::before {
+  margin-right: 0.5rem;
+  color: #FFFFFF;
+  background-color: #2F3542;
+}
+
+.markdown li:first-child {
+  counter-reset: index;
+}
+
+.markdown ul > li::before {
+  content: "*";
+  counter-increment: index;
+}
+
+.markdown ol > li::before {
+  content: counter(index, decimal) ".";
+  counter-increment: index;
+}
+
+/******************************************************************************/
+/* Tooltips *******************************************************************/
+/******************************************************************************/
+.tooltip {
+  position: relative; /* making the .tooltip span a container for the tooltip text */
+  border-bottom: 1px dashed #000; /* little indicater to indicate it's hoverable */
+}
+
+.tooltip:before {
+  content: attr(data-text); /* here's the magic */
+  position: absolute;
+  /* vertically center */
+  bottom: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+  /* basic styles */
+  padding: 10px;
+  border-radius: 10px;
+  background: #000;
+  color: #FFF;
+  text-align: center;
+  display: none; /* hide by default */
+}
+
+.tooltip:hover:before {
+  display: block;
+}
+
+/******************************************************************************/
+/* Spoilers *******************************************************************/
+/******************************************************************************/
+.spoiler {
+  background: #000;
+  border-radius: 0.2em;
+  color: transparent;
+}
+
+.spoiler:hover,
+.spoiler:focus {
+  background: transparent;
+  color: inherit;
+}
+
+/******************************************************************************/
+/* Main site body centering/container class ***********************************/
+/******************************************************************************/
+.center-max-width {
+  max-width: 66rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+main.center-max-width {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+
+@media (max-width: 55rem) {
+  .center-max-width {
+    padding: 0.75rem;
+  }
+}
+@media (max-width: 33rem) {
+  .center-max-width {
+    padding: 0.5rem;
+  }
+}
+/******************************************************************************/
+/* Vertical split container with separator lines ******************************/
+/******************************************************************************/
+/* Usage: must specify `.split .two-col` or `.split .three-col` */
+.split {
+  display: grid;
+  width: 100%;
+  margin: 1rem 0rem;
+}
+
+.split > .item1 {
+  grid-area: item1;
+}
+
+.split > .item2 {
+  grid-area: item2;
+}
+
+.split > .item3 {
+  grid-area: item3;
+}
+
+.split > .line1 {
+  grid-area: line1;
+}
+
+.split > .line2 {
+  grid-area: line2;
+}
+
+.split.two-col {
+  grid-template-rows: max-content;
+  grid-template-columns: 1fr 2.5rem 1fr;
+  grid-template-areas: "item1 line1 item2";
+}
+
+.split.three-col {
+  grid-template-rows: max-content;
+  grid-template-columns: 1fr 2.5rem 1fr 2.5rem 1fr;
+  grid-template-areas: "item1 line1 item2 line2 item3";
+}
+
+/*----------------------------------------------------------------------------*/
+/* Separator lines */
+/*----------------------------------------------------------------------------*/
+.split > .line1,
+.split > .line2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0.5;
+}
+
+.line1 > .line,
+.line2 > .line {
+  background-color: #2F3542;
+  width: 1px;
+  height: 100%;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Text in the separator lines */
+/*----------------------------------------------------------------------------*/
+.line1 > .text,
+.line2 > .text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #2F3542;
+  line-height: 3rem;
+}
+
+@media (max-width: 66rem) {
+  .line1 > .text,
+.line2 > .text {
+    width: 8rem;
+    text-align: center;
+  }
+}
+/*----------------------------------------------------------------------------*/
+/* Reflowing on small screens */
+/*----------------------------------------------------------------------------*/
+@media (max-width: 66rem) {
+  .split.two-col {
+    grid-template-rows: min-content 2.5rem min-content;
+    grid-template-columns: 1fr;
+    grid-template-areas: "item1" "line1" "item2";
+  }
+  .split.three-col {
+    grid-template-rows: min-content 2.5rem min-content 2.5rem min-content;
+    grid-template-columns: 1fr;
+    grid-template-areas: "item1" "line1" "item2" "line2" "item3";
+  }
+  .split > .line1,
+.split > .line2 {
+    flex-direction: row;
+  }
+  .split > .line1 > .line,
+.split > .line2 > .line {
+    height: 1px;
+    width: 100%;
+  }
+  /*
+   * Mix-in to disable the display of lines when in horizontal flow mode
+   * for small screens
+   */
+  .split.two-col.no-horizontal-lines {
+    grid-template-rows: min-content 1.5rem min-content;
+    grid-template-columns: 1fr;
+    grid-template-areas: "item1" "." "item2" ".";
+  }
+  .split.three-col.no-horizontal-lines {
+    grid-template-rows: min-content 1.5rem min-content 1.5rem min-content;
+    grid-template-columns: 1fr;
+    grid-template-areas: "item1" "." "item2" "." "item3";
+  }
+}
+/******************************************************************************/
+/* Table using CSS grid *******************************************************/
+/******************************************************************************/
+/* To use this, you need to set `grid-template-columns` in `.grid-table` to an
+ * appropriate value, like:
+ *
+ * .grid-table {
+ *     grid-template-columns: 1fr max-content max-content max-content;
+ * }
+ *
+ * And then set `grid-column` in `.grid-table .row` to an appropriate value,
+ * like:
+ *
+ * .grid-table .row {
+ *     grid-column: 1 / 5;
+ * }
+ *
+ */
+.grid-table {
+  display: grid;
+  gap: 1px;
+  margin: 1rem 0rem;
+}
+
+.grid-table .row {
+  display: grid;
+  grid-template-columns: subgrid;
+  background-color: #F1F2F6;
+}
+
+.grid-table .row.header {
+  background-color: #858E9D;
+  font-weight: bold;
+}
+
+.grid-table .row.highlight {
+  background-color: #FFB700;
+}
+
+.grid-table .row > * {
+  padding: 0.5rem;
+  box-shadow: 0 0 0 1px #000;
+}
+
+/******************************************************************************/
+/* Torrent tables *************************************************************/
+/******************************************************************************/
+/* Used on: */
+/* `torrent/music/artist/view` */
+/* `torrent/music/release_group/view` */
+/* `torrent/music/release/view` */
+/* `torrent/music/torrent/view` */
+table.torrent-listings {
+  white-space: nowrap;
+}
+
+/*
+ * Make the tables grow as much as they can, inside separator3.
+ */
+table#torrent-artists-table, table#torrent-info-table,
+table#torrent-operations-table, table#torrent-stats-table,
+table#torrent-album-art-table, table#torrent-artist-portrait-table {
+  width: 100%;
+}
+
+/*
+ * Disable text wrapping on the label column, and make the data column
+ * expand as much as it can.
+ */
+table#torrent-info-table > tbody > tr > td:nth-of-type(1) {
+  white-space: nowrap;
+}
+
+table#torrent-info-table > tbody > tr > td:nth-of-type(2) {
+  width: 100vw;
+}
+
+/*
+ * Make images as big as they can be on big screens, but constrain their size
+ * on small screens.
+ */
+table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
+  width: 100%;
+}
+
+@media (max-width: 66rem) {
+  table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
+    width: 15rem;
+  }
+}
+/******************************************************************************/
+/* Forum tables ***************************************************************/
+/******************************************************************************/
+/* Used on: `forum/category/view` */
+table.forum-listings {
+  white-space: nowrap;
+}
+
+/******************************************************************************/
+/* Torrent upload page ********************************************************/
+/******************************************************************************/
+/* Used on: `torrent/music/upload` */
+.split.torrent-upload-form > .item2 > .selector > label {
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.split.torrent-upload-form {
+  grid-template-columns: 1fr 0.5fr 1fr;
+}
+
+@media (max-width: 66rem) {
+  .split.torrent-upload-form {
+    grid-template-columns: 1fr;
+  }
+}
+/******************************************************************************/
+/* User Inbox *****************************************************************/
+/******************************************************************************/
+/* Used on: `inbox/thread/view` */
+#inbox-messages {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin: 1rem 0rem;
+}
+
+#inbox-messages .item {
+  display: grid;
+  column-gap: 1rem;
+}
+
+/* Display the message on the right-hand side for sent messages */
+#inbox-messages .item.sent {
+  grid-template-columns: minmax(10px, 1fr) 3fr;
+  grid-template-areas: "author message";
+}
+
+/* Display the message on the left-hand side for received messages */
+#inbox-messages .item.received {
+  grid-template-columns: 3fr minmax(10px, 1fr);
+  grid-template-areas: "message author";
+}
+
+#inbox-messages .item .message-author {
+  grid-area: author;
+  align-self: top;
+  display: flex;
+  flex-direction: column;
+}
+
+#inbox-messages .item .message-body {
+  grid-area: message;
+  padding: 0rem 1rem;
+  border: 1px solid #2F3542;
+  background-color: #F1F2F6;
+}
+
+#inbox-messages .item .message-datetime {
+  text-align: right;
+}
+
+#inbox-messages .item.sent .message-author {
+  text-align: right;
+}
+
+#inbox-messages .item.received .message-author {
+  text-align: left;
+}
+
+/******************************************************************************/
+/* Forum tables ***************************************************************/
+/******************************************************************************/
+/* Used on: `forum/index` and `forum/category/view` */
+.grid-table.forum {
+  grid-template-columns: minmax(15rem, 6fr) minmax(15rem, 4fr) max-content max-content;
+}
+
+.grid-table.forum .row {
+  grid-column: 1/5;
+}
+
+@media (max-width: 55rem) {
+  .grid-table.forum {
+    grid-template-columns: minmax(10rem, 6fr) minmax(10rem, 4fr);
+  }
+  .grid-table.forum .row {
+    grid-column: 1/3;
+  }
+  .grid-table.forum .hidden-small-screens {
+    display: none;
+  }
+}
+/******************************************************************************/
+/* Release Group **************************************************************/
+/******************************************************************************/
+.release-group-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "artists info operations art";
+  gap: 1rem;
+}
+
+@media (max-width: 66rem) {
+  .release-group-info {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "artists info" "operations art";
+  }
+}
+@media (max-width: 33rem) {
+  .release-group-info {
+    grid-template-columns: 1fr;
+    grid-template-areas: "artists" "art" "info" "operations";
+  }
+}
+
+/*# sourceMappingURL=combined.css.map */

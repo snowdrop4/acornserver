@@ -40,7 +40,7 @@ table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
     width: 100%;
 }
 
-@media (max-width: 66rem) {
+@media (max-width: $base-width-1) {
     table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
         width: 15rem;
     }
@@ -69,7 +69,7 @@ table.forum-listings {
     grid-template-columns: 1fr 0.5fr 1fr;
 }
 
-@media (max-width: 66rem) {
+@media (max-width: $base-width-1) {
     .split.torrent-upload-form {
         grid-template-columns: 1fr;
     }
@@ -120,8 +120,8 @@ table.forum-listings {
 
     padding: 0rem 1rem;
 
-    border: 1px solid var(--dark-background);
-    background-color: var(--element-background);
+    border: 1px solid $dark-background;
+    background-color: $element-background;
 }
 
 #inbox-messages .item .message-datetime {
@@ -149,7 +149,7 @@ table.forum-listings {
     grid-column: 1 / 5;
 }
 
-@media (max-width: 55rem) {
+@media (max-width: $base-width-2) {
     .grid-table.forum {
         grid-template-columns: minmax(10rem, 6fr) minmax(10rem, 4fr);
     }
@@ -173,14 +173,14 @@ table.forum-listings {
     gap: 1rem;
 }
 
-@media (max-width: 66rem) {
+@media (max-width: $base-width-1) {
     .release-group-info {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "artists info" "operations art";
     }
 }
 
-@media (max-width: 33rem) {
+@media (max-width: $base-width-4) {
     .release-group-info {
         grid-template-columns: 1fr;
         grid-template-areas: "artists" "art" "info" "operations";

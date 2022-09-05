@@ -1,0 +1,35 @@
+@import 'acorn';
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: safe center;
+    flex-direction: column;
+
+    background-color: #F1F2F6;
+    background-image: url("../img/backgrounds/heropatterns/graph-paper.svg");
+}
+
+h1, h2 {
+    display: table;
+    margin: 0rem;
+    background-color: unset;
+    color: $font-color;
+}
+
+h1 { font-size: 6rem; line-height: 6rem; }
+h2 { font-size: 3.5rem; line-height: 3.5rem; }
+
+@media (max-width: 50rem) {
+    h1 { font-size: 5rem; line-height: 5rem; }
+    h2 { font-size: 2.5rem; line-height: 2.5rem; }
+}
+
+@media (max-width: 30rem) {
+    h1 { font-size: 4rem; line-height: 4rem; }
+    h2 { font-size: 2rem; line-height: 2rem; }
+}

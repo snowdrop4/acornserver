@@ -3,7 +3,7 @@
 /******************************************************************************/
 
 .center-max-width {
-    max-width: var(--site-width);
+    max-width: $base-width-1;
 
     margin-left:  auto;
     margin-right: auto;
@@ -18,13 +18,13 @@ main.center-max-width {
     padding-bottom: 0rem;
 }
 
-@media (max-width: 55rem) {
+@media (max-width: $base-width-2) {
     .center-max-width {
         padding: 0.75rem;
     }
 }
 
-@media (max-width: 33rem) {
+@media (max-width: $base-width-4) {
     .center-max-width {
         padding: 0.50rem;
     }
@@ -76,7 +76,7 @@ main.center-max-width {
 
 .line1 > .line,
 .line2 > .line {
-    background-color: var(--dark-background);
+    background-color: $dark-background;
     width: 1px;
     height: 100%;
 }
@@ -92,12 +92,12 @@ main.center-max-width {
         -ms-user-select: none;
             user-select: none;
 
-    color: var(--dark-background);
+    color: $dark-background;
 
     line-height: 3rem;
 }
 
-@media (max-width: 66rem) {
+@media (max-width: $base-width-1) {
     .line1 > .text,
     .line2 > .text {
         width: 8rem;
@@ -109,7 +109,7 @@ main.center-max-width {
 /* Reflowing on small screens */
 /*----------------------------------------------------------------------------*/
 
-@media (max-width: 66rem) {
+@media (max-width: $base-width-1) {
     .split.two-col {
         grid-template-rows: min-content 2.5rem min-content ;
         grid-template-columns: 1fr;
@@ -180,16 +180,16 @@ main.center-max-width {
     display: grid;
     grid-template-columns: subgrid;
 
-    background-color: var(--element-background);
+    background-color: $element-background;
 }
 
 .grid-table .row.header {
-    background-color: var(--medium-background);
+    background-color: $medium-background;
     font-weight: bold;
 }
 
 .grid-table .row.highlight {
-    background-color: var(--highlight);
+    background-color: $highlight;
 }
 
 .grid-table .row > * {
