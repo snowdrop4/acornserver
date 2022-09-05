@@ -1,0 +1,124 @@
+/******************************************************************************/
+/* Release Group **************************************************************/
+/******************************************************************************/
+
+#release-group-page-container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 6fr 20rem;
+    grid-template-areas: "release-container info-container";
+
+    h3 {
+        display: none;
+    }
+
+    @media (max-width: $base-width-1) {
+        grid-template-columns: 1fr;
+        grid-template-rows: unset;
+        grid-auto-rows: max-content;
+        grid-template-areas: "info-container" "release-container";
+
+        h3 {
+            display: inherit;
+        }
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Release container */
+/*----------------------------------------------------------------------------*/
+
+#release-group-release-container {
+    grid-area: release-container;
+
+
+}
+
+/*----------------------------------------------------------------------------*/
+/* Info container */
+/*----------------------------------------------------------------------------*/
+
+#release-group-info-container {
+    grid-area: info-container;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "artists" "art" "info" "operations";
+    gap: 1rem;
+
+    @media (max-width: $base-width-1) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: "artists info operations art";
+    }
+
+    @media (max-width: $base-width-2) {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "artists info" "operations art";
+    }
+
+    @media (max-width: $base-width-5) {
+        grid-template-columns: 1fr;
+        grid-template-areas: "artists" "art" "info" "operations";
+    }
+}
+
+#release-group-artists-pane {
+    grid-area: artists;
+
+    grid-template-columns: 1fr max-content;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 3;
+    }
+}
+
+#release-group-info-pane {
+    grid-area: info;
+
+    grid-template-columns: max-content 1fr;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 3;
+    }
+}
+
+#release-group-operations-pane {
+    grid-area: operations;
+
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 2;
+    }
+}
+
+#release-group-art-pane {
+    grid-area: art;
+
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 2;
+    }
+
+    #art-container {
+        display: grid;
+        justify-items: center;
+
+        img {
+            width: 100%;
+            max-width: 25rem;
+
+            @media (max-width: $base-width-2) {
+                max-width: 15rem;
+            }
+
+            @media (max-width: $base-width-5) {
+                max-width: 25rem;
+            }
+        }
+    }
+}

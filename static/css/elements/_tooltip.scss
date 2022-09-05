@@ -1,0 +1,32 @@
+/******************************************************************************/
+/* Tooltips *******************************************************************/
+/******************************************************************************/
+
+.tooltip {
+    position: relative; /* making the .tooltip span a container for the tooltip text */
+    border-bottom: 1px dashed #000; /* little indicater to indicate it's hoverable */
+}
+
+.tooltip:before {
+    content: attr(data-text); /* here's the magic */
+    position: absolute;
+
+    /* vertically center */
+    bottom: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+
+    /* basic styles */
+    padding: 10px;
+    border-radius: 10px;
+    background: #000;
+    color: #FFF;
+    text-align: center;
+
+    display: none; /* hide by default */
+}
+
+.tooltip:hover:before {
+    display: block;
+}

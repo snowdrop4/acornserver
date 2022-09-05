@@ -1,0 +1,14 @@
+/******************************************************************************/
+/* Footer *********************************************************************/
+/******************************************************************************/
+
+footer {
+    background-color: $dark-background;
+    color: $font-color-inverted;
+}
+
+footer a {
+    color: $font-color-inverted;
+    background-color: $font-color-inverted-background;
+    font-weight: bold;
+}

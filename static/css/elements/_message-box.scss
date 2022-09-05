@@ -1,0 +1,38 @@
+/******************************************************************************/
+/* Message boxes **************************************************************/
+/******************************************************************************/
+
+.message {
+    margin: 1rem 0rem;
+    padding: 0rem 1rem;
+
+    border: 3px dashed $dark-background;
+    font-weight: bold;
+}
+
+.message > p {
+    color: $font-color;
+    margin: 0.5rem 0rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Specific message boxes */
+/*----------------------------------------------------------------------------*/
+
+.message.success      { background-color: $green;  }
+.message.failure      { background-color: $red;    }
+.message.creation     { background-color: $green;  }
+.message.deletion     { background-color: $red;    }
+.message.error        { background-color: $red;    }
+.message.warning      { background-color: $orange; }
+.message.modification { background-color: $yellow; }
+.message.information  { background-color: $blue;   }
+
+.message.success      > p::before { content: '✔️ '; }
+.message.failure      > p::before { content: '❌ '; }
+.message.creation     > p::before { content: '📄 '; }
+.message.deletion     > p::before { content: '🗑️ '; }
+.message.error        > p::before { content: '🛑 '; }
+.message.warning      > p::before { content: '⚠️ '; }
+.message.modification > p::before { content: '✏️ '; }
+.message.information  > p::before { content: 'ℹ️ '; }

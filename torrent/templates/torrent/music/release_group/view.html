@@ -15,75 +15,72 @@
 
     <h2>{{ release_group.name }} <span class="small">:: Release Group</span></h2>
 
-    <div class="release-group-info">
-        <div style="grid-area: artists;">
-            <table id="torrent-artists-table">
-                <thead>
-                    <tr>
-                        <th colspan="2">Contributions</th>
-                    </tr>
-                    <tr>
-                        <th>Artist</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
+    <div id="release-group-page-container">
+        <div id="release-group-info-container">
+            <div class="grid-table" id="release-group-artists-pane">
+                <div class="row header">
+                    <div class="tc" style="grid-column: 1 / span 2;">Contributions</div>
+                </div>
 
-                <tbody>
-                    {% for contribution in release_group.contributions.all %}
-                        <tr>
-                            <td><a href="{% url 'torrent:music_artist_view' pk=contribution.artist.pk %}">{{ contribution.artist.name }}</a></td>
-                            <td>{{ contribution.get_contribution_type_display }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <div class="row">
+                    <div class="tb">Artist:</div>
+                    <div class="tb">Role:</div>
+                </div>
+
+                {% for contribution in release_group.contributions.all %}
+                    <div class="row">
+                        <div class="ellipsis"><a href="{% url 'torrent:music_artist_view' pk=contribution.artist.pk %}">{{ contribution.artist.name }}</a></div>
+                        <div>{{ contribution.get_contribution_type_display }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="grid-table" id="release-group-info-pane">
+                <div class="row header">
+                    <div class="tc" style="grid-column: 1 / span 2;">Info</div>
+                </div>
+
+                <div class="row">
+                    <div class="tb">First Release:</div>
+                    <div class="tr"></div>
+                </div>
+
+                <div class="row">
+                    <div class="tb">Type:</div>
+                    <div class="tr">{{ release_group.get_group_type_display }}</div>
+                </div>
+            </div>
+
+            <div class="grid-table" id="release-group-operations-pane">
+                <div class="row header">
+                    <div class="tc" style="grid-column: 1 / span 2;">Operations</div>
+                </div>
+
+                <div class="row"><div>Subscribe to Release Group</div></div>
+                <div class="row"><div><a href="{% url 'torrent:music_release_group_edit' release_group.pk %}">Edit Release Group</a></div></div>
+                <div class="row"><div><a href="{% url 'torrent:music_release_group_delete' release_group.pk %}">Delete Release Group</a></div></div>
+                <div class="row"><div><a href="{% url 'torrent:music_release_group_edit_contributions' release_group.pk %}">Edit Contributions</a></div></div>
+                <div class="row"><div><a href="{% url 'torrent:music_release_add' %}?release_group={{ release_group.pk }}">Add Release</a></div></div>
+                <div class="row"><div><a href="{% url 'torrent:music_upload' %}?release_group={{ release_group.pk }}">Upload Release</a></div></div>
+            </div>
+
+            <div class="grid-table" id="release-group-art-pane">
+                <div class="row header">
+                    <div class="tc" style="grid-column: 1 / span 2;">Album Art</div>
+                </div>
+
+                <div class="row">
+                    <div id="art-container">
+                        <img src="{% static 'img/blank-album-cover.svg' %}">
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div style="grid-area: info;">
-            <table id="torrent-info-table">
-                <thead>
-                    <tr><th colspan="2">Info</th></tr>
-                </thead>
+        <div id="release-group-release-container">
+            <h3>Releases</h3>
 
-                <tbody>
-                    <tr><td>First Release:</td> <td class="tr"></td></tr>
-                    <tr><td>Type:</td>          <td class="tr">{{ release_group.get_group_type_display }}</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div style="grid-area: operations;">
-            <table id="torrent-operations-table">
-                <thead>
-                    <tr><th>Operations</th></tr>
-                </thead>
-
-                <tbody>
-                    <tr><td>Subscribe to Release Group</td></tr>
-                    <tr><td><a href="{% url 'torrent:music_release_group_edit' release_group.pk %}">Edit Release Group</a></td></tr>
-                    <tr><td><a href="{% url 'torrent:music_release_group_delete' release_group.pk %}">Delete Release Group</a></td></tr>
-                    <tr><td><a href="{% url 'torrent:music_release_group_edit_contributions' release_group.pk %}">Edit Contributions</a></td></tr>
-                    <tr><td><a href="{% url 'torrent:music_release_add' %}?release_group={{ release_group.pk }}">Add Release</a></td></tr>
-                    <tr><td><a href="{% url 'torrent:music_upload' %}?release_group={{ release_group.pk }}">Upload Release</a></td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div style="grid-area: art;">
-            <table id="torrent-album-art-table">
-                <thead>
-                    <tr><th>Album Art</th></tr>
-                </thead>
-
-                <tbody>
-                    <tr><td><img src="{% static 'img/blank-album-cover.svg' %}"></td></tr>
-                </tbody>
-            </table>
+            {% include 'torrent/music/release_group/as_table_without_album_header.html' %}
         </div>
     </div>
-
-    <h3>Releases</h3>
-
-    {% include 'torrent/music/release_group/as_table_without_album_header.html' %}
-
 {% endblock %}

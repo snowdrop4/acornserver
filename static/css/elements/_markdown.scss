@@ -1,0 +1,54 @@
+/******************************************************************************/
+/* Markdown boxes *************************************************************/
+/******************************************************************************/
+/*
+ * Used anywhere there is user-enterable text,
+ * like in the forum or in user biographies
+ */
+
+ .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 1rem 0rem;
+
+    /*
+     * Make it so that the width of the element is only as big as the text
+     * contained within. We could use `display: inline-block` instead,
+     * but that breaks margin collapsing.
+     *
+     * We don't want the user-generated markdown headers to have a
+     * big horizontal bar like our (real) site headers.
+     */
+    display: table;
+}
+
+.markdown h1::before { content: '# '; }
+.markdown h2::before { content: '## '; }
+.markdown h3::before { content: '### '; }
+.markdown h4::before { content: '#### '; }
+.markdown h5::before { content: '##### '; }
+
+.markdown li {
+    list-style: none;
+    margin-bottom: 0.25rem;
+}
+
+.markdown li::before {
+    margin-right: 0.50rem;
+    color: $font-color-inverted;
+    background-color: $font-color-inverted-background;
+}
+
+.markdown li:first-child {
+    counter-reset: index;
+}
+
+.markdown ul > li::before {
+    content: '*';
+    counter-increment: index;
+}
+
+.markdown ol > li::before {
+    content: counter(index, decimal) '.';
+    counter-increment: index;
+}

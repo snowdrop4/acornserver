@@ -138,12 +138,6 @@ a:focus {
   outline: none;
 }
 
-header a, footer a {
-  color: #FFFFFF;
-  background-color: #2F3542;
-  font-weight: bold;
-}
-
 /*----------------------------------------------------------------------------*/
 /* Lists */
 /*----------------------------------------------------------------------------*/
@@ -172,145 +166,6 @@ body {
 }
 
 /******************************************************************************/
-/* Header *********************************************************************/
-/******************************************************************************/
-/*----------------------------------------------------------------------------*/
-/* Header */
-/*----------------------------------------------------------------------------*/
-#header-container {
-  background-color: #2F3542;
-}
-
-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  row-gap: 1rem;
-  column-gap: 1rem;
-  /* Left-justify (instead of right-justify) for small screens. */
-}
-@media (max-width: 66rem) {
-  header {
-    justify-content: flex-start;
-  }
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header: Logo */
-/*----------------------------------------------------------------------------*/
-header h1 {
-  margin: 0rem;
-}
-header h1 a {
-  display: flex;
-  align-items: center;
-  column-gap: 0.75rem;
-}
-
-header #header-logo-image {
-  height: 5rem;
-}
-
-/*
- * Don't display the logo text on small screens
- * in order to save horizontal space.
- */
-@media (max-width: 66rem) {
-  header h1 #header-logo-text {
-    display: none;
-  }
-}
-/*
- * On very small screens, things will start flowing
- * vertically, so we have horizontal space available now.
- *
- * Display the logo text again, but shrink the font size, and
- * also reduce the size of the logo image to match.
- */
-@media (max-width: 44rem) {
-  header #header-logo-image {
-    height: 4rem;
-  }
-}
-/*
- * On very small screens, things will start flowing
- * vertically, so we have horizontal space available now.
- *
- * Display the logo text again, but shrink the font size, and
- * also reduce the size of the logo image to match.
- */
-@media (max-width: 33rem) {
-  header h1 #header-logo-text {
-    display: unset;
-  }
-  header #header-logo-image {
-    height: 3rem;
-  }
-}
-/*----------------------------------------------------------------------------*/
-/* Header: Links */
-/*----------------------------------------------------------------------------*/
-/* Right side of the header containing site nav and user bar */
-#header-links {
-  display: grid;
-  row-gap: 0.5rem;
-}
-
-/* Divider inbetween items  */
-#header-links .divider {
-  width: 1px;
-  background-color: #858E9D;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
-/*----------------------------------------------------------------------------*/
-header #header-site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
-  column-gap: 0.5rem;
-}
-
-/* Links */
-header #header-site-nav a {
-  font-size: 1.25rem;
-  white-space: nowrap;
-}
-@media (max-width: 33rem) {
-  header #header-site-nav a {
-    font-size: 1rem;
-  }
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header: User bar (containing stuff like ratio and inbox) */
-/*----------------------------------------------------------------------------*/
-header #header-user-bar {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.5rem;
-  color: #FFFFFF;
-  justify-self: end;
-  /* Left-justify (instead of right-justify) for small screens. */
-  /* Shrink the font size for very small screens. */
-}
-header #header-user-bar a {
-  font-weight: normal;
-}
-@media (max-width: 66rem) {
-  header #header-user-bar {
-    justify-self: start;
-  }
-}
-@media (max-width: 44rem) {
-  header #header-user-bar {
-    font-size: 0.8rem;
-  }
-}
-
-/******************************************************************************/
 /* Main ***********************************************************************/
 /******************************************************************************/
 main {
@@ -328,13 +183,6 @@ main {
 /******************************************************************************/
 /* Miscellaneous navigation ***************************************************/
 /******************************************************************************/
-/*----------------------------------------------------------------------------*/
-/* Breadcrumb navigation */
-/*----------------------------------------------------------------------------*/
-nav.breadcrumb {
-  margin: 1rem 0rem;
-}
-
 /*----------------------------------------------------------------------------*/
 /* h2/h3 underbar */
 /*----------------------------------------------------------------------------*/
@@ -363,87 +211,6 @@ article {
   background-color: #F1F2F6;
   margin: 1rem 0rem;
   padding: 0rem 1rem;
-}
-
-/******************************************************************************/
-/* Footer *********************************************************************/
-/******************************************************************************/
-footer {
-  background-color: #2F3542;
-  color: #FFFFFF;
-}
-
-/******************************************************************************/
-/* Tables *********************************************************************/
-/******************************************************************************/
-.table-container {
-  overflow: auto; /* Make a scrollbar appear on small screens */
-  margin: 1rem 0rem;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-/*
- * Give standard rows a background colour.
- *
- * Ignore spacer rows so that they still have an unset
- * (transparent) background colour.
- */
-tr:not(.conjoined-table-spacer) {
-  background-color: #F1F2F6;
-}
-
-/*
- * Give the the first row in the header section
- * of each table a darker background to stand out.
- */
-thead > tr:first-of-type {
-  background-color: #858E9D;
-}
-
-/* Give every cell a border and a little bit of padding */
-td, th {
-  border: 1px solid #2F3542;
-  padding: 0.5rem;
-}
-
-/*
- * Remove the border on spacer rows as the spacer is intended to be invisible.
- * Give the spacer rows more space.
- */
-tr.conjoined-table-spacer > th {
-  border-width: 0px;
-  padding: 0.5rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Handy mix-ins */
-/*----------------------------------------------------------------------------*/
-tr.highlight {
-  background-color: #FFB700;
-}
-
-tr.error {
-  background-color: #FF4757;
-  color: #FFFFFF;
-}
-
-th.tl, td.tl {
-  text-align: left;
-}
-
-th.tc, td.tc {
-  text-align: center;
-}
-
-th.tr, td.tr {
-  text-align: right;
-}
-
-th.width-100, td.width-100 {
-  width: 100vw;
 }
 
 /******************************************************************************/

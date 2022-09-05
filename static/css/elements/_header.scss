@@ -1,0 +1,155 @@
+/******************************************************************************/
+/* Header *********************************************************************/
+/******************************************************************************/
+
+/*----------------------------------------------------------------------------*/
+/* Header */
+/*----------------------------------------------------------------------------*/
+
+#header-container {
+    background-color: $dark-background;
+}
+
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 1rem;
+    column-gap: 1rem;
+
+    /* Left-justify (instead of right-justify) for small screens. */
+    @media (max-width: $base-width-2) {
+        justify-content: flex-start;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Logo */
+/*----------------------------------------------------------------------------*/
+
+header h1 {
+    margin: 0rem;
+
+    & a {
+        display: flex;
+        align-items: center;
+        column-gap: 0.75rem;
+    }
+}
+
+header #header-logo-image {
+    height: 5rem;
+}
+
+/*
+ * Don't display the logo text on small screens
+ * in order to save horizontal space.
+ */
+@media (max-width: 66rem) {
+    header h1 #header-logo-text {
+        display: none;
+    }
+}
+
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: $base-width-4) {
+    header #header-logo-image {
+        height: 4rem;
+    }
+}
+
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+ @media (max-width: $base-width-5) {
+    header h1 #header-logo-text {
+        display: unset;
+    }
+
+    header #header-logo-image {
+        height: 3rem;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Links */
+/*----------------------------------------------------------------------------*/
+/* Right side of the header containing site nav and user bar */
+
+#header-links {
+    display: grid;
+    row-gap: 0.5rem;
+}
+
+/* Divider inbetween items  */
+#header-links .divider {
+    width: 1px;
+    background-color: #858E9D;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
+/*----------------------------------------------------------------------------*/
+
+header #header-site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.50rem;
+    column-gap: 0.50rem;
+}
+
+/* Links */
+header #header-site-nav a {
+    font-size: 1.25rem;
+    white-space: nowrap;
+
+    @media (max-width: $base-width-5) {
+        font-size: 1rem;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: User bar (containing stuff like ratio and inbox) */
+/*----------------------------------------------------------------------------*/
+
+header #header-user-bar {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.50rem;
+
+    color: $font-color-inverted;
+
+    justify-self: end;
+
+    & a {
+        font-weight: normal;
+    }
+
+    /* Left-justify (instead of right-justify) for small screens. */
+    @media (max-width: $base-width-2) {
+        justify-self: start;
+    }
+
+    /* Shrink the font size for very small screens. */
+    @media (max-width: $base-width-4) {
+        font-size: 0.80rem;
+    }
+}
+
+
+header a {
+    color: $font-color-inverted;
+    background-color: $font-color-inverted-background;
+    font-weight: bold;
+}

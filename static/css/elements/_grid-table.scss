@@ -1,0 +1,61 @@
+/******************************************************************************/
+/* Table using CSS grid *******************************************************/
+/******************************************************************************/
+
+/* To use this, you need to set `grid-template-columns` in `.grid-table` to an
+ * appropriate value, like:
+ *
+ * .grid-table {
+ *     grid-template-columns: 1fr max-content max-content max-content;
+ * }
+ *
+ * And then set `grid-column` in `.grid-table .row` to an appropriate value,
+ * like:
+ *
+ * .grid-table .row {
+ *     grid-column: 1 / 5;
+ * }
+ *
+ */
+
+ .grid-table {
+    display: grid;
+    gap: 1px;
+
+    .tc {
+        text-align: center;
+    }
+
+    .tr {
+        text-align: right;
+    }
+
+    .tl {
+        text-align: left;
+    }
+
+    .tb {
+        font-weight: bold;
+    }
+}
+
+.grid-table .row {
+    display: grid;
+    grid-template-columns: subgrid;
+
+    background-color: $element-background;
+}
+
+.grid-table .row.header {
+    background-color: $medium-background;
+    font-weight: bold;
+}
+
+.grid-table .row.highlight {
+    background-color: $highlight;
+}
+
+.grid-table .row > * {
+    padding: 0.5rem;
+    box-shadow: 0 0 0 1px #000;
+}

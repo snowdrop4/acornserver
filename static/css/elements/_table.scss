@@ -1,0 +1,65 @@
+/******************************************************************************/
+/* Tables *********************************************************************/
+/******************************************************************************/
+
+.table-container {
+    overflow: auto; /* Make a scrollbar appear on small screens */
+}
+
+table {
+    border-collapse: collapse;
+}
+
+/*
+ * Give standard rows a background colour.
+ *
+ * Ignore spacer rows so that they still have an unset
+ * (transparent) background colour.
+ */
+ tr:not(.conjoined-table-spacer) {
+    background-color: $element-background;
+}
+
+/*
+ * Give the the first row in the header section
+ * of each table a darker background to stand out.
+ */
+thead > tr:first-of-type {
+    background-color: $medium-background;
+}
+
+/* Give every cell a border and a little bit of padding */
+td, th {
+    border: 1px solid $dark-background;
+    padding: 0.5rem;
+}
+
+/*
+ * Remove the border on spacer rows as the spacer is intended to be invisible.
+ * Give the spacer rows more space.
+ */
+tr.conjoined-table-spacer > th {
+    border-width: 0px;
+    padding: 0.5rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Handy mix-ins */
+/*----------------------------------------------------------------------------*/
+
+tr.highlight {
+    background-color: $highlight;
+}
+
+tr.error {
+    background-color: $red;
+    color: $font-color-inverted;
+}
+
+th.tl, td.tl { text-align:   left; }
+th.tc, td.tc { text-align: center; }
+th.tr, td.tr { text-align:  right; }
+
+th.width-100, td.width-100 {
+    width: 100vw;
+}

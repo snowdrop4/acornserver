@@ -1,0 +1,41 @@
+/******************************************************************************/
+/* Autocomplete ***************************************************************/
+/******************************************************************************/
+
+.autocomplete {
+    cursor: pointer;
+
+    border: 1px solid $active;
+    border-top: 0px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+
+    background: #FFF;
+
+    position: absolute;
+    display: none;
+    z-index: 9999;
+}
+
+.autocomplete > .item {
+    padding: 0.5em;
+    line-height: 0.5rem;
+    font-size: 1rem;
+
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.autocomplete > .item b {
+    font-weight: normal;
+    color: #1F8DD6;
+}
+
+.autocomplete > .item:hover {
+    background-color: #DDD;
+}
+
+.autocomplete > .item.highlighted {
+    background-color: $light-background;
+}

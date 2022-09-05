@@ -1,0 +1,40 @@
+/******************************************************************************/
+/* Search bar *****************************************************************/
+/******************************************************************************/
+
+.search-container {
+    background-color: $medium-background;
+    /*
+     * Allow scrolling when the screen is too small.
+     * Letting the search boxes wrap around to multiple lines would look ugly.
+     */
+    overflow: auto;
+}
+
+.search {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 0.50rem;
+}
+
+/* Let the flex items grow in size when there's free space. */
+.search > form {
+    flex: 1 0;
+}
+
+/*
+ * Overide the minimum width for input boxes that we defined elsewhere,
+ * so that they can shrink to be as small as we need them to be in the
+ * confined space of the search bar.
+ */
+.search > form > input {
+    min-width: 5rem;
+
+    /*
+     * Make them grow when focused, so that the user has enough space
+     * to work with.
+     */
+    &:focus {
+        min-width: 18rem;
+    }
+}

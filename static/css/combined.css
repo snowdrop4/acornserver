@@ -139,12 +139,6 @@ a:focus {
   outline: none;
 }
 
-header a, footer a {
-  color: #FFFFFF;
-  background-color: #2F3542;
-  font-weight: bold;
-}
-
 /*----------------------------------------------------------------------------*/
 /* Lists */
 /*----------------------------------------------------------------------------*/
@@ -173,145 +167,6 @@ body {
 }
 
 /******************************************************************************/
-/* Header *********************************************************************/
-/******************************************************************************/
-/*----------------------------------------------------------------------------*/
-/* Header */
-/*----------------------------------------------------------------------------*/
-#header-container {
-  background-color: #2F3542;
-}
-
-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  row-gap: 1rem;
-  column-gap: 1rem;
-  /* Left-justify (instead of right-justify) for small screens. */
-}
-@media (max-width: 66rem) {
-  header {
-    justify-content: flex-start;
-  }
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header: Logo */
-/*----------------------------------------------------------------------------*/
-header h1 {
-  margin: 0rem;
-}
-header h1 a {
-  display: flex;
-  align-items: center;
-  column-gap: 0.75rem;
-}
-
-header #header-logo-image {
-  height: 5rem;
-}
-
-/*
- * Don't display the logo text on small screens
- * in order to save horizontal space.
- */
-@media (max-width: 66rem) {
-  header h1 #header-logo-text {
-    display: none;
-  }
-}
-/*
- * On very small screens, things will start flowing
- * vertically, so we have horizontal space available now.
- *
- * Display the logo text again, but shrink the font size, and
- * also reduce the size of the logo image to match.
- */
-@media (max-width: 44rem) {
-  header #header-logo-image {
-    height: 4rem;
-  }
-}
-/*
- * On very small screens, things will start flowing
- * vertically, so we have horizontal space available now.
- *
- * Display the logo text again, but shrink the font size, and
- * also reduce the size of the logo image to match.
- */
-@media (max-width: 33rem) {
-  header h1 #header-logo-text {
-    display: unset;
-  }
-  header #header-logo-image {
-    height: 3rem;
-  }
-}
-/*----------------------------------------------------------------------------*/
-/* Header: Links */
-/*----------------------------------------------------------------------------*/
-/* Right side of the header containing site nav and user bar */
-#header-links {
-  display: grid;
-  row-gap: 0.5rem;
-}
-
-/* Divider inbetween items  */
-#header-links .divider {
-  width: 1px;
-  background-color: #858E9D;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
-/*----------------------------------------------------------------------------*/
-header #header-site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
-  column-gap: 0.5rem;
-}
-
-/* Links */
-header #header-site-nav a {
-  font-size: 1.25rem;
-  white-space: nowrap;
-}
-@media (max-width: 33rem) {
-  header #header-site-nav a {
-    font-size: 1rem;
-  }
-}
-
-/*----------------------------------------------------------------------------*/
-/* Header: User bar (containing stuff like ratio and inbox) */
-/*----------------------------------------------------------------------------*/
-header #header-user-bar {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.5rem;
-  color: #FFFFFF;
-  justify-self: end;
-  /* Left-justify (instead of right-justify) for small screens. */
-  /* Shrink the font size for very small screens. */
-}
-header #header-user-bar a {
-  font-weight: normal;
-}
-@media (max-width: 66rem) {
-  header #header-user-bar {
-    justify-self: start;
-  }
-}
-@media (max-width: 44rem) {
-  header #header-user-bar {
-    font-size: 0.8rem;
-  }
-}
-
-/******************************************************************************/
 /* Main ***********************************************************************/
 /******************************************************************************/
 main {
@@ -329,13 +184,6 @@ main {
 /******************************************************************************/
 /* Miscellaneous navigation ***************************************************/
 /******************************************************************************/
-/*----------------------------------------------------------------------------*/
-/* Breadcrumb navigation */
-/*----------------------------------------------------------------------------*/
-nav.breadcrumb {
-  margin: 1rem 0rem;
-}
-
 /*----------------------------------------------------------------------------*/
 /* h2/h3 underbar */
 /*----------------------------------------------------------------------------*/
@@ -364,87 +212,6 @@ article {
   background-color: #F1F2F6;
   margin: 1rem 0rem;
   padding: 0rem 1rem;
-}
-
-/******************************************************************************/
-/* Footer *********************************************************************/
-/******************************************************************************/
-footer {
-  background-color: #2F3542;
-  color: #FFFFFF;
-}
-
-/******************************************************************************/
-/* Tables *********************************************************************/
-/******************************************************************************/
-.table-container {
-  overflow: auto; /* Make a scrollbar appear on small screens */
-  margin: 1rem 0rem;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-/*
- * Give standard rows a background colour.
- *
- * Ignore spacer rows so that they still have an unset
- * (transparent) background colour.
- */
-tr:not(.conjoined-table-spacer) {
-  background-color: #F1F2F6;
-}
-
-/*
- * Give the the first row in the header section
- * of each table a darker background to stand out.
- */
-thead > tr:first-of-type {
-  background-color: #858E9D;
-}
-
-/* Give every cell a border and a little bit of padding */
-td, th {
-  border: 1px solid #2F3542;
-  padding: 0.5rem;
-}
-
-/*
- * Remove the border on spacer rows as the spacer is intended to be invisible.
- * Give the spacer rows more space.
- */
-tr.conjoined-table-spacer > th {
-  border-width: 0px;
-  padding: 0.5rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Handy mix-ins */
-/*----------------------------------------------------------------------------*/
-tr.highlight {
-  background-color: #FFB700;
-}
-
-tr.error {
-  background-color: #FF4757;
-  color: #FFFFFF;
-}
-
-th.tl, td.tl {
-  text-align: left;
-}
-
-th.tc, td.tc {
-  text-align: center;
-}
-
-th.tr, td.tr {
-  text-align: right;
-}
-
-th.width-100, td.width-100 {
-  width: 100vw;
 }
 
 /******************************************************************************/
@@ -675,337 +442,10 @@ tr.error > .form-data-cell > .help-text.inline::before {
 }
 
 /******************************************************************************/
-/* Search bar *****************************************************************/
-/******************************************************************************/
-.search-container {
-  background-color: #858E9D;
-  /*
-   * Allow scrolling when the screen is too small.
-   * Letting the search boxes wrap around to multiple lines would look ugly.
-   */
-  overflow: auto;
-}
-
-.search {
-  display: flex;
-  justify-content: space-between;
-  column-gap: 0.5rem;
-}
-
-/* Let the flex items grow in size when there's free space. */
-.search > form {
-  flex: 1 0;
-}
-
-/*
- * Overide the minimum width for input boxes that we defined elsewhere,
- * so that they can shrink to be as small as we need them to be in the
- * confined space of the search bar.
- */
-.search > form > input {
-  min-width: 5rem;
-  /*
-   * Make them grow when focused, so that the user has enough space
-   * to work with.
-   */
-}
-.search > form > input:focus {
-  min-width: 18rem;
-}
-
-/******************************************************************************/
-/* Message boxes **************************************************************/
-/******************************************************************************/
-.message {
-  margin: 1rem 0rem;
-  padding: 0rem 1rem;
-  border: 3px dashed #2F3542;
-  font-weight: bold;
-}
-
-.message > p {
-  color: #2F3542;
-  margin: 0.5rem 0rem;
-}
-
-/*----------------------------------------------------------------------------*/
-/* Specific message boxes */
-/*----------------------------------------------------------------------------*/
-.message.success {
-  background-color: #2ED573;
-}
-
-.message.failure {
-  background-color: #FF4757;
-}
-
-.message.creation {
-  background-color: #2ED573;
-}
-
-.message.deletion {
-  background-color: #FF4757;
-}
-
-.message.error {
-  background-color: #FF4757;
-}
-
-.message.warning {
-  background-color: #fb8c00;
-}
-
-.message.modification {
-  background-color: #fbc02d;
-}
-
-.message.information {
-  background-color: #70a1ff;
-}
-
-.message.success > p::before {
-  content: "✔️ ";
-}
-
-.message.failure > p::before {
-  content: "❌ ";
-}
-
-.message.creation > p::before {
-  content: "📄 ";
-}
-
-.message.deletion > p::before {
-  content: "🗑️ ";
-}
-
-.message.error > p::before {
-  content: "🛑 ";
-}
-
-.message.warning > p::before {
-  content: "⚠️ ";
-}
-
-.message.modification > p::before {
-  content: "✏️ ";
-}
-
-.message.information > p::before {
-  content: "ℹ️ ";
-}
-
-/******************************************************************************/
-/* Autocomplete ***************************************************************/
-/******************************************************************************/
-.autocomplete {
-  cursor: pointer;
-  border: 1px solid #FFB700;
-  border-top: 0px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  background: #FFF;
-  position: absolute;
-  display: none;
-  z-index: 9999;
-}
-
-.autocomplete > .item {
-  padding: 0.5em;
-  line-height: 0.5rem;
-  font-size: 1rem;
-  position: relative;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.autocomplete > .item b {
-  font-weight: normal;
-  color: #1F8DD6;
-}
-
-.autocomplete > .item:hover {
-  background-color: #DDD;
-}
-
-.autocomplete > .item.highlighted {
-  background-color: #DFE4EA;
-}
-
-/******************************************************************************/
-/* Pagination *****************************************************************/
-/******************************************************************************/
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  column-gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.pagination > .line {
-  background-color: #2F3542;
-  width: 1px;
-  height: 1.5rem;
-  opacity: 0.5;
-}
-
-.pagination a.arrow {
-  font-size: 1.5rem;
-  line-height: 1.5rem;
-}
-
-/******************************************************************************/
-/* File listing ***************************************************************/
-/******************************************************************************/
-/* Used on `torrent/music/torrent/view` */
-ul.file-list {
-  list-style: none;
-  padding-left: 0rem;
-}
-
-/* Start adding left-padding only when we're recursing. */
-ul.file-list > ul.file-list {
-  padding-left: 2rem;
-}
-
-ul.file-list .name {
-  background-color: #F1F2F6;
-  display: inline;
-}
-
-ul.file-list .size {
-  display: inline;
-  font-size: 0.8rem;
-  opacity: 75%;
-}
-
-/******************************************************************************/
-/* Markdown boxes *************************************************************/
-/******************************************************************************/
-/*
- * Used anywhere there is user-enterable text,
- * like in the forum or in user biographies
- */
-.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 {
-  font-size: 1rem;
-  font-weight: normal;
-  margin: 1rem 0rem;
-  /*
-   * Make it so that the width of the element is only as big as the text
-   * contained within. We could use `display: inline-block` instead,
-   * but that breaks margin collapsing.
-   *
-   * We don't want the user-generated markdown headers to have a
-   * big horizontal bar like our (real) site headers.
-   */
-  display: table;
-}
-
-.markdown h1::before {
-  content: "# ";
-}
-
-.markdown h2::before {
-  content: "## ";
-}
-
-.markdown h3::before {
-  content: "### ";
-}
-
-.markdown h4::before {
-  content: "#### ";
-}
-
-.markdown h5::before {
-  content: "##### ";
-}
-
-.markdown li {
-  list-style: none;
-  margin-bottom: 0.25rem;
-}
-
-.markdown li::before {
-  margin-right: 0.5rem;
-  color: #FFFFFF;
-  background-color: #2F3542;
-}
-
-.markdown li:first-child {
-  counter-reset: index;
-}
-
-.markdown ul > li::before {
-  content: "*";
-  counter-increment: index;
-}
-
-.markdown ol > li::before {
-  content: counter(index, decimal) ".";
-  counter-increment: index;
-}
-
-/******************************************************************************/
-/* Tooltips *******************************************************************/
-/******************************************************************************/
-.tooltip {
-  position: relative; /* making the .tooltip span a container for the tooltip text */
-  border-bottom: 1px dashed #000; /* little indicater to indicate it's hoverable */
-}
-
-.tooltip:before {
-  content: attr(data-text); /* here's the magic */
-  position: absolute;
-  /* vertically center */
-  bottom: 50%;
-  left: 50%;
-  transform: translateY(-50%);
-  transform: translateX(-50%);
-  /* basic styles */
-  padding: 10px;
-  border-radius: 10px;
-  background: #000;
-  color: #FFF;
-  text-align: center;
-  display: none; /* hide by default */
-}
-
-.tooltip:hover:before {
-  display: block;
-}
-
-/******************************************************************************/
-/* Spoilers *******************************************************************/
-/******************************************************************************/
-.spoiler {
-  background: #000;
-  border-radius: 0.2em;
-  color: transparent;
-}
-
-.spoiler:hover,
-.spoiler:focus {
-  background: transparent;
-  color: inherit;
-}
-
-/******************************************************************************/
 /* Main site body centering/container class ***********************************/
 /******************************************************************************/
 .center-max-width {
-  max-width: 66rem;
-  margin-left: auto;
-  margin-right: auto;
   padding: 1rem;
-  box-sizing: border-box;
-}
-
-main.center-max-width {
-  padding-top: 0rem;
-  padding-bottom: 0rem;
 }
 
 @media (max-width: 55rem) {
@@ -1138,50 +578,6 @@ main.center-max-width {
   }
 }
 /******************************************************************************/
-/* Table using CSS grid *******************************************************/
-/******************************************************************************/
-/* To use this, you need to set `grid-template-columns` in `.grid-table` to an
- * appropriate value, like:
- *
- * .grid-table {
- *     grid-template-columns: 1fr max-content max-content max-content;
- * }
- *
- * And then set `grid-column` in `.grid-table .row` to an appropriate value,
- * like:
- *
- * .grid-table .row {
- *     grid-column: 1 / 5;
- * }
- *
- */
-.grid-table {
-  display: grid;
-  gap: 1px;
-  margin: 1rem 0rem;
-}
-
-.grid-table .row {
-  display: grid;
-  grid-template-columns: subgrid;
-  background-color: #F1F2F6;
-}
-
-.grid-table .row.header {
-  background-color: #858E9D;
-  font-weight: bold;
-}
-
-.grid-table .row.highlight {
-  background-color: #FFB700;
-}
-
-.grid-table .row > * {
-  padding: 0.5rem;
-  box-shadow: 0 0 0 1px #000;
-}
-
-/******************************************************************************/
 /* Torrent tables *************************************************************/
 /******************************************************************************/
 /* Used on: */
@@ -1228,14 +624,6 @@ table#torrent-album-art-table img, table#torrent-artist-portrait-table img {
   }
 }
 /******************************************************************************/
-/* Forum tables ***************************************************************/
-/******************************************************************************/
-/* Used on: `forum/category/view` */
-table.forum-listings {
-  white-space: nowrap;
-}
-
-/******************************************************************************/
 /* Torrent upload page ********************************************************/
 /******************************************************************************/
 /* Used on: `torrent/music/upload` */
@@ -1253,6 +641,754 @@ table.forum-listings {
     grid-template-columns: 1fr;
   }
 }
+/******************************************************************************/
+/* Autocomplete ***************************************************************/
+/******************************************************************************/
+.autocomplete {
+  cursor: pointer;
+  border: 1px solid #FFB700;
+  border-top: 0px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  background: #FFF;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+}
+
+.autocomplete > .item {
+  padding: 0.5em;
+  line-height: 0.5rem;
+  font-size: 1rem;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.autocomplete > .item b {
+  font-weight: normal;
+  color: #1F8DD6;
+}
+
+.autocomplete > .item:hover {
+  background-color: #DDD;
+}
+
+.autocomplete > .item.highlighted {
+  background-color: #DFE4EA;
+}
+
+/******************************************************************************/
+/* Breadcrumb *****************************************************************/
+/******************************************************************************/
+nav.breadcrumb {
+  margin: 1rem 0rem;
+}
+
+/******************************************************************************/
+/* File listing ***************************************************************/
+/******************************************************************************/
+/* Used on `torrent/music/torrent/view` */
+ul.file-list {
+  list-style: none;
+  padding-left: 0rem;
+}
+
+/* Start adding left-padding only when we're recursing. */
+ul.file-list > ul.file-list {
+  padding-left: 2rem;
+}
+
+ul.file-list .name {
+  background-color: #F1F2F6;
+  display: inline;
+}
+
+ul.file-list .size {
+  display: inline;
+  font-size: 0.8rem;
+  opacity: 75%;
+}
+
+/******************************************************************************/
+/* Footer *********************************************************************/
+/******************************************************************************/
+footer {
+  background-color: #2F3542;
+  color: #FFFFFF;
+}
+
+footer a {
+  color: #FFFFFF;
+  background-color: #2F3542;
+  font-weight: bold;
+}
+
+/******************************************************************************/
+/* Table using CSS grid *******************************************************/
+/******************************************************************************/
+/* To use this, you need to set `grid-template-columns` in `.grid-table` to an
+ * appropriate value, like:
+ *
+ * .grid-table {
+ *     grid-template-columns: 1fr max-content max-content max-content;
+ * }
+ *
+ * And then set `grid-column` in `.grid-table .row` to an appropriate value,
+ * like:
+ *
+ * .grid-table .row {
+ *     grid-column: 1 / 5;
+ * }
+ *
+ */
+.grid-table {
+  display: grid;
+  gap: 1px;
+}
+.grid-table .tc {
+  text-align: center;
+}
+.grid-table .tr {
+  text-align: right;
+}
+.grid-table .tl {
+  text-align: left;
+}
+.grid-table .tb {
+  font-weight: bold;
+}
+
+.grid-table .row {
+  display: grid;
+  grid-template-columns: subgrid;
+  background-color: #F1F2F6;
+}
+
+.grid-table .row.header {
+  background-color: #858E9D;
+  font-weight: bold;
+}
+
+.grid-table .row.highlight {
+  background-color: #FFB700;
+}
+
+.grid-table .row > * {
+  padding: 0.5rem;
+  box-shadow: 0 0 0 1px #000;
+}
+
+/******************************************************************************/
+/* Header *********************************************************************/
+/******************************************************************************/
+/*----------------------------------------------------------------------------*/
+/* Header */
+/*----------------------------------------------------------------------------*/
+#header-container {
+  background-color: #2F3542;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  /* Left-justify (instead of right-justify) for small screens. */
+}
+@media (max-width: 66rem) {
+  header {
+    justify-content: flex-start;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Logo */
+/*----------------------------------------------------------------------------*/
+header h1 {
+  margin: 0rem;
+}
+header h1 a {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+header #header-logo-image {
+  height: 5rem;
+}
+
+/*
+ * Don't display the logo text on small screens
+ * in order to save horizontal space.
+ */
+@media (max-width: 66rem) {
+  header h1 #header-logo-text {
+    display: none;
+  }
+}
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: 44rem) {
+  header #header-logo-image {
+    height: 4rem;
+  }
+}
+/*
+ * On very small screens, things will start flowing
+ * vertically, so we have horizontal space available now.
+ *
+ * Display the logo text again, but shrink the font size, and
+ * also reduce the size of the logo image to match.
+ */
+@media (max-width: 33rem) {
+  header h1 #header-logo-text {
+    display: unset;
+  }
+  header #header-logo-image {
+    height: 3rem;
+  }
+}
+/*----------------------------------------------------------------------------*/
+/* Header: Links */
+/*----------------------------------------------------------------------------*/
+/* Right side of the header containing site nav and user bar */
+#header-links {
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+/* Divider inbetween items  */
+#header-links .divider {
+  width: 1px;
+  background-color: #858E9D;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: Site nav (containing links to torrents, upload page, forum, etc) */
+/*----------------------------------------------------------------------------*/
+header #header-site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+}
+
+/* Links */
+header #header-site-nav a {
+  font-size: 1.25rem;
+  white-space: nowrap;
+}
+@media (max-width: 33rem) {
+  header #header-site-nav a {
+    font-size: 1rem;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header: User bar (containing stuff like ratio and inbox) */
+/*----------------------------------------------------------------------------*/
+header #header-user-bar {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  color: #FFFFFF;
+  justify-self: end;
+  /* Left-justify (instead of right-justify) for small screens. */
+  /* Shrink the font size for very small screens. */
+}
+header #header-user-bar a {
+  font-weight: normal;
+}
+@media (max-width: 66rem) {
+  header #header-user-bar {
+    justify-self: start;
+  }
+}
+@media (max-width: 44rem) {
+  header #header-user-bar {
+    font-size: 0.8rem;
+  }
+}
+
+header a {
+  color: #FFFFFF;
+  background-color: #2F3542;
+  font-weight: bold;
+}
+
+/******************************************************************************/
+/* Markdown boxes *************************************************************/
+/******************************************************************************/
+/*
+ * Used anywhere there is user-enterable text,
+ * like in the forum or in user biographies
+ */
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5 {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 1rem 0rem;
+  /*
+   * Make it so that the width of the element is only as big as the text
+   * contained within. We could use `display: inline-block` instead,
+   * but that breaks margin collapsing.
+   *
+   * We don't want the user-generated markdown headers to have a
+   * big horizontal bar like our (real) site headers.
+   */
+  display: table;
+}
+
+.markdown h1::before {
+  content: "# ";
+}
+
+.markdown h2::before {
+  content: "## ";
+}
+
+.markdown h3::before {
+  content: "### ";
+}
+
+.markdown h4::before {
+  content: "#### ";
+}
+
+.markdown h5::before {
+  content: "##### ";
+}
+
+.markdown li {
+  list-style: none;
+  margin-bottom: 0.25rem;
+}
+
+.markdown li::before {
+  margin-right: 0.5rem;
+  color: #FFFFFF;
+  background-color: #2F3542;
+}
+
+.markdown li:first-child {
+  counter-reset: index;
+}
+
+.markdown ul > li::before {
+  content: "*";
+  counter-increment: index;
+}
+
+.markdown ol > li::before {
+  content: counter(index, decimal) ".";
+  counter-increment: index;
+}
+
+/******************************************************************************/
+/* Message boxes **************************************************************/
+/******************************************************************************/
+.message {
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
+  border: 3px dashed #2F3542;
+  font-weight: bold;
+}
+
+.message > p {
+  color: #2F3542;
+  margin: 0.5rem 0rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Specific message boxes */
+/*----------------------------------------------------------------------------*/
+.message.success {
+  background-color: #2ED573;
+}
+
+.message.failure {
+  background-color: #FF4757;
+}
+
+.message.creation {
+  background-color: #2ED573;
+}
+
+.message.deletion {
+  background-color: #FF4757;
+}
+
+.message.error {
+  background-color: #FF4757;
+}
+
+.message.warning {
+  background-color: #fb8c00;
+}
+
+.message.modification {
+  background-color: #fbc02d;
+}
+
+.message.information {
+  background-color: #70a1ff;
+}
+
+.message.success > p::before {
+  content: "✔️ ";
+}
+
+.message.failure > p::before {
+  content: "❌ ";
+}
+
+.message.creation > p::before {
+  content: "📄 ";
+}
+
+.message.deletion > p::before {
+  content: "🗑️ ";
+}
+
+.message.error > p::before {
+  content: "🛑 ";
+}
+
+.message.warning > p::before {
+  content: "⚠️ ";
+}
+
+.message.modification > p::before {
+  content: "✏️ ";
+}
+
+.message.information > p::before {
+  content: "ℹ️ ";
+}
+
+/******************************************************************************/
+/* Pagination *****************************************************************/
+/******************************************************************************/
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  column-gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.pagination > .line {
+  background-color: #2F3542;
+  width: 1px;
+  height: 1.5rem;
+  opacity: 0.5;
+}
+
+.pagination a.arrow {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+/******************************************************************************/
+/* Search bar *****************************************************************/
+/******************************************************************************/
+.search-container {
+  background-color: #858E9D;
+  /*
+   * Allow scrolling when the screen is too small.
+   * Letting the search boxes wrap around to multiple lines would look ugly.
+   */
+  overflow: auto;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 0.5rem;
+}
+
+/* Let the flex items grow in size when there's free space. */
+.search > form {
+  flex: 1 0;
+}
+
+/*
+ * Overide the minimum width for input boxes that we defined elsewhere,
+ * so that they can shrink to be as small as we need them to be in the
+ * confined space of the search bar.
+ */
+.search > form > input {
+  min-width: 5rem;
+  /*
+   * Make them grow when focused, so that the user has enough space
+   * to work with.
+   */
+}
+.search > form > input:focus {
+  min-width: 18rem;
+}
+
+/******************************************************************************/
+/* Spoilers *******************************************************************/
+/******************************************************************************/
+.spoiler {
+  background: #000;
+  border-radius: 0.2em;
+  color: transparent;
+}
+
+.spoiler:hover,
+.spoiler:focus {
+  background: transparent;
+  color: inherit;
+}
+
+/******************************************************************************/
+/* Tables *********************************************************************/
+/******************************************************************************/
+.table-container {
+  overflow: auto; /* Make a scrollbar appear on small screens */
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/*
+ * Give standard rows a background colour.
+ *
+ * Ignore spacer rows so that they still have an unset
+ * (transparent) background colour.
+ */
+tr:not(.conjoined-table-spacer) {
+  background-color: #F1F2F6;
+}
+
+/*
+ * Give the the first row in the header section
+ * of each table a darker background to stand out.
+ */
+thead > tr:first-of-type {
+  background-color: #858E9D;
+}
+
+/* Give every cell a border and a little bit of padding */
+td, th {
+  border: 1px solid #2F3542;
+  padding: 0.5rem;
+}
+
+/*
+ * Remove the border on spacer rows as the spacer is intended to be invisible.
+ * Give the spacer rows more space.
+ */
+tr.conjoined-table-spacer > th {
+  border-width: 0px;
+  padding: 0.5rem;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Handy mix-ins */
+/*----------------------------------------------------------------------------*/
+tr.highlight {
+  background-color: #FFB700;
+}
+
+tr.error {
+  background-color: #FF4757;
+  color: #FFFFFF;
+}
+
+th.tl, td.tl {
+  text-align: left;
+}
+
+th.tc, td.tc {
+  text-align: center;
+}
+
+th.tr, td.tr {
+  text-align: right;
+}
+
+th.width-100, td.width-100 {
+  width: 100vw;
+}
+
+/******************************************************************************/
+/* Tooltips *******************************************************************/
+/******************************************************************************/
+.tooltip {
+  position: relative; /* making the .tooltip span a container for the tooltip text */
+  border-bottom: 1px dashed #000; /* little indicater to indicate it's hoverable */
+}
+
+.tooltip:before {
+  content: attr(data-text); /* here's the magic */
+  position: absolute;
+  /* vertically center */
+  bottom: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+  /* basic styles */
+  padding: 10px;
+  border-radius: 10px;
+  background: #000;
+  color: #FFF;
+  text-align: center;
+  display: none; /* hide by default */
+}
+
+.tooltip:hover:before {
+  display: block;
+}
+
+/******************************************************************************/
+/* Release Group **************************************************************/
+/******************************************************************************/
+#release-group-page-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 6fr 20rem;
+  grid-template-areas: "release-container info-container";
+}
+#release-group-page-container h3 {
+  display: none;
+}
+@media (max-width: 77rem) {
+  #release-group-page-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: unset;
+    grid-auto-rows: max-content;
+    grid-template-areas: "info-container" "release-container";
+  }
+  #release-group-page-container h3 {
+    display: inherit;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+/* Release container */
+/*----------------------------------------------------------------------------*/
+#release-group-release-container {
+  grid-area: release-container;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Info container */
+/*----------------------------------------------------------------------------*/
+#release-group-info-container {
+  grid-area: info-container;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "artists" "art" "info" "operations";
+  gap: 1rem;
+}
+@media (max-width: 77rem) {
+  #release-group-info-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "artists info operations art";
+  }
+}
+@media (max-width: 66rem) {
+  #release-group-info-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "artists info" "operations art";
+  }
+}
+@media (max-width: 33rem) {
+  #release-group-info-container {
+    grid-template-columns: 1fr;
+    grid-template-areas: "artists" "art" "info" "operations";
+  }
+}
+
+#release-group-artists-pane {
+  grid-area: artists;
+  grid-template-columns: 1fr max-content;
+  grid-auto-rows: min-content;
+}
+#release-group-artists-pane .row {
+  grid-column: 1/3;
+}
+
+#release-group-info-pane {
+  grid-area: info;
+  grid-template-columns: max-content 1fr;
+  grid-auto-rows: min-content;
+}
+#release-group-info-pane .row {
+  grid-column: 1/3;
+}
+
+#release-group-operations-pane {
+  grid-area: operations;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+}
+#release-group-operations-pane .row {
+  grid-column: 1/2;
+}
+
+#release-group-art-pane {
+  grid-area: art;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+}
+#release-group-art-pane .row {
+  grid-column: 1/2;
+}
+#release-group-art-pane #art-container {
+  display: grid;
+  justify-items: center;
+}
+#release-group-art-pane #art-container img {
+  width: 100%;
+  max-width: 25rem;
+}
+@media (max-width: 66rem) {
+  #release-group-art-pane #art-container img {
+    max-width: 15rem;
+  }
+}
+@media (max-width: 33rem) {
+  #release-group-art-pane #art-container img {
+    max-width: 25rem;
+  }
+}
+
+/******************************************************************************/
+/* Forum tables ***************************************************************/
+/******************************************************************************/
+/* Used on: `forum/index` and `forum/category/view` */
+.grid-table.forum {
+  margin-top: 1rem;
+  grid-template-columns: minmax(15rem, 6fr) minmax(15rem, 4fr) max-content max-content;
+}
+.grid-table.forum .row {
+  grid-column: 1/5;
+}
+@media (max-width: 55rem) {
+  .grid-table.forum {
+    grid-template-columns: minmax(10rem, 6fr) minmax(10rem, 4fr);
+  }
+  .grid-table.forum .row {
+    grid-column: 1/3;
+  }
+  .grid-table.forum .hidden-small-screens {
+    display: none;
+  }
+}
+
 /******************************************************************************/
 /* User Inbox *****************************************************************/
 /******************************************************************************/
@@ -1306,52 +1442,6 @@ table.forum-listings {
 
 #inbox-messages .item.received .message-author {
   text-align: left;
-}
-
-/******************************************************************************/
-/* Forum tables ***************************************************************/
-/******************************************************************************/
-/* Used on: `forum/index` and `forum/category/view` */
-.grid-table.forum {
-  grid-template-columns: minmax(15rem, 6fr) minmax(15rem, 4fr) max-content max-content;
-}
-
-.grid-table.forum .row {
-  grid-column: 1/5;
-}
-
-@media (max-width: 55rem) {
-  .grid-table.forum {
-    grid-template-columns: minmax(10rem, 6fr) minmax(10rem, 4fr);
-  }
-  .grid-table.forum .row {
-    grid-column: 1/3;
-  }
-  .grid-table.forum .hidden-small-screens {
-    display: none;
-  }
-}
-/******************************************************************************/
-/* Release Group **************************************************************/
-/******************************************************************************/
-.release-group-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-areas: "artists info operations art";
-  gap: 1rem;
-}
-
-@media (max-width: 66rem) {
-  .release-group-info {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "artists info" "operations art";
-  }
-}
-@media (max-width: 33rem) {
-  .release-group-info {
-    grid-template-columns: 1fr;
-    grid-template-areas: "artists" "art" "info" "operations";
-  }
 }
 
 /*# sourceMappingURL=combined.css.map */

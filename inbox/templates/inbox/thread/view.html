@@ -23,9 +23,10 @@
             <form class="item sent" method="post">
                 {% csrf_token %}
 
-                <div class="message-body">
-                    {% include 'form-as-divs.html' %}
-                </div>
+                <!-- Manually render the content field from the form,
+                     so that we don't get any additional decorations.
+                     The form contains no other fields. -->
+                {{ form.content }}
 
                 <div class="message-author">
                     <button type="submit">Reply</button>

@@ -3,28 +3,16 @@
 /******************************************************************************/
 
 .center-max-width {
-    max-width: $base-width-1;
-
-    margin-left:  auto;
-    margin-right: auto;
-
     padding: 1rem;
-
-    box-sizing: border-box;
 }
 
-main.center-max-width {
-    padding-top:    0rem;
-    padding-bottom: 0rem;
-}
-
-@media (max-width: $base-width-2) {
+@media (max-width: $base-width-3) {
     .center-max-width {
         padding: 0.75rem;
     }
 }
 
-@media (max-width: $base-width-4) {
+@media (max-width: $base-width-5) {
     .center-max-width {
         padding: 0.50rem;
     }
@@ -97,7 +85,7 @@ main.center-max-width {
     line-height: 3rem;
 }
 
-@media (max-width: $base-width-1) {
+@media (max-width: $base-width-2) {
     .line1 > .text,
     .line2 > .text {
         width: 8rem;
@@ -109,7 +97,7 @@ main.center-max-width {
 /* Reflowing on small screens */
 /*----------------------------------------------------------------------------*/
 
-@media (max-width: $base-width-1) {
+@media (max-width: $base-width-2) {
     .split.two-col {
         grid-template-rows: min-content 2.5rem min-content ;
         grid-template-columns: 1fr;
@@ -148,51 +136,4 @@ main.center-max-width {
         grid-template-columns: 1fr;
         grid-template-areas: "item1" "." "item2" "." "item3";
     }
-}
-
-/******************************************************************************/
-/* Table using CSS grid *******************************************************/
-/******************************************************************************/
-
-/* To use this, you need to set `grid-template-columns` in `.grid-table` to an
- * appropriate value, like:
- *
- * .grid-table {
- *     grid-template-columns: 1fr max-content max-content max-content;
- * }
- *
- * And then set `grid-column` in `.grid-table .row` to an appropriate value,
- * like:
- *
- * .grid-table .row {
- *     grid-column: 1 / 5;
- * }
- *
- */
-
-.grid-table {
-    display: grid;
-    gap: 1px;
-    margin: 1rem 0rem;
-}
-
-.grid-table .row {
-    display: grid;
-    grid-template-columns: subgrid;
-
-    background-color: $element-background;
-}
-
-.grid-table .row.header {
-    background-color: $medium-background;
-    font-weight: bold;
-}
-
-.grid-table .row.highlight {
-    background-color: $highlight;
-}
-
-.grid-table .row > * {
-    padding: 0.5rem;
-    box-shadow: 0 0 0 1px #000;
 }

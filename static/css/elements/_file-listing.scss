@@ -1,0 +1,25 @@
+/******************************************************************************/
+/* File listing ***************************************************************/
+/******************************************************************************/
+/* Used on `torrent/music/torrent/view` */
+
+ul.file-list {
+    list-style: none;
+    padding-left: 0rem;
+}
+
+/* Start adding left-padding only when we're recursing. */
+ul.file-list > ul.file-list {
+    padding-left: 2rem;
+}
+
+ul.file-list .name {
+    background-color: $element-background;
+    display: inline;
+}
+
+ul.file-list .size {
+    display: inline;
+    font-size: 0.8rem;
+    opacity: 75%;
+}
