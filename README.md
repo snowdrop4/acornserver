@@ -40,24 +40,13 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
     - 🟩 Fields can be autocompleted by searching for an artist or album
     - 🟩 Fields can be autocompleted by clicking "upload here" on an artist/release group/release page
 * 🟩 Artist pages
-    - 🟩 Artist portrait image
-    - 🟩 Artist country flag
-    - 🟨 Artist biography
 * 🟩 Release group pages
-    - 🟩 Album art image
 * 🟩 Release pages
-    - 🟩 Album art image
 * 🟩 Torrent pages
-    - 🟩 File list
 * 🟨 WebTorrent support
     - 🟨 Ability to stream an album
     - 🟨 Ability to stream album art (maybe?)
 * 🟩 Forum
-    - 🟩 Categories
-        - 🟩 Subcategories/tree structure
-        - 🟨 Category descriptions
-    - 🟩 Threads
-    - 🟩 Posts
 * 🟩 Users
     - 🟩 User biography
     - 🟨 User avatar
@@ -79,7 +68,9 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 # Requirements
 
 * Python >=3.11
+* [Docker](https://www.docker.com/)
 * [Fish Shell](https://fishshell.com/)
+* [Sass](https://sass-lang.com/)
 
 # Development
 
@@ -92,15 +83,16 @@ Code is 100% type annotated and checked. Formatting is done with black/isort.
 3. Run `poetry install` from the repository directory to set up a virtual environment with the necessary python version and packages.
 4. Run `fish scripts/installgithooks.fish` to install the appropriate git hooks.
 
-### Running
+### Development
 
-Populate the database:
-
+* Start Postgres: `docker-compose --profile development up -d`
+* Start Sass: `sass -w static/css/`
+* Create migrations: `poetry run python3 manage.py makemigrations`
+* Apply migrations: `poetry run python3 manage.py migrate`
 * Create the default user groups: `poetry run python3 manage.py create_user_groups`
-* Create the default forum categories: `poetry run python3 manage.py create_forum_groups`
+* Create the default forum categories: `poetry run python3 manage.py create_forum_categories`
 * Create a super user account: `poetry run python3 manage.py createsuperuser`
-
-Run the server: `poetry run python3 manage.py runserver`
+* Run the server: `poetry run python3 manage.py runserver`
 
 ### Testing
 
@@ -109,6 +101,10 @@ Run the server: `poetry run python3 manage.py runserver`
 ### Type checking
 
 `poetry run mypy .`
+
+### Deployment
+
+`docker-compose up`
 
 # License & Credits
 
