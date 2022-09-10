@@ -25,15 +25,21 @@
         {% for thread in threads %}
             {% if thread.sender == user and thread.sender_unread_messages > 0 %}
                 {% define "highlight" as highlight %}
+                {% define thread.sender_unread_messages as unread_messages %}
             {% elif thread.receiver == user and thread.receiver_unread_messages > 0 %}
                 {% define "highlight" as highlight %}
+                {% define thread.receiver_unread_messages as unread_messages %}
             {% else %}
                 {% define "" as highlight %}
+                {% define "" as unread_messages %}
             {% endif %}
 
             <div class="row {{ highlight }}" style="grid-column: 1 / 5">
                 <div class="ellipsis">
                     <a href="{% url 'inbox:thread_view' pk=thread.pk %}">{{ thread.title }}</a>
+                    {% if unread_messages %}
+                        ({{ unread_messages }})
+                    {% endif %}
                 </div>
 
                 <div>

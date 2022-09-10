@@ -54,6 +54,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     uploaded = models.PositiveBigIntegerField(default=0)
     downloaded = models.PositiveBigIntegerField(default=0)
 
+    # Number of unread inbox messages
+    unread_messages = models.PositiveIntegerField(default=0)
+
     # Django nonsense
     # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 

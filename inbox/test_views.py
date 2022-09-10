@@ -46,6 +46,33 @@ class TestThread(TestCase):
         dates = [message.pub_date, message.mod_date, thread.latest_message_datetime]
         self.assertTrue(all(i == dates[0] for i in dates))
 
+    # Test the unread messages count on the user model
+    def test_unread_messages(self) -> None:
+        url = reverse("inbox:thread_create")
+        request = self.requestFactory.post(url, self.data)
+        request.user = self.user
+
+        threads = []
+
+        # Test unread message count increment:
+        for i in range(1, 3):
+            ThreadCreateView.as_view()(request)
+            threads.append(cast(InboxThread, InboxThread.objects.last()))
+
+            self.receiver.refresh_from_db()
+            self.assertEquals(self.receiver.unread_messages, i)
+
+        # Test unread message count decrement:
+        for i in range(1, -1, -1):
+            data = {"pk": threads[i].pk}
+
+            url = reverse("inbox:thread_view", kwargs=data)
+            request = self.requestFactory.get(url)
+            request.user = self.receiver
+
+            ThreadReplyView.as_view()(request, **data)
+            self.assertEquals(self.receiver.unread_messages, i)
+
 
 class TestThreadQueries(TestCase):
     def setUp(self) -> None:

@@ -16,20 +16,15 @@ from root.utils.get_parameters import fill_typed_get_parameters
 class InboxView(View):
     def get(self, request: AuthedHttpRequest) -> HttpResponse:
         threads = (
-            InboxThread.objects
-            .filter(Q(sender=request.user) | Q(receiver=request.user))
+            InboxThread.objects.filter(
+                Q(sender=request.user) | Q(receiver=request.user)
+            )
             .order_by("-latest_message_datetime")
             .select_related("receiver")
             .select_related("sender")[:10]
         )
 
-        return render(
-            request,
-            "inbox/view.html",
-            {
-                "threads": threads,
-            },
-        )
+        return render(request, "inbox/view.html", {"threads": threads})
 
 
 class ThreadCreateView(View):
@@ -54,11 +49,12 @@ class ThreadCreateView(View):
 
         if form.is_valid():
             now = timezone.now()
+            receiver = form.cleaned_data["receiver"]
 
             thread = InboxThread(
                 title=form.cleaned_data["title"],
                 sender=request.user,
-                receiver=form.cleaned_data["receiver"],
+                receiver=receiver,
                 latest_message_datetime=now,
             )
 
@@ -69,11 +65,16 @@ class ThreadCreateView(View):
                 sender=request.user,
             )
 
+            receiver.unread_messages += 1
+
             try:
                 with transaction.atomic():
                     thread.save()
+
                     message.thread = thread
                     message.save()
+
+                    receiver.save()
             except Error as e:
                 return renderers.render_http_server_error(
                     request, f"Could not create thread. Error: {e}"
@@ -116,8 +117,17 @@ class ThreadReplyView(View):
             thread.save()
 
         if thread.receiver == request.user and thread.receiver_unread_messages > 0:
+            request.user.unread_messages -= thread.receiver_unread_messages
             thread.receiver_unread_messages = 0
-            thread.save()
+
+            try:
+                with transaction.atomic():
+                    thread.save()
+                    request.user.save()
+            except Error as e:
+                return renderers.render_http_server_error(
+                    request, f"Could not send reply. Error: {e}"
+                )
 
         return render(
             request,
@@ -144,15 +154,28 @@ class ThreadReplyView(View):
             message.pub_date = now
             message.mod_date = now
 
+            # Increment the unread message count on the thread object
+            # for the user who just received the message.
             if thread.sender == request.user:
                 thread.receiver_unread_messages += 1
+                message_target = thread.receiver
             elif thread.receiver == request.user:
                 thread.sender_unread_messages += 1
+                message_target = thread.sender
+            else:
+                return renderers.render_http_server_error(
+                    request, "Could post reply to thread."
+                )
+
+            # Increment the unread message count on the user object of the
+            # user who just received the message.
+            message_target.unread_messages += 1  # type: ignore
 
             try:
                 with transaction.atomic():
                     thread.save()
                     message.save()
+                    message_target.save()  # type: ignore
             except Error as e:
                 return renderers.render_http_server_error(
                     request, f"Could not send reply. Error: {e}"
@@ -162,7 +185,9 @@ class ThreadReplyView(View):
             request,
             "inbox/thread/view.html",
             {
-                "form": MessageFormAdd(),  # reconstruct the form, so that it's blank again
+                # We need to reconstruct the form anew, so that it's blank again
+                # and doesn't retain the contents of the message we just sent.
+                "form": MessageFormAdd(),
                 "thread": thread,
                 "thread_messages": messages,
             },
