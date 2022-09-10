@@ -27,6 +27,8 @@
                 {% define "highlight" as highlight %}
             {% elif thread.receiver == user and thread.receiver_unread_messages > 0 %}
                 {% define "highlight" as highlight %}
+            {% else %}
+                {% define "" as highlight %}
             {% endif %}
 
             <div class="row {{ highlight }}" style="grid-column: 1 / 5">
