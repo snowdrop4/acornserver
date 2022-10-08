@@ -1366,6 +1366,64 @@ th.width-100, td.width-100 {
   }
 }
 
+#torrent-info-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "info" "stats" "operations";
+  gap: 1rem;
+}
+@media (max-width: 77rem) {
+  #torrent-info-container {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "info stats operations";
+  }
+}
+@media (max-width: 66rem) {
+  #torrent-info-container {
+    grid-template-columns: 4fr 4fr 2fr;
+    grid-template-areas: "info stats operations";
+  }
+}
+@media (max-width: 55rem) {
+  #torrent-info-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "info info" "stats operations";
+  }
+}
+@media (max-width: 33rem) {
+  #torrent-info-container {
+    grid-template-columns: 1fr;
+    grid-template-areas: "info" "stats" "operations";
+  }
+}
+
+#torrent-info-pane {
+  grid-area: info;
+  grid-template-columns: max-content 1fr;
+  grid-auto-rows: min-content;
+}
+#torrent-info-pane .row {
+  grid-column: 1/3;
+}
+
+#torrent-operations-pane {
+  grid-area: operations;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+}
+#torrent-operations-pane .row {
+  grid-column: 1/2;
+}
+
+#torrent-stats-pane {
+  grid-area: stats;
+  grid-template-columns: max-content 1fr;
+  grid-auto-rows: min-content;
+}
+#torrent-stats-pane .row {
+  grid-column: 1/3;
+}
+
 /******************************************************************************/
 /* Forum tables ***************************************************************/
 /******************************************************************************/

@@ -1,0 +1,59 @@
+#torrent-info-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "info" "stats" "operations";
+    gap: 1rem;
+
+    @media (max-width: $base-width-1) {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: "info stats operations";
+    }
+
+    @media (max-width: $base-width-2) {
+        grid-template-columns: 4fr 4fr 2fr;
+        grid-template-areas: "info stats operations";
+    }
+
+    @media (max-width: $base-width-3) {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "info info" "stats operations";
+    }
+
+    @media (max-width: $base-width-5) {
+        grid-template-columns: 1fr;
+        grid-template-areas: "info" "stats" "operations";
+    }
+}
+
+#torrent-info-pane {
+    grid-area: info;
+
+    grid-template-columns: max-content 1fr;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 3;
+    }
+}
+
+#torrent-operations-pane {
+    grid-area: operations;
+
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 2;
+    }
+}
+
+#torrent-stats-pane {
+    grid-area: stats;
+
+    grid-template-columns: max-content 1fr;
+    grid-auto-rows: min-content;
+
+    .row {
+        grid-column: 1 / 3;
+    }
+}

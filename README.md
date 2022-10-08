@@ -69,8 +69,8 @@ Torrents can be uploaded from any page, with the relevant details filled in on t
 
 * Python >=3.11
 * [Docker](https://www.docker.com/)
-* [Fish Shell](https://fishshell.com/)
-* [Sass](https://sass-lang.com/)
+* (development) [Fish Shell](https://fishshell.com/)
+* (development) [Sass](https://sass-lang.com/)
 
 # Development
 

@@ -1,7 +1,11 @@
-<td class="tl" colspan="4">
-    {% include 'torrent/music/release/as_link.html' %}
+<td class="tl ellipsis" colspan="4">
+    <div class="ellipsis">{% include 'torrent/music/release/as_link.html' %}</div>
 </td>
 
 <td class="tr">
-    <a href="{% url 'torrent:music_release_edit' pk=release.pk %}">ED</a> / <a href="{% url 'torrent:music_release_delete' pk=release.pk %}">RM</a> / RP
+    <a href="{% url 'torrent:music_release_edit' pk=release.pk %}">ED</a>
+    /
+    <a href="{% url 'torrent:music_release_delete' pk=release.pk %}">RM</a>
+    /
+    RP
 </td>

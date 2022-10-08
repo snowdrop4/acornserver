@@ -15,58 +15,64 @@
 
     <h2>{{ release_group.name }} <span class="small">:: Torrent</span></h2>
 
-    <div class="split three-col no-horizontal-lines">
-        <div class="item1">
-            <table id="torrent-info-table">
-                <thead>
-                    <tr><th colspan="2">Info</th></tr>
-                </thead>
+    <div id="torrent-info-container">
+        <div class="grid-table" id="torrent-info-pane">
+            <div class="row header">
+                <div class="tc" style="grid-column: 1 / span 2;">Info</div>
+            </div>
 
-                <tbody>
-                    <tr><td>Uploader:</td> <td class="tr width-100"><a href="{% url 'account:profile_view' pk=torrent.uploader.pk %}">{{ torrent.uploader }}</a></td></tr>
-                    <tr><td>Date:</td>     <td class="tr width-100">{{ torrent.upload_datetime }}</td></tr>
-                    <tr><td>Format:</td>   <td class="tr width-100">{{ torrent.get_encode_format_display }}</td></tr>
-                    <tr><td>Size:</td>     <td class="tr width-100">{{ torrent.torrent_size|IEC_80000_13 }}</td></tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="tb">Uploader:</div>
+                <div><a href="{% url 'account:profile_view' pk=torrent.uploader.pk %}">{{ torrent.uploader }}</a></div>
+            </div>
+
+            <div class="row">
+                <div class="tb">Date:</div>
+                <div>{{ torrent.upload_datetime }}</div>
+            </div>
+
+            <div class="row">
+                <div class="tb">Format:</div>
+                <div>{{ torrent.get_encode_format_display }}</div>
+            </div>
+
+            <div class="row">
+                <div class="tb">Size:</div>
+                <div>{{ torrent.torrent_size|IEC_80000_13 }}</div>
+            </div>
         </div>
 
-        <div class="line1">
-            <div class="line"></div>
+        <div class="grid-table" id="torrent-operations-pane">
+            <div class="row header">
+                <div class="tc" style="grid-column: 1 / span 2;">Operations</div>
+            </div>
+
+            <div class="row"><div><a href="{% url 'torrent:music_torrent_download' pk=torrent.pk %}">Download</a></div></div>
+            <div class="row"><div>Freeleech</div></div>
+            <div class="row"><div><a href="{% url 'torrent:music_torrent_edit' pk=torrent.pk %}">Edit</a></div></div>
+            <div class="row"><div><a href="{% url 'torrent:music_torrent_delete' pk=torrent.pk %}">Delete</a></div></div>
+            <div class="row"><div>Report</div></div>
         </div>
 
-        <div class="item2">
-            <table id="torrent-operations-table">
-                <thead>
-                    <tr><th colspan="2">Operations</th></tr>
-                </thead>
+        <div class="grid-table" id="torrent-stats-pane">
+            <div class="row header">
+                <div class="tc" style="grid-column: 1 / span 2;">Stats</div>
+            </div>
 
-                <tbody>
-                    <tr><td><a href="{% url 'torrent:music_torrent_download' pk=torrent.pk %}">Download</a></td></tr>
-                    <tr><td>Freeleech</td></tr>
-                    <tr><td><a href="{% url 'torrent:music_torrent_edit' pk=torrent.pk %}">Edit</a></td></tr>
-                    <tr><td><a href="{% url 'torrent:music_torrent_delete' pk=torrent.pk %}">Delete</a></td></tr>
-                    <tr><td>Report</td></tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="row">
+                <div class="tb">Seeders:</div>
+                <div>{{ torrent.get_num_seeders }}</div>
+            </div>
 
-        <div class="line2">
-            <div class="line"></div>
-        </div>
+            <div class="row">
+                <div class="tb">Leechers:</div>
+                <div>{{ torrent.get_num_leechers }}</div>
+            </div>
 
-        <div class="item3">
-            <table id="torrent-stats-table">
-                <thead>
-                    <tr><th colspan="2">Stats</th></tr>
-                </thead>
-
-                <tbody>
-                    <tr><td>Seeders:</td>   <td class="tr width-100">{{ torrent.get_num_seeders }}</td></tr>
-                    <tr><td>Leechers:</td>  <td class="tr width-100">{{ torrent.get_num_leechers }}</td></tr>
-                    <tr><td>Downloads:</td> <td class="tr width-100">{{ torrent.downloads.count }}</td></tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="tb">Downloads:</div>
+                <div>{{ torrent.downloads.count }}</div>
+            </div>
         </div>
     </div>
 
