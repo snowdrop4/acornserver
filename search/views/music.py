@@ -2,7 +2,7 @@ from typing import Any
 
 from django.http import HttpResponse
 from django.db.models import QuerySet
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 
 from root import renderers
@@ -48,9 +48,14 @@ def search(request: AuthedHttpRequest) -> HttpResponse:
             ).order_by("pk")
 
         if query is not None:
-            paginator = Paginator(query, 5)
+            # If there's only one match, immediately redirect there for
+            # convenience
+            if len(query) == 1:
+                return redirect(query[0].get_absolute_url())
+            else:
+                paginator = Paginator(query, 5)
 
-            template_args["page"] = paginator.get_page(get_params.get("page", 1))
-            template_args["model_name"] = model_name
+                template_args["page"] = paginator.get_page(get_params.get("page", 1))
+                template_args["model_name"] = model_name
 
     return render(request, "search/music.html", template_args)
