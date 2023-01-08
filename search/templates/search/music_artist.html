@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Artists < Music < Search
+{% endblock %}
+
+{% block content %}
+    <h2>Search</h2>
+
+    <h3>Query</h3>
+
+    <form method="get">
+        {% include 'form-as-table.html' %}
+
+        <div class="button-container">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+
+    <h3>Artists</h3>
+
+    {% if page.object_list %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for artist in page.object_list %}
+                        <tr>
+                            <td><a href="{{ artist.get_absolute_url }}">{{ artist }}</a></td>
+                            <td>{{ artist.get_artist_type_display }}</td>
+                            <td>{{ artist.country.name }} <div class="{{ artist.country.flag_css }}"></div></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% include 'pagination.html' %}
+{% endblock %}
